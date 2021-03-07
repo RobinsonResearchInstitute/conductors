@@ -20,8 +20,8 @@
     }
 
     .content {
-  position: fixed;
-  bottom: 0;
+  
+  
   background: rgba(0, 0, 0, 0.0);
   color: #f1f1f1;
   width: 100%;
@@ -80,26 +80,68 @@
 </head>
 <body>
     <h1>The Rise of Superconductivity</h1>
-
+    <div class="graph"></div>
 <script>
 
-var w = window.innerWidth,
-          h = window.innerHeight;
+var svg,x,y, focus;
 
+var w1 = window.innerWidth,
+          h1 = window.innerHeight;
+    /*
     var margin = { top: 30, right: 120, bottom: 80, left: 100 },
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom,
-        tooltip = { width: 100, height: 100, x: 10, y: -30 };
+        */
+     var   tooltip = { width: 100, height: 100, x: 10, y: -30 };
+    
+    // Set default width and height, calculate ratio
+var default_width = 900;
+var default_height = 400;
+var default_ratio = default_width / default_height;
 
+// Current (non-responsive) width and height are calcuated from the default, minus the margins
+var margin = {top: 40, right: 100, bottom: 60, left: 100},
+    width = default_width - margin.left - margin.right,
+    height = default_height - margin.top - margin.bottom;
+
+// Determine current size, which determines vars
+function set_vars() {
+  //alert('setting vars')
+  current_width = window.innerWidth*0.8;
+    current_height = window.innerHeight*0.8;
+    //console.log(current_width);
+    //console.log(current_height);
+  current_ratio = current_width / current_height;
+
+  // Check if height is limiting factor
+  if ( current_ratio > default_ratio ){
+    h = current_height;
+    w = h * default_ratio;
+  // Else width is limiting
+  } else {
+    w = current_width;
+    h = w / default_ratio;
+  }
+
+  // Set new width and height based on graph dimensions
+  //width = w - margin.left - margin.right;
+  //height = h - margin.top - margin.bottom;
+  //w1 = window.innerWidth;
+  //h1 = window.innerHeight;
+
+};
+    
+set_vars();
+function drawGraphic(){
     var radius = 6;    
 
     
     var bisectDate = d3.bisector(function(d) { return d.year; }).left;
 
-    var x = d3.time.scale()
+    x = d3.time.scale()
             .range([0, width]);
 
-    var y = d3.scale.linear()
+    y = d3.scale.linear()
             .range([height, 0]);
 
     var xAxis = d3.svg.axis()
@@ -119,14 +161,16 @@ var w = window.innerWidth,
           // We're passing in a function in d3.max to tell it what we're maxing (x value)
           var xScale = d3.scale.linear()
           .domain([1910, 2020])
-          .range([margin.left, w - margin.right]);  // Set margins for x specific
+          .range([margin.left, w1 - margin.right]);  // Set margins for x specific
 
       // We're passing in a function in d3.max to tell it what we're maxing (y value)
       var yScale = d3.scale.linear()
           .domain([0, 300])
-          .range([margin.top, h - margin.bottom]);  // Set margins for y specific
+          .range([margin.top, h1 - margin.bottom]);  // Set margins for y specific
 
-    var svg = d3.select("body").append("svg")
+
+          
+    svg = d3.select(".graph").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -255,6 +299,7 @@ var w = window.innerWidth,
     x.domain([1900, 2020]);
     y.domain([0,300]);
 
+    
     svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
@@ -314,9 +359,9 @@ var w = window.innerWidth,
         .on("mouseover", handleMouseOver)
         .on("mouseout", handleMouseOut);
         
+   
 
-
-        var focus = svg.append("g")
+        focus = svg.append("g")
             .attr("class", "focus")
             .style("display", "none");
         
@@ -344,8 +389,9 @@ var w = window.innerWidth,
             .attr("x", 50)
             .attr("y", 18);
 
-        
 
+        }
+drawGraphic();
         
         // Create Event Handlers for mouse
       function handleMouseOver(d, i) {  // Add interactivity
@@ -376,14 +422,25 @@ function handleMouseOut(d, i) {
 
     }
         
-   
+    var resizeTimer;
+window.onresize = function(event) {
+ clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function()
+  {
+    var s = d3.selectAll('svg');
+    s = s.remove();
+    set_vars();
+    drawGraphic();
+  }, 100);
+}
 
 </script>
+<div class="credit">By J.G. Storey </div>
 <div class="content">
     <p>The discovery of superconductors that operate at higher temperatures follows an unpredictable path. They can be grouped into <span style="color: #46a6f5">conventional</span>, <span style="color: #ff0000">cuprate high-temperature</span>, <span style="color: #ff00ff">carbon-based</span>, <span style="color: #00ff00">iron-based high-temperature</span> and <span style="color: #ffff00">polycyclic hydrocarbon</span> superconductors. White-filled symbols denote materials that become superconductors at extreme pressures. (Mouseover points for information.)</p>
   </div>
   
 
-<div class="credit">By J.G. Storey </div>
- 
+
+
 </body>
