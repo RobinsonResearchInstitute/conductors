@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/>
+<head>
+<style> /* set the CSS */
+
+  body{
+    background: black;
+    font-family:"Arial";
+    color:white;
+    
+  }
+  .line {
+    fill: none;
+    stroke: rgb(251, 255, 0);
+    stroke-width: 2px;
+  }
+
+  .float-container {
+    width:96%;
+    height:100%;
+    border: 3px solid black;
+    padding: 20px;
+}
+
+.float-child {
+    width: 40%;
+    height: 500px;
+    float: left;
+    border: 2px solid black;
+} 
+
+#cryocooler{
+  margin-top:100px;
+}
+
+  #slider-vertical{
+    float:left;
+    margin-left:10%;
+    width:30%;
+    height:400px;
+    border: 2px solid black;
+  }
+
+  #chart{
+    float:left;
+    width:50%;
+    height:500px;
+    border: 2px solid black;
+  }
+
+  .yAxis text, .xAxis text{
+    fill: white;
+    font-size:15px;
+  }
+
+  .yAxis path, .xAxis path{
+    stroke: white;
+    stroke-width:2px;
+  }
+
+  .yAxis line, .xAxis line{
+    stroke: white;
+    stroke-width:2px;
+  }
+
+  .axTitle{
+    font-size:20px;
+    fill:white;
+  }
+
+  .axis text,
+.slider text {
+  font-size: 18px;
+}
+
+.axis text {
+  fill: red;
+}
+
+.slider text {
+  fill: green;
+}
+
+rect.btn {
+  stroke:black;
+  fill:rgb(0, 75, 16);
+  fill-opacity:1;
+  stroke-opacity:1;
+}
+
+#coldhead{
+  stroke:white;
+}
+
+.content {
+				position:absolute;
+				bottom:10px;
+				font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: rgba(0, 0, 0, 0.0);
+  color: #f1f1f1;
+  padding-left:20px;
+  padding-right:20px;
+  z-index: 200;
+  
+}
+h1{
+        color:white;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+	.credit {
+        color: #9E9E9E;
+    font-size: 10px;
+    margin-bottom: 10px;
+    text-align:right;
+    }
+
+
+    
+ .arrow {
+	 cursor: pointer;
+	 height: 120px;
+	 right: 0%;
+	 position: absolute;
+	 top: 50%;
+	 transform: translateX(-50%) translateY(-50%);
+	 transition: transform 0.1s;
+	 width: 80px;
+}
+ .arrow-top, .arrow-bottom {
+	 background-color: #666;
+	 height: 4px;
+	 left: -5px;
+	 position: absolute;
+	 top: 50%;
+	 width: 100%;
+}
+ .arrow-top:after, .arrow-bottom:after {
+	 background-color: #fff;
+	 content: '';
+	 height: 100%;
+	 position: absolute;
+	 top: 0;
+	 transition: all 0.15s;
+}
+ .arrow-top {
+	 transform: rotate(45deg);
+	 transform-origin: bottom right;
+}
+ .arrow-top:after {
+	 left: 100%;
+	 right: 0;
+	 transition-delay: 0s;
+}
+ .arrow-bottom {
+	 transform: rotate(-45deg);
+	 transform-origin: top right;
+}
+ .arrow-bottom:after {
+	 left: 0;
+	 right: 100%;
+	 transition-delay: 0.15s;
+}
+ .arrow:hover .arrow-top:after {
+	 left: 0;
+	 transition-delay: 0.15s;
+}
+ .arrow:hover .arrow-bottom:after {
+	 right: 0;
+	 transition-delay: 0s;
+}
+ .arrow:active {
+	 transform: translateX(-50%) translateY(-50%) scale(0.9);
+}
+ 
+  
+  </style>
+<title>Resistance vs Temperature</title>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://unpkg.com/d3-simple-slider"></script>
+<script>
+    var cooler = false;
+    var val = 299;
+    function setval(varval)
+    {
+        if(!cooler){
+            document.getElementById('onbutton').style.fill = "#00ff00";
+            cooler=true;
+        }
+        else{
+            document.getElementById('onbutton').style.fill = "rgb(0,75,16)";
+            cooler=false;
+        } 
+        myMove();   
+    }
+
+   
+var id = null;
+function myMove() { 
+  
+  clearInterval(id);
+  id = setInterval(frame, 50);
+  function frame() {
+    if (cooler && val <= 0) {
+      clearInterval(id);
+    } 
+    else if(!cooler && val>299){
+        clearInterval(id);
+    }
+    else {
+      if(cooler){
+      val--; 
+      }
+      else{
+          val++;
+      }
+      d3.select("path.line").remove();
+      svg.append("path")
+      .data([linedata.slice(val/1,linedata.length)])
+      .attr("class", "line")
+      .attr("d", valueline);
+      document.getElementById('coldhead').style.fill = color(val/300.0);
+    }
+  }
+}
+
+function color(c){
+  var r,g,b;
+  b = 255*(1.0-c);
+  if(c>0.5){
+    g = 0;
+  }
+  else{
+    g = 1;
+  }
+  r = 255*c;
+  
+  return "rgb("+Math.trunc(r)+","+Math.trunc(g)+","+Math.trunc(b)+")"
+}
+    
+    </script>
+
+</head>
+
+
+<body>
+
+
+<div class="float-container">
+
+    <div class="float-child">
+      <!--<h2>Temperature</h2>-->
+    <div id="slider-vertical"></div>
+    <svg id="cryocooler" width="300" height="500">
+        <rect x="100" y="50" width="80" height="40" style="fill:rgb(100,100,100);" />
+        <path id="coldhead" d="M80 90 L200 90 L200 130 L190 130 L190 200 L220 200 L60 200 L90 200 L90 130 L80 130 Z" style="fill:rgb(255,0,0);" />
+        <rect x="60" y="200" width="160" height="100" style="fill:rgb(200,200,200)" />
+        <text x="80" y="240" fill="black">Cryocooler</text>
+        <text x="102" y="120" fill="white">Cold head</text>
+        <text x="80" y="40" fill="white">Superconductor</text>
+        <text x="100" y="265" fill="black">on/off</text>
+        <rect class="btn" id="onbutton" x="150" y="250" width="20" height="20" onclick="javascript:setval(1)" />
+        
+      </svg>
+    </div>
+    
+      <div id="chart" ></div>
+      
+      </div>
+
+      <div class="content">
+        <h1>Zero Resistance</h1>
+          <p>When cooled below a certain temperature the electrical resistance of a superconductor suddenly becomes zero. (Try switching the cryocooler on.)</p>
+        <div class="credit">By J.G. Storey </div>  
+      </div>
+
+      <a href="https://robinsonresearchinstitute.github.io/conductors/tcvstime.html">
+      <div class="arrow">
+        <div class="arrow-top"></div>
+        <div class="arrow-bottom"></div>
+      </div></a>
+
+<script>
+  
+  var linedata;
+
+  // set the dimensions and margins of the graph
+var margin = {top: 20, right: 20, bottom: 70, left: 100},
+    width = 600 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// parse the date / time
+var parseTime = d3.timeParse("%d-%b-%y");
+
+// set the ranges
+//var x = d3.scaleTime().range([0, width]);
+var x = d3.scaleLinear().range([0,width]);
+var y = d3.scaleLinear().range([height, 0]);
+
+// define the line
+var valueline = d3.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.close); });
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg = d3.select("#chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Get the data
+d3.csv("Tc2.csv").then(function(data) {
+
+  // format the data
+  data.forEach(function(d) {
+      d.date = +d.date;
+      d.close = +d.close;
+  });
+
+  linedata = data;
+  
+  // Scale the range of the data
+  //x.domain(d3.extent(data, function(d) { return d.date; }));
+  x.domain([0, d3.max(data, function(d) { return d.date; })]);
+  y.domain([0, d3.max(data, function(d) { return d.close; })]);
+
+  // Add the valueline path.
+  svg.append("path")
+      .data([])
+      .attr("class", "line")
+      .attr("d", valueline);
+
+  // Add the x Axis
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .attr("class", "xAxis")
+      .call(d3.axisBottom(x));
+
+  // Add the y Axis
+  svg.append("g")
+      .attr("class", "yAxis")
+      .call(d3.axisLeft(y));
+
+
+      // Add X axis label:
+svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", width-150)
+    .attr("y", height + margin.top + 30)
+    .attr("class","axTitle")
+    .text("Temperature (K)");
+
+// Y axis label:
+svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("transform", "rotate(-90)")
+    .attr("y", -margin.left+40)
+    .attr("x", -margin.top-130)
+    .attr("class","axTitle")
+    .text("Resistance (\u{2126})");
+
+});
+
+
+
+  /*
+  // Simple
+  var data = [0, 50, 100, 150, 200, 250, 300];
+
+  // Vertical
+  var sliderVertical = d3
+    .sliderLeft()
+    .min(d3.min(data))
+    .max(d3.max(data))
+    .height(300)
+    .ticks(5)
+    .default(300)
+    .on('onchange', val => {
+      d3.select("path.line").remove();
+      svg.append("path")
+      .data([linedata.slice(val/1,linedata.length)])
+      .attr("class", "line")
+      .attr("d", valueline);
+    });
+
+  var gVertical = d3
+    .select('div#slider-vertical')
+    .append('svg')
+    .attr('width', 100)
+    .attr('height', 400)
+    .append('g')
+    .attr('transform', 'translate(60,30)');
+
+  gVertical.call(sliderVertical);
+*/
+  
+
+  
+</script>
+</body>
