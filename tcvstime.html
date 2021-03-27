@@ -74,6 +74,62 @@
     margin-bottom: 10px;
     text-align:right;
     }
+    
+    .arrow {
+	 cursor: pointer;
+	 height: 120px;
+	 right: 0%;
+	 position: absolute;
+	 top: 50%;
+	 transform: translateX(-50%) translateY(-50%);
+	 transition: transform 0.1s;
+	 width: 80px;
+}
+ .arrow-top, .arrow-bottom {
+	 background-color: #666;
+	 height: 4px;
+	 left: -5px;
+	 position: absolute;
+	 top: 50%;
+	 width: 100%;
+}
+ .arrow-top:after, .arrow-bottom:after {
+	 background-color: #fff;
+	 content: '';
+	 height: 100%;
+	 position: absolute;
+	 top: 0;
+	 transition: all 0.15s;
+}
+ .arrow-top {
+	 transform: rotate(45deg);
+	 transform-origin: bottom right;
+}
+ .arrow-top:after {
+	 left: 100%;
+	 right: 0;
+	 transition-delay: 0s;
+}
+ .arrow-bottom {
+	 transform: rotate(-45deg);
+	 transform-origin: top right;
+}
+ .arrow-bottom:after {
+	 left: 0;
+	 right: 100%;
+	 transition-delay: 0.15s;
+}
+ .arrow:hover .arrow-top:after {
+	 left: 0;
+	 transition-delay: 0.15s;
+}
+ .arrow:hover .arrow-bottom:after {
+	 right: 0;
+	 transition-delay: 0s;
+}
+ .arrow:active {
+	 transform: translateX(-50%) translateY(-50%) scale(0.9);
+}
 
 </style>
 </head>
@@ -439,7 +495,11 @@ window.onresize = function(event) {
     <p>The discovery of superconductors that operate at higher temperatures follows an unpredictable path. They can be grouped into <span style="color: #46a6f5">conventional</span>, <span style="color: #ff0000">cuprate high-temperature</span>, <span style="color: #ff00ff">carbon-based</span>, <span style="color: #00ff00">iron-based high-temperature</span> and <span style="color: #ffff00">polycyclic hydrocarbon</span> superconductors. White-filled symbols denote materials that become superconductors at extreme pressures. (Mouseover points for information.)</p>
   </div>
   
-
+ <a href="https://robinsonresearchinstitute.github.io/conductors/structure.html">
+      <div class="arrow">
+        <div class="arrow-top"></div>
+        <div class="arrow-bottom"></div>
+      </div></a>
 
 
 </body>
