@@ -224,7 +224,8 @@ function myMove() {
       .data([linedata.slice(val/1,linedata.length)])
       .attr("class", "line")
       .attr("d", valueline);
-      document.getElementById('coldhead').style.fill = color(val/300.0);
+      document.getElementById('g1').style.stopColor = color(val/300.0);
+      document.getElementById('g2').style.stopColor = color((3.0+val/300.0)/4.0);
     }
   }
 }
@@ -257,8 +258,15 @@ function color(c){
       <!--<h2>Temperature</h2>-->
     <div id="slider-vertical"></div>
     <svg id="cryocooler" width="300" height="500">
-        <rect x="100" y="50" width="80" height="40" style="fill:rgb(100,100,100);" />
-        <path id="coldhead" d="M80 90 L200 90 L200 130 L190 130 L190 200 L220 200 L60 200 L90 200 L90 130 L80 130 Z" style="fill:rgb(255,0,0);" />
+        <defs>
+      <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop stop-color="red" offset="0%" id="g1"></stop>
+          <stop stop-color="red" offset="100%" id="g2"></stop>
+      </linearGradient>
+    </defs>
+	    
+	<rect x="100" y="50" width="80" height="40" style="fill:rgb(100,100,100);" />
+        <path id="coldhead" d="M80 90 L200 90 L200 130 L190 130 L190 200 L220 200 L60 200 L90 200 L90 130 L80 130 Z" style="fill:url(#myGradient)" />
         <rect x="60" y="200" width="160" height="100" style="fill:rgb(200,200,200)" />
         <text x="80" y="240" fill="black">Cryocooler</text>
         <text x="102" y="120" fill="white">Cold head</text>
