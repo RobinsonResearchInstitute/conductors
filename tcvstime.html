@@ -336,7 +336,7 @@ function drawGraphic(){
             {"year": 1991, "Tc": 33, "name": "RbCs2C60", "color":colors[2],"fillcolor":colors[2],"symbol":"circle"},
             {"year": 1993, "Tc": 133, "name": "HgBaCaCuO", "color":colors[1],"fillcolor":colors[1],"symbol":"circle"},
             {"year": 1994, "Tc": 23, "name": "YPd2B2C", "color":colors[0],"fillcolor":colors[0],"symbol":"circle"},
-            {"year": 1994, "Tc": 164, "name": "HgBaCaCuO", "color":colors[1],"fillcolor":"white","symbol":"circle"},
+            {"year": 1994, "Tc": 164, "name": "HgBaCaCuO", "color":colors[1],"fillcolor":"white","symbol":"square"},
             {"year": 1995, "Tc": 138, "name": "HgTlBaCaCuO", "color":colors[1],"fillcolor":colors[1],"symbol":"circle"},
             {"year": 1995, "Tc": 38, "name": "Cs3C60", "color":colors[2],"fillcolor":"white","symbol":"circle"},
             {"year": 2001, "Tc": 39, "name": "MgB2", "color":colors[0],"fillcolor":colors[0],"symbol":"circle"},
@@ -345,9 +345,9 @@ function drawGraphic(){
             {"year": 2008, "Tc": 55, "name": "SmFeAsOF", "color":colors[3],"fillcolor":colors[3],"symbol":"circle"},
             {"year": 2010, "Tc": 18, "name": "KxC22H14", "color":colors[4],"fillcolor":colors[4],"symbol":"circle"},
             {"year": 2012, "Tc": 33, "name": "KxC30H18", "color":colors[4],"fillcolor":colors[4],"symbol":"circle"},
-            {"year": 2015, "Tc": 203, "name": "H3S", "color":colors[0],"fillcolor":"white","symbol":"circle"},
-            {"year": 2019, "Tc": 250, "name": "H10La", "color":colors[0],"fillcolor":"white","symbol":"circle"},
-            {"year": 2020, "Tc": 287.7, "name": "C-S-H", "color":colors[0],"fillcolor":"white","symbol":"circle"}
+            {"year": 2015, "Tc": 203, "name": "H3S", "color":colors[0],"fillcolor":"white","symbol":"square"},
+            {"year": 2019, "Tc": 250, "name": "H10La", "color":colors[0],"fillcolor":"white","symbol":"square"},
+            {"year": 2020, "Tc": 287.7, "name": "C-S-H", "color":colors[0],"fillcolor":"white","symbol":"square"}
         ];
 
     //add a function to calculate axis limits automatically
@@ -405,7 +405,7 @@ function drawGraphic(){
       .selectAll("dot")
       .data(datapoints)
       .enter()
-      .append(function(d) { return x(d.symbol) })
+      .append(function(d) { return d.symbol })
         .attr("cx", function(d) { return x(d.year) } )
         .attr("cy", function(d) { return y(d.Tc) } )
         .attr("r", 5)
