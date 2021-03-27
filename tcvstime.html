@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-<script src="//d3js.org/d3.v3.min.js"></script>    
+<script src="//d3js.org/d3.v6.min.js"></script>    
 <style>
 
     body {
@@ -46,27 +46,31 @@
         stroke-width: 1.5px;
     }
 
-    .overlay {
-        fill: none;
-        pointer-events: all;
+    .xaxis, .yaxis{
+        font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color:white;
+        stroke-width: 2px;
+        
     }
+    
+    .titles{
+        fill:white;
+    }
+   
+    
 
-    .focus circle {
-        fill: orange;
-    }
-
-    .focus text {
-        font-size: 14px;
-    }
-
-    .tooltip {
-        fill: white;
-        stroke: #000;
-    }
-
-    .tooltip-year, .tooltip-Tc {
-        font-weight: bold;
-    }
+    div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 110px;
+  height: 40px;
+  padding-top: 5px;
+  font: 14px sans-serif;
+  background: white;
+  border: 0px;
+  border-radius: 2px;
+ 
+}
 
     .credit {
         color: #9E9E9E;
@@ -138,7 +142,7 @@
     <div class="graph"></div>
 <script>
 
-var svg,x,y, focus;
+var svg,x,y;
 
 var w1 = window.innerWidth,
           h1 = window.innerHeight;
@@ -147,7 +151,7 @@ var w1 = window.innerWidth,
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom,
         */
-     var   tooltip = { width: 100, height: 100, x: 10, y: -30 };
+     //var   tooltip = { width: 100, height: 100, x: 10, y: -30 };
     
     // Set default width and height, calculate ratio
 var default_width = 900;
@@ -193,37 +197,39 @@ function drawGraphic(){
     
     var bisectDate = d3.bisector(function(d) { return d.year; }).left;
 
-    x = d3.time.scale()
+    x = d3.scaleTime()
             .range([0, width]);
 
-    y = d3.scale.linear()
+    y = d3.scaleLinear()
             .range([height, 0]);
 
-    var xAxis = d3.svg.axis()
+    var xAxis = d3.axisBottom()
         .scale(x)
-        .orient("bottom")
-        .tickFormat(d3.format("r"));
+        .tickFormat(d3.format(""));
 
-    var yAxis = d3.svg.axis()
+    var yAxis = d3.axisLeft()
         .scale(y)
-        .orient("left")
-        .tickFormat(d3.format("s"))
+        .ticks(6)
+        .tickFormat(d3.format(""))
 
-    var line = d3.svg.line()
+    var line = d3.line()
         .x(function(d) { return x(d.year); })
         .y(function(d) { return y(d.Tc); });
 
           // We're passing in a function in d3.max to tell it what we're maxing (x value)
-          var xScale = d3.scale.linear()
+          var xScale = d3.scaleLinear()
           .domain([1910, 2020])
           .range([margin.left, w1 - margin.right]);  // Set margins for x specific
 
       // We're passing in a function in d3.max to tell it what we're maxing (y value)
-      var yScale = d3.scale.linear()
+      var yScale = d3.scaleLinear()
           .domain([0, 300])
           .range([margin.top, h1 - margin.bottom]);  // Set margins for y specific
 
-
+          var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("display","none");
+    
           
     svg = d3.select(".graph").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -338,7 +344,7 @@ function drawGraphic(){
             {"year": 1994, "Tc": 23, "name": "YPd2B2C", "color":colors[0],"fillcolor":colors[0],"symbol":"circle"},
             {"year": 1994, "Tc": 164, "name": "HgBaCaCuO", "color":colors[1],"fillcolor":"white","symbol":"square"},
             {"year": 1995, "Tc": 138, "name": "HgTlBaCaCuO", "color":colors[1],"fillcolor":colors[1],"symbol":"circle"},
-            {"year": 1995, "Tc": 38, "name": "Cs3C60", "color":colors[2],"fillcolor":"white","symbol":"circle"},
+            {"year": 1995, "Tc": 38, "name": "Cs3C60", "color":colors[2],"fillcolor":"white","symbol":"square"},
             {"year": 2001, "Tc": 39, "name": "MgB2", "color":colors[0],"fillcolor":colors[0],"symbol":"circle"},
             {"year": 2008, "Tc": 26, "name": "LaFeAsOF", "color":colors[3],"fillcolor":colors[3],"symbol":"circle"},
             {"year": 2008, "Tc": 38, "name": "BaKFeAs", "color":colors[3],"fillcolor":colors[3],"symbol":"circle"},
@@ -356,27 +362,38 @@ function drawGraphic(){
 
     
     svg.append("g")
-            .attr("class", "x axis")
+            .attr("class", "xaxis")
             .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-            .append("text")             
-            .attr("transform",
-                "translate(" + (width/2) + " ," + 
-                           (0*height + 0*margin.top + 60) + ")")
-            .style("text-anchor", "middle")
-            .text("Year");
+            .call(xAxis);
+    
 
 
         svg.append("g")
-            .attr("class", "y axis")
+            .attr("class", "yaxis")
             .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0-margin.left)
-            .attr("x", 0-height/2)
-            .attr("dy", "1.5em")
-            .style("text-anchor", "middle")
-            .text("Critical Temperature (K)");
+            .append("text");
+           
+            
+
+                  // Add X axis label:
+svg.append("text")
+.attr("class", "titles")
+.attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 20) + ")")
+            .attr("text-anchor", "middle")
+            .text("Year");
+
+// Y axis label:
+svg.append("text")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .attr("y", -margin.left)
+    .attr("x", -height/2)
+    .attr("dy", "1.5em")
+    .attr("class", "titles")
+    .text("Critical Temperature (K)");
+
 
 
     //draw the lines
@@ -398,84 +415,75 @@ function drawGraphic(){
         
     } );
 
-
-     // Add the points
-     svg
-      .append("g")
-      .selectAll("dot")
-      .data(datapoints)
-      .enter()
-      .append("circle")
-        .attr("cx", function(d) { return x(d.year) } )
-        .attr("cy", function(d) { return y(d.Tc) } )
-        .attr("r", 5)
+    var sym = 
+d3.symbol().type(d3.symbolTriangle).size(500);
+svg
+        // Add the points!
+    svg.selectAll(".point")
+        .data(datapoints)
+        .enter().append("path")
+        .attr("class", "point")
+        .attr("d", d3.symbol().type(function(d){
+            if(d.symbol == "circle") return d3.symbolCircle;
+            else return d3.symbolTriangle;}))
+        .attr("transform", function(d) { return "translate(" + x(d.year) + "," + y(d.Tc) + ")"; })
         .attr("stroke",function(d) { return d.color })  
         .attr("fill", function(d) { return d.fillcolor })
-        .on("mouseover", handleMouseOver)
-        .on("mouseout", handleMouseOut);
+        .on("mouseover", function(event,d) {
+       div.transition()
+         //.duration(200)
+         .style("display", null);
+       div.html("<b>"+d.name+"</b>" + "<br/> Tc: <b>" + d.Tc+" K</b>")
+         .style("left", (event.pageX+20) + "px")
+         .style("top", (event.pageY - 28) + "px")
+         //.style("opacity",1);
+         d3.select(this).attr("fill", "orange");
+       })
+     .on("mouseout", function(d) {
+        d3.select(this).attr("fill", function(d){return d.fillcolor});
+       div.transition()
+         //.duration(500)
+         //.style("opacity",0);
+         .style("display", "none");
+       });
+    
         
+        /*
+        svg
+        .selectAll(".dot")
+    .data(datapoints)
+    .enter()
+    .append("circle") // Uses the enter().append() method
+    .attr("class", "dot") // Assign a class for styling
+    .attr("cx", function(d) { return x(d.year) })
+    .attr("cy", function(d) { return y(d.Tc) })
+    .attr("r", 5)
+    .attr("stroke",function(d) { return d.color })  
+        .attr("fill", function(d) { return d.fillcolor })
+        .on("mouseover", function(event,d) {
+       div.transition()
+         //.duration(200)
+         .style("display", null);
+       div.html("<b>"+d.name+"</b>" + "<br/> Tc: <b>" + d.Tc+" K</b>")
+         .style("left", (event.pageX+20) + "px")
+         .style("top", (event.pageY - 28) + "px")
+         //.style("opacity",1);
+         d3.select(this).attr("fill", "orange");
+       })
+     .on("mouseout", function(d) {
+        d3.select(this).attr("fill", function(d){return d.fillcolor});
+       div.transition()
+         //.duration(500)
+         //.style("opacity",0);
+         .style("display", "none");
+       });
+       */
    
-
-        focus = svg.append("g")
-            .attr("class", "focus")
-            .style("display", "none");
-        
-        focus.append("rect")
-            .attr("class", "tooltip")
-            .attr("width", 110)
-            .attr("height", 50)
-            .attr("x", 10)
-            .attr("y", -22)
-            .attr("rx", 4)
-            .attr("ry", 4);
-
-        focus.append("text")
-            .attr("class", "tooltip-year")
-            .attr("x", 18)
-            .attr("y", -2);
-
-        focus.append("text")
-            .attr("x", 18)
-            .attr("y", 18)
-            .text("Tc:");
-
-        focus.append("text")
-            .attr("class", "tooltip-Tc")
-            .attr("x", 50)
-            .attr("y", 18);
-
-
-        }
+    }
+       
 drawGraphic();
         
-        // Create Event Handlers for mouse
-      function handleMouseOver(d, i) {  // Add interactivity
-
-        // Use D3 to select element, change color and size
         
-        d3.select(this).attr({
-        fill: "orange",
-        //r: radius * 2
-        });
-        
-        focus.style("display", null);
-        focus.attr("transform", "translate(" + x(d.year) + "," + y(d.Tc) + ")");
-            focus.select(".tooltip-year").text(d.name);
-            focus.select(".tooltip-Tc").text(d.Tc+" K");
-
-        }
-
-function handleMouseOut(d, i) {
-    // Use D3 to select element, change color back to normal
-    
-    d3.select(this).attr({
-    fill: d.fillcolor,
-    //r: radius
-    });
-    
-    focus.style("display", "none"); 
-
-    }
         
     var resizeTimer;
 window.onresize = function(event) {
@@ -492,7 +500,7 @@ window.onresize = function(event) {
 </script>
 <div class="credit">By J.G. Storey </div>
 <div class="content">
-    <p>The discovery of superconductors that operate at higher temperatures follows an unpredictable path. They can be grouped into <span style="color: #46a6f5">conventional</span>, <span style="color: #ff0000">cuprate high-temperature</span>, <span style="color: #ff00ff">carbon-based</span>, <span style="color: #00ff00">iron-based high-temperature</span> and <span style="color: #ffff00">polycyclic hydrocarbon</span> superconductors. White-filled symbols denote materials that become superconductors at extreme pressures. (Mouseover points for information.)</p>
+    <p>The discovery of superconductors that operate at higher temperatures follows an unpredictable path. They can be grouped into <span style="color: #46a6f5">conventional</span>, <span style="color: #ff0000">cuprate high-temperature</span>, <span style="color: #ff00ff">carbon-based</span>, <span style="color: #00ff00">iron-based high-temperature</span> and <span style="color: #ffff00">polycyclic hydrocarbon</span> superconductors. Triangle symbols denote materials that become superconductors at extreme pressures. (Mouseover points for information.)</p>
   </div>
   
  <a href="https://robinsonresearchinstitute.github.io/conductors/structure.html">
