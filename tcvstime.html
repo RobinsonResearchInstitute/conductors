@@ -21,10 +21,14 @@
 
     .content {
   
-  
+  position:fixed;
+  bottom:10px;
+  font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: rgba(0, 0, 0, 0.0);
   color: #f1f1f1;
-  padding: 20px;
+  padding-left:20px;
+  padding-right:20px;
+  z-index: 200;
 }
 
 
@@ -47,7 +51,7 @@
     }
 
     .xaxis, .yaxis{
-        font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font: 1.5vw "Helvetica Neue", Helvetica, Arial, sans-serif;
         color:white;
         stroke-width: 2px;
         
@@ -55,6 +59,7 @@
     
     .titles{
         fill:white;
+        font: 1.7vw "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
    
     
@@ -145,8 +150,8 @@
 
 var svg,x,y;
 
-var w1 = window.innerWidth,
-          h1 = window.innerHeight;
+var w1 = window.innerWidth*0.7,
+          h1 = window.innerHeight*0.6;
     /*
     var margin = { top: 30, right: 120, bottom: 80, left: 100 },
         width = 960 - margin.left - margin.right,
@@ -155,20 +160,23 @@ var w1 = window.innerWidth,
      //var   tooltip = { width: 100, height: 100, x: 10, y: -30 };
     
     // Set default width and height, calculate ratio
-var default_width = 900;
-var default_height = 400;
+var default_width = w1;
+var default_height = h1;
 var default_ratio = default_width / default_height;
 
+console.log(w1);
+    console.log(h1);
+
 // Current (non-responsive) width and height are calcuated from the default, minus the margins
-var margin = {top: 40, right: 100, bottom: 60, left: 100},
+var margin = {top: 0.1*h1, right: 0.1*w1, bottom: 0.15*h1, left: 0.1*w1},
     width = default_width - margin.left - margin.right,
     height = default_height - margin.top - margin.bottom;
 
 // Determine current size, which determines vars
 function set_vars() {
   //alert('setting vars')
-  current_width = window.innerWidth*0.8;
-    current_height = window.innerHeight*0.8;
+  current_width = window.innerWidth*0.7;
+    current_height = window.innerHeight*0.6;
     //console.log(current_width);
     //console.log(current_height);
   current_ratio = current_width / current_height;
@@ -184,10 +192,11 @@ function set_vars() {
   }
 
   // Set new width and height based on graph dimensions
-  //width = w - margin.left - margin.right;
-  //height = h - margin.top - margin.bottom;
-  //w1 = window.innerWidth;
-  //h1 = window.innerHeight;
+  margin = {top: 0.1*h, right: 0.1*w, bottom: 0.15*h, left: 0.1*w},
+  width = w - margin.left - margin.right;
+  height = h - margin.top - margin.bottom;
+  w1 = window.innerWidth;
+  h1 = window.innerHeight;
 
 };
     
@@ -381,7 +390,8 @@ svg.append("text")
 .attr("class", "titles")
 .attr("transform",
             "translate(" + (width/2) + " ," + 
-                           (height + margin.top + 20) + ")")
+                           (height + margin.top) + ")")
+                           .attr("dy","0.5em")
             .attr("text-anchor", "middle")
             .text("Year");
 
@@ -506,10 +516,11 @@ window.onresize = function(event) {
 }
 
 </script>
-<div class="credit">By J.G. Storey </div>
+
 <div class="content">
     <p>The discovery of superconductors that operate at higher temperatures follows an unpredictable path. They can be grouped into <span style="color: #46a6f5">conventional</span>, <span style="color: #ff0000">cuprate high-temperature</span>, <span style="color: #ff00ff">carbon-based</span>, <span style="color: #00ff00">iron-based high-temperature</span> and <span style="color: #ffff00">polycyclic hydrocarbon</span> superconductors. Triangle symbols denote materials that become superconductors at extreme pressures. (Mouseover and click points for information.)</p>
   </div>
+  <div class="credit">By J.G. Storey </div>
   
  <a href="https://robinsonresearchinstitute.github.io/conductors/structure.html">
       <div class="arrow">
