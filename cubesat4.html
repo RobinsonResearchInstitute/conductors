@@ -264,7 +264,7 @@ function getSpherical(rad1, rad2, r){
     transparent: true,
     opacity: 0.5,
     //depthTest: false,
-    //blending: THREE.AdditiveBlending,
+    blending: THREE.AdditiveBlending,
   });
   var points_geometry2 = new THREE.Geometry();
   var points_material2 = new THREE.PointsMaterial({
@@ -273,7 +273,7 @@ function getSpherical(rad1, rad2, r){
     transparent: true,
     opacity: 0.5,
     //depthTest: false,
-    //blending: THREE.AdditiveBlending,
+    blending: THREE.AdditiveBlending,
   });
   
   for (var i = 0; i < movers_num; i++) {
