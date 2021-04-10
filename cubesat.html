@@ -80,7 +80,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             import * as THREE from 'https://unpkg.com/three@0.124.0/build/three.module.js';
 
 			import { OrbitControls } from 'https://unpkg.com/three@0.124.0/examples/jsm/controls/OrbitControls.js';
-			import { GLTFLoader } from 'https://unpkg.com/three@0.124.0/examples/jsm/loaders/GLTFLoader.js';
+			import { GLTFLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/GLTFLoader.js';
             import { RGBELoader } from 'https://unpkg.com/three@0.124.0/examples/jsm/loaders/RGBELoader.js';
             //import { EXRLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/EXRLoader.js';
 			//import{RectAreaLightHelper} from 'https://unpkg.com/three@0.126.0/examples/jsm/helpers/RectAreaLightHelper.js';
@@ -112,7 +112,7 @@ var camTilt2;
 var cube,bwb;
 var controls;
 
-var extent = 100;
+var extent = 100/30;
 
 
 var antigravity = new THREE.Vector3(0, 5, 0);
@@ -147,19 +147,30 @@ var initThree = function() {
   
 			camera = new THREE.PerspectiveCamera( 35, body_width / body_height, 0.1, 100000 );
             
-
-			renderer = new THREE.WebGLRenderer();
+            /*
+			renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.outputEncoding = THREE.sRGBEncoding;
 			renderer.setSize( body_width, body_height);
 			document.body.appendChild( renderer.domElement );
 
             renderer.toneMapping = toneMappingOptions[ params.toneMapping ];
 				renderer.toneMappingExposure = params.exposure;
                 renderer.outputEncoding = THREE.sRGBEncoding;
+            */
+                renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.outputEncoding = THREE.sRGBEncoding;
+				renderer.toneMapping = THREE.ACESFilmicToneMapping;
+				renderer.toneMappingExposure = 0.1;
+				renderer.physicallyCorrectLights = true;
+				document.body.appendChild( renderer.domElement );
 
 
+            /*
 			const geometry = new THREE.BoxGeometry(300,300,300);
 			const material = new THREE.MeshStandardMaterial( { color: 0x555555, transparent:false, metalness: 0.8, roughness: 0.8 } );
-			/*
+			
             cube = new THREE.Mesh( geometry, material );
             cube.rotation.x = 3*Math.PI/4;
             cube.position.z = (300+150)*Math.cos(getRadian(45));
@@ -169,7 +180,7 @@ var initThree = function() {
 
       const loader = new GLTFLoader();
 
-var scale = 300;
+var scale = 10;
 loader.load( 'models/Cubesat3astack.glb', function ( gltf ) {
 
 //loader.load( 'models/Cubesat2.glb', function ( gltf ) {
@@ -177,8 +188,8 @@ loader.load( 'models/Cubesat3astack.glb', function ( gltf ) {
   gltf.scene.scale.set(scale,scale,scale)
   
   bwb.rotation.x = 1*Math.PI/4;
-            bwb.position.z = (300)*Math.cos(getRadian(45));
-            bwb.position.y = (300)*Math.sin(getRadian(45));
+            bwb.position.z = (10)*Math.cos(getRadian(45));
+            bwb.position.y = (10)*Math.sin(getRadian(45));
 	scene.add( gltf.scene );
 
 }, undefined, function ( error ) {
@@ -189,31 +200,31 @@ loader.load( 'models/Cubesat3astack.glb', function ( gltf ) {
 
 
 
-            camera.position.x = 766;//1027;//1951;
-			camera.position.y = -286;//-409;//-75;
-            camera.position.z = -1179;//-1596;//-1532;
+            camera.position.x = 766/30;//1027;//1951;
+			camera.position.y = -286/30;//-409;//-75;
+            camera.position.z = -1179/30;//-1596;//-1532;
             //camera.translateOnAxis('x',1000);
 
-            
-            const pointLight = new THREE.PointLight( 0x00ffff, 10, 1000 );
-            pointLight.position.set( 0,139,139);
+            //scene.add( new THREE.AmbientLight( 0xffffff, 20 ) );
+            const pointLight = new THREE.PointLight( 0x00ffff, 100, 100 );
+            pointLight.position.set( 0,4.5,4.5);
             scene.add( pointLight );
 
-//const sphereSize = 50;
+//const sphereSize = 2;
 //const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
 //scene.add( pointLightHelper );
 
 ///*
 // controls
 controls = new OrbitControls( camera, renderer.domElement );
-				controls.minDistance = 200;
-				controls.maxDistance = 4000;
+				controls.minDistance = 0.1;
+				controls.maxDistance = 300;
 				controls.enablePan = true;
                 //controls.autoRotate = true;
                 
-                controls.target.x = -19;//18;//268;
-                controls.target.y = 164;//79;//77;
-                controls.target.z = 328;//380;//508;
+                controls.target.x = -19/30;//18;//268;
+                controls.target.y = 164/30;//79;//77;
+                controls.target.z = 328/30;//380;//508;
                 controls.update();
 	//*/		
 			
@@ -309,7 +320,7 @@ function getSpherical(rad1, rad2, r){
   points_geometry = new THREE.Geometry();// new THREE.TorusGeometry(20, 5, 16, 100)//new THREE.Geometry();
   points_material = new THREE.PointsMaterial({
     color: 0x77ffaa,
-    size: 6,
+    size: 6/30,
     transparent: true,
     opacity: 0.7,
     //epthTest: false,
@@ -318,7 +329,7 @@ function getSpherical(rad1, rad2, r){
   var points_geometry2 = new THREE.Geometry();
   var points_material2 = new THREE.PointsMaterial({
     color: 0x77aaff,
-    size: 6,
+    size: 6/30,
     transparent: true,
     opacity: 0.7,
     //depthTest: false,
@@ -331,8 +342,8 @@ function getSpherical(rad1, rad2, r){
     var rad = getRadian(getRandomInt(0, 360));
     var x = Math.cos(rad) * range;
     var z = Math.sin(rad) * range;
-    mover.init(new THREE.Vector3(x, -300, z));
-    mover.mass = getRandomInt(300, 500) / 100;
+    mover.init(new THREE.Vector3(x, -10, z));
+    mover.mass = getRandomInt(300, 500) / 100*30;
     movers.push(mover);
     if (i % 2 === 0) {
       points_geometry.vertices.push(mover.position);
@@ -414,7 +425,7 @@ var Mover = function() {
     
     if (mover.is_active) continue;
     mover.activate();
-    mover.velocity.y = -300;
+    mover.velocity.y = -10;
     count++;
     if (count >= 20) break;
   }
@@ -430,13 +441,13 @@ var updatePoints = function() {
       mover.applyForce(antigravity);
       mover.updateVelocity();
       mover.updatePosition();
-      if (mover.position.y > 1000) {
+      if (mover.position.y > 1000/30) {
         var range = (1 - Math.log(getRandomInt(2, 256)) / Math.log(256)) * extent;
         var rad = getRadian(getRandomInt(0, 360));
         var x = Math.cos(rad) * range;
         var z = Math.sin(rad) * range;
-        mover.init(new THREE.Vector3(x, -300, z));
-        mover.mass = getRandomInt(300, 500) / 100;
+        mover.init(new THREE.Vector3(x, -10, z));
+        mover.mass = getRandomInt(300, 500) / 100*30;
       }
     }
     if (i % 2 === 0) {
