@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Cube Sat</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		
+
+    <style>
+
+      body{
+         /*overflow:hidden;hide scrollbars*/
+         margin:0;
+          font-family:"Arial";
+          color:white;
+          
+        }
+              .content {
+                  position:absolute;
+                  bottom:10px;
+                  font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: rgba(0, 0, 0, 0.2);
+      color: #f1f1f1;
+      padding-left:20px;
+      padding-right:20px;
+      z-index: 200;
+      
+      }
+      h1{
+          color:white;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+      
+      .credit {
+          color: #9E9E9E;
+      font-size: 10px;
+      margin-bottom: 10px;
+      text-align:right;
+      }
+      
+      </style>
+      
+
+	</head>
+
+	<body>
+	
+        <div id="canvas"></div>
+
+
+		<script type="module">
+
+            /*HDRI SPACE ROOM PACK
+
+-BY MARCOS BARRIOS MUÑOZ
+	-pixeledasteroid ( youtube/ gumroad / artstation )
+	-@marcus_b_art (instagram)
+    
+    Adapted from following
+    Copyright (c) 2021 by yoichi kobayashi (https://codepen.io/ykob/pen/avEpdd)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    
+    */
+
+
+
+
+            /*
+			import * as THREE from '../build/three.module.js';
+
+			import { OrbitControls } from '../build/OrbitControls.js';
+			import { GLTFLoader } from '../build/GLTFLoader.js';
+            */
+
+            import * as THREE from 'https://unpkg.com/three@0.124.0/build/three.module.js';
+
+			import { OrbitControls } from 'https://unpkg.com/three@0.124.0/examples/jsm/controls/OrbitControls.js';
+			import { GLTFLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/GLTFLoader.js';
+            import { RGBELoader } from 'https://unpkg.com/three@0.124.0/examples/jsm/loaders/RGBELoader.js';
+            //import { EXRLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/EXRLoader.js';
+			//import{RectAreaLightHelper} from 'https://unpkg.com/three@0.126.0/examples/jsm/helpers/RectAreaLightHelper.js';
+			import * as dat from 'https://unpkg.com/dat.gui@0.7.6/build/dat.gui.module.js';
+			
+
+            
+var settings = {'rotation_speed':0};
+			var body_width = window.innerWidth;
+var body_height = window.innerHeight;
+var last_time_activate = Date.now();
+
+var canvas = null;
+var renderer = null;
+var scene = null;
+var camera = null;
+var light = null;
+
+var movers_num = 20000;
+var movers = [];
+var points_geometry = null;
+var points_material = null;
+var points = null;
+var points,points2,points_vertices, points_vertices2;
+
+var camera;
+var camTilt1;
+var camTilt2;
+var cube,bwb;
+var controls;
+var mixer;
+var animations;
+var extent = 100/30;
+
+
+var antigravity = new THREE.Vector3(0, 5, 0);
+
+var target = new function(){
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
+}
+
+var frame = 0;
+
+const params = {
+				exposure: 0.1,
+				toneMapping: 'ACESFilmic'
+			};
+
+			const toneMappingOptions = {
+				None: THREE.NoToneMapping,
+				Linear: THREE.LinearToneMapping,
+				Reinhard: THREE.ReinhardToneMapping,
+				Cineon: THREE.CineonToneMapping,
+				ACESFilmic: THREE.ACESFilmicToneMapping,
+				Custom: THREE.CustomToneMapping
+			};
+
+
+
+var initThree = function() {
+    scene = new THREE.Scene();
+    camTilt1 = getRadian(90);
+    camTilt2 = getRadian(0);
+  
+			camera = new THREE.PerspectiveCamera( 35, body_width / body_height, 0.1, 100000 );
+            
+            /*
+			renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.outputEncoding = THREE.sRGBEncoding;
+			renderer.setSize( body_width, body_height);
+			document.body.appendChild( renderer.domElement );
+
+            renderer.toneMapping = toneMappingOptions[ params.toneMapping ];
+				renderer.toneMappingExposure = params.exposure;
+                renderer.outputEncoding = THREE.sRGBEncoding;
+            */
+                renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.outputEncoding = THREE.sRGBEncoding;
+				renderer.toneMapping = THREE.ACESFilmicToneMapping;
+				renderer.toneMappingExposure = 0.1;
+				renderer.physicallyCorrectLights = true;
+				document.body.appendChild( renderer.domElement );
+
+
+            /*
+			const geometry = new THREE.BoxGeometry(300,300,300);
+			const material = new THREE.MeshStandardMaterial( { color: 0x555555, transparent:false, metalness: 0.8, roughness: 0.8 } );
+			
+            cube = new THREE.Mesh( geometry, material );
+            cube.rotation.x = 3*Math.PI/4;
+            cube.position.z = (300+150)*Math.cos(getRadian(45));
+            cube.position.y = (300+150)*Math.sin(getRadian(45)); 
+			scene.add( cube );
+            */
+
+      const loader = new GLTFLoader();
+
+var scale = 10;
+loader.load( 'models/Cubesat3aOpen.glb', function ( gltf ) {
+
+//loader.load( 'models/Cubesat2.glb', function ( gltf ) {
+	bwb = gltf.scene;
+  gltf.scene.scale.set(scale,scale,scale)
+  
+  bwb.rotation.x = 1*Math.PI/4;
+            bwb.position.z = (10)*Math.cos(getRadian(45));
+            bwb.position.y = (10)*Math.sin(getRadian(45));
+	scene.add( gltf.scene );
+
+animations = gltf.animations;
+mixer = new THREE.AnimationMixer(bwb);
+console.log(animations);
+animations.forEach( function ( animations ) {
+	mixer.clipAction( animations ).play();
+} );
+frame = 0;
+
+}, undefined, function ( error ) {
+
+	console.error( error );
+
+} );
+
+
+            camera.position.x = 766/30;//1027;//1951;
+			camera.position.y = -286/30;//-409;//-75;
+            camera.position.z = -1179/30;//-1596;//-1532;
+            //camera.translateOnAxis('x',1000);
+
+            //scene.add( new THREE.AmbientLight( 0xffffff, 20 ) );
+            const pointLight = new THREE.PointLight( 0x00ffff, 100, 100 );
+            pointLight.position.set( 0,4.5,4.5);
+            scene.add( pointLight );
+
+//const sphereSize = 2;
+//const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
+//scene.add( pointLightHelper );
+
+///*
+// controls
+controls = new OrbitControls( camera, renderer.domElement );
+				controls.minDistance = 0.1;
+				controls.maxDistance = 300;
+				controls.enablePan = true;
+                //controls.autoRotate = true;
+                
+                controls.target.x = -19/30;//18;//268;
+                controls.target.y = 164/30;//79;//77;
+                controls.target.z = 328/30;//380;//508;
+                controls.update();
+	//*/		
+			
+
+   // DAT.GUI Related Stuff
+/*
+var gui = new dat.GUI();
+
+var cam = gui.addFolder('Camera');
+
+cam.add(camera.position, 'x', -1000, 1000).listen();
+cam.add(camera.position, 'y', -1000, 1000).listen();
+cam.add(camera.position, 'z', -1000, 1000).listen();
+cam.add(controls.target, 'x', -1000, 1000).listen();
+cam.add(controls.target, 'y', -1000, 1000).listen();
+cam.add(controls.target, 'z', -1000, 1000).listen();
+cam.open();
+*/
+
+
+var gui = new dat.GUI();
+gui.add(settings, 'rotation_speed',0,10);
+gui.close();
+
+
+//hdri
+const pmremGenerator = new THREE.PMREMGenerator( renderer );
+				pmremGenerator.compileEquirectangularShader();
+                
+                    
+                   async function loadHDRI(){
+                const rgbeLoader = new RGBELoader()
+					.setDataType( THREE.UnsignedByteType );
+					//.setPath( 'textures/equirectangular/' );
+
+                    const texture = await rgbeLoader.loadAsync( 'full earth1k.hdr' );
+                    const envMap = pmremGenerator.fromEquirectangular( texture ).texture;
+
+                    scene.background = envMap;
+                    scene.environment = envMap;
+                    texture.dispose();
+                    pmremGenerator.dispose();
+                    }
+                    loadHDRI();
+
+
+};
+
+function pauseActions(){
+    actions.forEach(function(action){
+        action.paused = true;
+    });
+}
+
+function setLookAt(){
+    camera.lookAt(target.x,target.y,target.z);
+}
+
+const animate = function () {
+                var now = Date.now();
+				requestAnimationFrame( animate );
+                frame++;
+               //setLookAt();
+                
+				render();
+                if(now-last_time_activate>10){
+                    activateMover();
+                    last_time_activate = Date.now();
+                }
+			};
+
+            function render() {
+				//renderer.clear();
+                updatePoints();
+                //rotateCamera();
+                if(bwb){bwb.rotation.y+=0.001*settings['rotation_speed'];}
+                if(mixer && frame<501){
+                    mixer.update( 0.01 );
+                }
+				renderer.render( scene, camera );
+
+			}
+           
+var rotateCamera = function() {
+  camTilt2 += getRadian(0.2);
+}            
+
+function getSpherical(rad1, rad2, r){
+    var x = Math.cos(rad1)*Math.cos(rad2)*r;
+    var z = Math.cos(rad1)*Math.sin(rad2)*r;
+    var y = Math.sin(rad1)*r;
+    return [x,y,z];
+ }
+
+ function getRadian(degrees) {
+    return degrees * Math.PI / 180;
+  }
+
+  function getRandomInt(min, max){
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+ var buildPoints = function() {
+  points_geometry = new THREE.Geometry();// new THREE.TorusGeometry(20, 5, 16, 100)//new THREE.Geometry();
+  points_material = new THREE.PointsMaterial({
+    color: 0x77ffaa,
+    size: 6/30,
+    transparent: true,
+    opacity: 0.7,
+    //epthTest: false,
+    blending: THREE.AdditiveBlending,
+  });
+  var points_geometry2 = new THREE.Geometry();
+  var points_material2 = new THREE.PointsMaterial({
+    color: 0x77aaff,
+    size: 6/30,
+    transparent: true,
+    opacity: 0.7,
+    //depthTest: false,
+    blending: THREE.AdditiveBlending,
+  });
+  
+  for (var i = 0; i < movers_num; i++) {
+    var mover = new Mover();
+    var range = (1 - Math.log(getRandomInt(2, 256)) / Math.log(256)) * extent;
+    var rad = getRadian(getRandomInt(0, 360));
+    var x = Math.cos(rad) * range;
+    var z = Math.sin(rad) * range;
+    mover.init(new THREE.Vector3(x, -10, z));
+    mover.mass = getRandomInt(300, 500) / 100*30;
+    movers.push(mover);
+    if (i % 2 === 0) {
+      points_geometry.vertices.push(mover.position);
+    } else {
+      points_geometry2.vertices.push(mover.position);
+    }
+  }
+  
+  points = new THREE.Points(points_geometry, points_material);
+  points.rotation.x = -3*Math.PI/4;
+  points2 = new THREE.Points(points_geometry2, points_material2);
+  points2.rotation.x = -3*Math.PI/4;
+  scene.add(points);
+  scene.add(points2);
+};
+
+
+var Mover = function() {
+    this.position = new THREE.Vector3();
+    this.velocity = new THREE.Vector3();
+    this.acceleration = new THREE.Vector3();
+    this.anchor = new THREE.Vector3();
+    this.mass = 1;
+    this.r = 0;
+    this.g = 0;
+    this.b = 0;
+    this.a = 1;
+    this.time = 0;
+    this.is_active = false;
+  };
+  
+  Mover.prototype = {
+    init: function(vector) {
+      this.position = vector.clone();
+      this.velocity = vector.clone();
+      this.anchor = vector.clone();
+      this.acceleration.set(0, 0, 0);
+      this.a = 1;
+      this.time = 0;
+    },
+    updatePosition: function() {
+      this.position.copy(this.velocity);
+    },
+    updateVelocity: function() {
+      this.acceleration.divideScalar(this.mass);
+      this.velocity.add(this.acceleration);
+      // if (this.velocity.distanceTo(this.position) >= 1) {
+      //   this.direct(this.velocity);
+      // }
+    },
+    applyForce: function(vector) {
+      this.acceleration.add(vector);
+    },
+    applyFriction: function() {
+      var friction = Force.friction(this.acceleration, 0.1);
+      this.applyForce(friction);
+    },
+    applyDragForce: function(value) {
+      var drag = Force.drag(this.acceleration, value);
+      this.applyForce(drag);
+    },
+    hook: function(rest_length, k) {
+      var force = Force.hook(this.velocity, this.anchor, rest_length, k);
+      this.applyForce(force);
+    },
+    activate: function () {
+      this.is_active = true;
+    },
+    inactivate: function () {
+      this.is_active = false;
+    }
+  };
+
+  var activateMover = function () {
+  var count = 0;
+
+  for (var i = 0; i < movers.length; i++) {
+    var mover = movers[i];
+    
+    if (mover.is_active) continue;
+    mover.activate();
+    mover.velocity.y = -10;
+    count++;
+    if (count >= 20) break;
+  }
+};
+
+
+var updatePoints = function() {
+   points_vertices = [];
+   points_vertices2 = [];
+  for (var i = 0; i < movers.length; i++) {
+    var mover = movers[i];
+    if (mover.is_active) {
+      mover.applyForce(antigravity);
+      mover.updateVelocity();
+      mover.updatePosition();
+      if (mover.position.y > 1000/30) {
+        var range = (1 - Math.log(getRandomInt(2, 256)) / Math.log(256)) * extent;
+        var rad = getRadian(getRandomInt(0, 360));
+        var x = Math.cos(rad) * range;
+        var z = Math.sin(rad) * range;
+        mover.init(new THREE.Vector3(x, -10, z));
+        mover.mass = getRandomInt(300, 500) / 100*30;
+      }
+    }
+    if (i % 2 === 0) {
+      points_vertices.push(mover.position);
+    } else {
+      points_vertices2.push(mover.position);
+    }
+  }
+  points.geometry.vertices = points_vertices;
+  points.geometry.verticesNeedUpdate = true;
+  points2.geometry.vertices = points_vertices2;
+  points2.geometry.verticesNeedUpdate = true;
+};
+
+
+
+initThree();
+buildPoints();
+//render();
+
+window.addEventListener( 'resize', onWindowResize, false );
+function onWindowResize() {
+
+    renderer.setSize( body_width, body_height );
+
+    camera.aspect = body_width / body_height;
+    camera.updateProjectionMatrix();
+
+render();
+
+}
+animate();
+
+		</script>
+
+<div class="content">
+  <h1>Impulse Power</h1>
+    <p>Ion thrusters enhanced by strong superconducting magnets will propel missions to other planets. (Left-click drag to rotate, right-click drag to pan, mousewheel to zoom.)</p>
+  <div class="credit">By J.G. Storey </div>  
+</div>
+		
+	</body>
+</html>
