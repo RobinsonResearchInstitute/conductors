@@ -108,7 +108,7 @@ h1{
  }
 
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 900px) and (min-height:700px) {
     .float-container{
         padding-top:10vh;
     }
