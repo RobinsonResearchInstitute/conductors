@@ -1,0 +1,151 @@
+body {
+    font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: black;
+}
+
+h1{
+    color:white;
+}
+
+svg{
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    border: 2px solid black;
+}
+
+.content {
+
+    font: 1rem "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: rgba(0, 0, 0, 0.0);
+    color: #f1f1f1;
+    padding-left:1.25rem;
+    padding-right:1.25rem;
+    z-index: 200;
+}
+
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: white;
+    shape-rendering: crispEdges;
+}
+
+.axis text{
+    fill: white;
+}
+
+
+
+.line {
+    fill: none;
+    stroke-width: 1.5px;
+}
+
+.xaxis, .yaxis{
+    font: 1rem "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color:white;
+    stroke-width: 2px;
+    
+}
+
+.titles{
+    fill:white;
+    font: 1.25rem "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+
+div.tooltip {
+position: absolute;
+text-align: center;
+width: 110px;
+height: 40px;
+padding-top: 5px;
+font: 14px sans-serif;
+background: white;
+border: 0px;
+border-radius: 2px;
+
+}
+
+.credit {
+    color: #9E9E9E;
+    font-size: 0.6rem;
+    margin-bottom: 0.6rem;
+    text-align:right;
+}
+
+
+@media screen and (min-width: 1200px) and (min-height:700px) {
+    .credit{
+        position:absolute;
+        bottom:0;
+        right:0;
+
+    }
+    .content{
+        position:absolute;
+        bottom:1.125rem;
+        font-size:1.25rem;
+    }
+}
+
+
+
+.arrow {
+ cursor: pointer;
+ height: 120px;
+ right: 0%;
+ position: absolute;
+ top: 50%;
+ transform: translateX(-50%) translateY(-50%);
+ transition: transform 0.1s;
+ width: 80px;
+}
+.arrow-top, .arrow-bottom {
+ background-color: #666;
+ height: 4px;
+ left: -5px;
+ position: absolute;
+ top: 50%;
+ width: 100%;
+}
+.arrow-top:after, .arrow-bottom:after {
+ background-color: #fff;
+ content: '';
+ height: 100%;
+ position: absolute;
+ top: 0;
+ transition: all 0.15s;
+}
+.arrow-top {
+ transform: rotate(45deg);
+ transform-origin: bottom right;
+}
+.arrow-top:after {
+ left: 100%;
+ right: 0;
+ transition-delay: 0s;
+}
+.arrow-bottom {
+ transform: rotate(-45deg);
+ transform-origin: top right;
+}
+.arrow-bottom:after {
+ left: 0;
+ right: 100%;
+ transition-delay: 0.15s;
+}
+.arrow:hover .arrow-top:after {
+ left: 0;
+ transition-delay: 0.15s;
+}
+.arrow:hover .arrow-bottom:after {
+ right: 0;
+ transition-delay: 0s;
+}
+.arrow:active {
+ transform: translateX(-50%) translateY(-50%) scale(0.9);
+}
