@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <head>
-    <link rel="stylesheet" href="Tc.css">
+    <link rel="stylesheet" href="Tc4.css">
 
     <title>Resistance vs Temperature</title>
 
@@ -82,8 +82,8 @@
         <p>When cooled below a certain temperature the electrical resistance of a superconductor suddenly becomes zero.
             (Switch the cryocooler on.)</p>
     </div>
-    <div class="float-container">
-
+    <div class="grid" id="grid">
+        
         <div class="float-child">
 
             <svg id="cryocooler" width="300" height="340">
@@ -110,7 +110,8 @@
         </div>
 
         <div id="chart"></div>
-
+    
+    
     </div>
 
     <div class="credit">By J.G. Storey </div>
@@ -136,10 +137,11 @@
             //var vw = window.innerWidth,
             //var vw = document.getElementById("chart").offsetWidth;
             var vw = chartDiv.clientWidth;
+            var vh = chartDiv.clientHeight;
             margin = { top: 20, right: 60, bottom: 70, left: 100 },
                 width = vw - margin.left - margin.right,
-                height = 500 - margin.top - margin.bottom;
-
+                height = vh - margin.top - margin.bottom;
+            //console.log(vh)
             var tickWidth = 50;
             // parse the date / time
             //var parseTime = d3.timeParse("%d-%b-%y");
@@ -159,11 +161,14 @@
             var svg = d3.select("#chart").append("svg")
             .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
+                //.attr("preserveAspectRatio", "xMinYMin meet")
+                //.attr("viewBox", "0 0 "+(width + margin.left + margin.right)+" "+(height + margin.top + margin.bottom))
+                .classed("svg-content", true)
                 .append("g")
                 .attr("transform",
                     "translate(" + margin.left + "," + margin.top + ")");
              
-            var xAxisEl, xlabel,xmax;
+            var xAxisEl, xlabel,xmax,yAxisEl,ylabel,ymax;
 
               // Get the data
             d3.csv("Tc2.csv").then(function (data) {
@@ -196,9 +201,9 @@
                    
 
                 // Add the y Axis
-                svg.append("g")
+                yAxisEl = svg.append("g")
                     .attr("class", "yAxis")
-                    .call(d3.axisLeft(y));
+                    .call(d3.axisLeft(y).ticks(height/tickWidth));
 
 
                 // Add X axis label:
@@ -210,11 +215,11 @@
                     .text("Temperature (K)");
 
                 // Y axis label:
-                svg.append("text")
+                ylabel = svg.append("text")
                     .attr("text-anchor", "end")
                     .attr("transform", "rotate(-90)")
                     .attr("y", -margin.left + 40)
-                    .attr("x", -margin.top - 130)
+                    .attr("x", -height/2+70)
                     .attr("class", "axTitle")
                     .text("Resistance (\u{2126})");
 
@@ -222,12 +227,26 @@
 
             function redraw() {
                 vw=chartDiv.clientWidth;
-                width = vw - margin.left - margin.right,
-                svg.attr("width", width + margin.left + margin.right);
-                
+                //vw=document.getElementById("grid").offsetWidth;
+                width = vw - margin.left - margin.right;
+
+                vh = chartDiv.clientHeight;
+               height = vh - margin.top - margin.bottom;
+                console.log(vh);
+                //d3.select("#chart").select("svg").attr("width", width + margin.left + margin.right);
+                //svg.attr("width",width + margin.left + margin.right);
+
+                y.range([height,0]);
+                if(yAxisEl!=null) yAxisEl.call(d3.axisLeft(y).ticks(height/tickWidth));
+                if(ylabel!=null) ylabel.attr("x", -height/2+70);
+
+
+                //console.log(width);
                 x.range([0, width]);
-                if(xAxisEl!=null) xAxisEl.call(d3.axisBottom(x).ticks(width / tickWidth));
-                if(xlabel!=null) xlabel.attr("x", (width - margin.left - margin.right) / 2 + 10 * 16);
+                if(xAxisEl!=null) xAxisEl.attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).ticks(width / tickWidth));
+                if(xlabel!=null) xlabel.attr("x", (width - margin.left - margin.right) / 2 + 10 * 16).attr("y", height + margin.top + 30);
+
+               
             }
 
         // Draw for the first time to initialize.
