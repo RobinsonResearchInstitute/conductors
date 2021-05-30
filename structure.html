@@ -1,531 +1,353 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>YBCO Structure</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
-		<style>
-			#menu {
-				position: absolute;
-				bottom: 20px;
-				width: 100%;
-				text-align: center;
-				padding: 0;
-				margin: 0;
-			}
-
-			button {
-				color: rgb(255,255,255);
-				background: transparent;
-				border: 0px;
-				padding: 5px 10px;
-				cursor: pointer;
-			}
-			button:hover {
-				background-color: rgba(0,255,255,0.5);
-			}
-			button:active {
-				color: #000000;
-				background-color: rgba(0,255,255,1);
-			}
-
-			.label {
-				text-shadow: -1px 1px 1px rgb(0,0,0);
-				margin-left: 25px;
-				font-size: 20px;
-			}
-
-			.content {
-				position:absolute;
-				bottom:10px;
-				font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background: rgba(0, 0, 0, 0.0);
-  color: #f1f1f1;
-  padding-left:20px;
-  padding-right:20px;
-  z-index: 200;
-  
-}
-h1{
-        color:white;
-		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-
-	.credit {
-        color: #9E9E9E;
-    font-size: 10px;
-    margin-bottom: 10px;
-    text-align:right;
-    }
-			
-.arrow {
-	 cursor: pointer;
-	 height: 120px;
-	 right: 0%;
-	 position: absolute;
-	 top: 50%;
-	 transform: translateX(-50%) translateY(-50%);
-	 transition: transform 0.1s;
-	 width: 80px;
-}
- .arrow-top, .arrow-bottom {
-	 background-color: #666;
-	 height: 4px;
-	 left: -5px;
-	 position: absolute;
-	 top: 50%;
-	 width: 100%;
-}
- .arrow-top:after, .arrow-bottom:after {
-	 background-color: #fff;
-	 content: '';
-	 height: 100%;
-	 position: absolute;
-	 top: 0;
-	 transition: all 0.15s;
-}
- .arrow-top {
-	 transform: rotate(45deg);
-	 transform-origin: bottom right;
-}
- .arrow-top:after {
-	 left: 100%;
-	 right: 0;
-	 transition-delay: 0s;
-}
- .arrow-bottom {
-	 transform: rotate(-45deg);
-	 transform-origin: top right;
-}
- .arrow-bottom:after {
-	 left: 0;
-	 right: 100%;
-	 transition-delay: 0.15s;
-}
- .arrow:hover .arrow-top:after {
-	 left: 0;
-	 transition-delay: 0.15s;
-}
- .arrow:hover .arrow-bottom:after {
-	 right: 0;
-	 transition-delay: 0s;
-}
- .arrow:active {
-	 transform: translateX(-50%) translateY(-50%) scale(0.9);
-}
-			
-		</style>
-	</head>
-	<body>
-		
-		<div id="container"></div>
-		<!--<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js webgl</a> - molecules</div>
-		<div id="menu"></div>-->
-
-		<script type="module">
-
-            //add triangle planes https://threejs.org/docs/#api/en/math/Triangle
-			/*
-			import * as THREE from '../build/three.module.js';
-
-			//import { TrackballControls } from './jsm/controls/TrackballControls.js';
-            import { OrbitControls } from './jsm/controls/OrbitControls.js';
-			import { PDBLoader } from './jsm/loaders/PDBLoader.js';
-			import { CSS2DRenderer, CSS2DObject } from './jsm/renderers/CSS2DRenderer.js';
-			*/
-			import * as THREE from 'https://unpkg.com/three@0.126.0/build/three.module.js';//'../build/three.module.js';
-
-			import { OrbitControls } from 'https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js';//'../build/TrackballControls.js';
-			import { PDBLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/PDBLoader.js';//'../build/PDBLoader.js';
-			import { CSS2DRenderer, CSS2DObject } from 'https://unpkg.com/three@0.126.0/examples/jsm/renderers/CSS2DRenderer.js';//'../build/CSS3DRenderer.js';
-
-
-			var camera, scene, renderer, labelRenderer;
-			var controls;
-
-			var root;
-
-			var MOLECULES = {
-				"Ethanol": "ethanol.pdb",
-				"Aspirin": "aspirin.pdb",
-				"Caffeine": "caffeine.pdb",
-				"Nicotine": "nicotine.pdb",
-				"LSD": "lsd.pdb",
-				"Cocaine": "cocaine.pdb",
-				"Cholesterol": "cholesterol.pdb",
-				"Lycopene": "lycopene.pdb",
-				"Glucose": "glucose.pdb",
-				"Aluminium oxide": "Al2O3.pdb",
-				"Cubane": "cubane.pdb",
-				"Copper": "cu.pdb",
-				"Fluorite": "caf2.pdb",
-				"Salt": "nacl.pdb",
-				"YBCO superconductor": "ybco.pdb",
-				"Buckyball": "buckyball.pdb",
-				"Graphite": "graphite.pdb"
-			};
-
-			var loader = new PDBLoader();
-			var offset = new THREE.Vector3();
 
-			var menu = document.getElementById( 'menu' );
+<head>
+    <title>YBCO Structure</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="structure.css">
 
-			init();
-			//animate();
+</head>
 
-			function init() {
+<body>
 
-				scene = new THREE.Scene();
-				scene.background = new THREE.Color( 0x050505 );
+    <div class="content">
+        <h1>Crystal Structure</h1>
+        <p>The layered structure of the copper-oxide-based high-temperature superconductor
+            YBa<sub>2</sub>Cu<sub>3</sub>O<sub>7</sub>. The supercurrent flows predominantly through the copper-oxide
+            planes. (Click and drag to rotate, mousewheel to zoom.)</p>
+        <div class="credit">By J.G. Storey </div>
+    </div>
 
-				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 5000 );
-				camera.position.z = 1200;
-				scene.add( camera );
+    <a href="https://robinsonresearchinstitute.github.io/conductors/htswire.html">
+        <div class="arrow">
+            <div class="arrow-top"></div>
+            <div class="arrow-bottom"></div>
+        </div>
+    </a>
 
-				
-    
+    <div id="container"></div>
 
-				var light = new THREE.DirectionalLight( 0xffffff, 0.8 );
-				light.position.set( 1, 1, 1 );
-				scene.add( light );
+    <script type="module">
 
-				//var helper = new THREE.DirectionalLightHelper( light, 100 );
-				//scene.add( helper );
+        
+        import * as THREE from 'https://unpkg.com/three@0.126.0/build/three.module.js';//'../build/three.module.js';
 
-				light = new THREE.DirectionalLight( 0xffffff, 0.5 );
-				light.position.set( - 1, - 1, 1 );
-				scene.add( light );
+        import { OrbitControls } from 'https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js';//'../build/TrackballControls.js';
+        import { PDBLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/PDBLoader.js';//'../build/PDBLoader.js';
+        import { CSS2DRenderer, CSS2DObject } from 'https://unpkg.com/three@0.126.0/examples/jsm/renderers/CSS2DRenderer.js';//'../build/CSS3DRenderer.js';
 
-				//helper = new THREE.DirectionalLightHelper( light, 100 );
-				//scene.add( helper );
 
-				light = new THREE.AmbientLight(0xFFFFFF, 0.1);
-    			scene.add(light);
+        var camera, scene, renderer, labelRenderer;
+        var controls;
 
-				root = new THREE.Group();
-				scene.add( root );
+        var root;
 
-				//
+        var loader = new PDBLoader();
+        var offset = new THREE.Vector3();
 
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				document.getElementById( 'container' ).appendChild( renderer.domElement );
+        var menu = document.getElementById('menu');
 
-				labelRenderer = new CSS2DRenderer();
-				labelRenderer.setSize( window.innerWidth, window.innerHeight );
-				labelRenderer.domElement.style.position = 'absolute';
-				labelRenderer.domElement.style.top = '0';
-				labelRenderer.domElement.style.pointerEvents = 'none';
-				document.getElementById( 'container' ).appendChild( labelRenderer.domElement );
+        var containerDiv;
 
-				//
+        init();
 
-				//controls = new TrackballControls( camera, renderer.domElement );
-				//controls.minDistance = 500;
-				//controls.maxDistance = 2000;
+        function init() {
 
-                // controls
-				controls = new OrbitControls( camera, renderer.domElement );
-				controls.addEventListener( 'change', render );
-				controls.minDistance = 100;
-				controls.maxDistance = 2000;
-				controls.enablePan = false;
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x050505);
 
-				//
+            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 5000);
+            camera.position.z = 1200;
+            scene.add(camera);
 
-				loadMolecule( 'models/pdb/ybco2.pdb' );
-				createMenu();
+            containerDiv = document.getElementById("container");
 
-				//
 
-				window.addEventListener( 'resize', onWindowResize, false );
+            var light = new THREE.DirectionalLight(0xffffff, 0.8);
+            light.position.set(1, 1, 1);
+            scene.add(light);
 
-			}
+            //var helper = new THREE.DirectionalLightHelper( light, 100 );
+            //scene.add( helper );
 
-			//
+            light = new THREE.DirectionalLight(0xffffff, 0.5);
+            light.position.set(- 1, - 1, 1);
+            scene.add(light);
 
-			function generateButtonCallback( url ) {
+            //helper = new THREE.DirectionalLightHelper( light, 100 );
+            //scene.add( helper );
 
-				return function () {
+            light = new THREE.AmbientLight(0xFFFFFF, 0.1);
+            scene.add(light);
 
-					loadMolecule( url );
+            root = new THREE.Group();
+            scene.add(root);
 
-				};
+            //
 
-			}
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('container').appendChild(renderer.domElement);
 
-			function createMenu() {
-                /*
-				for ( var m in MOLECULES ) {
+            labelRenderer = new CSS2DRenderer();
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+            labelRenderer.domElement.style.position = 'absolute';
+            labelRenderer.domElement.style.top = '0';
+            labelRenderer.domElement.style.pointerEvents = 'none';
+            document.getElementById('container').appendChild(labelRenderer.domElement);
 
-					var button = document.createElement( 'button' );
-					button.innerHTML = m;
-					menu.appendChild( button );
+            // controls
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.addEventListener('change', render);
+            controls.minDistance = 100;
+            controls.maxDistance = 2000;
+            controls.enablePan = false;
 
-					var url = 'models/molecules/' + MOLECULES[ m ];
+            //
 
-					button.addEventListener( 'click', generateButtonCallback( url ), false );
+            loadMolecule('models/pdb/ybco2.pdb');
 
-				}
-                */
-			}
+            //
 
-			//
+            window.addEventListener('resize', onWindowResize, false);
 
-			function loadMolecule( url ) {
+        }
 
-				while ( root.children.length > 0 ) {
+        //
 
-					var object = root.children[ 0 ];
-					object.parent.remove( object );
+        function generateButtonCallback(url) {
 
-				}
+            return function () {
 
-				loader.load( url, function ( pdb ) {
+                loadMolecule(url);
 
-					var geometryAtoms = pdb.geometryAtoms;
-					var geometryBonds = pdb.geometryBonds;
-					var json = pdb.json;
+            };
 
-					var boxGeometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
-					var sphereGeometry = new THREE.IcosahedronBufferGeometry( 1, 2 );
+        }
 
-					geometryAtoms.computeBoundingBox();
-					geometryAtoms.boundingBox.getCenter( offset ).negate();
+        
 
-					geometryAtoms.translate( offset.x, offset.y, offset.z );
-					geometryBonds.translate( offset.x, offset.y, offset.z );
-
-					var positions = geometryAtoms.getAttribute( 'position' );
-					var colors = geometryAtoms.getAttribute( 'color' );
+        function loadMolecule(url) {
 
-					var position = new THREE.Vector3();
-					var color = new THREE.Color();
+            while (root.children.length > 0) {
 
-					for ( var i = 0; i < positions.count; i ++ ) {
-
-						position.x = positions.getX( i );
-						position.y = positions.getY( i );
-						position.z = positions.getZ( i );
-
-						color.r = colors.getX( i );
-						color.g = colors.getY( i );
-						color.b = colors.getZ( i );
-
-						var material = new THREE.MeshPhongMaterial( { color: color } );
-
-						var object = new THREE.Mesh( sphereGeometry, material );
-						object.position.copy( position );
-						object.position.multiplyScalar( 75 );
-						object.scale.multiplyScalar( 25 );
-						root.add( object );
-
-						var atom = json.atoms[ i ];
-						//console.log(atom);
-						var text = document.createElement( 'div' );
-						text.className = 'label';
-						text.style.color = 'rgb(' + atom[ 3 ][ 0 ] + ',' + atom[ 3 ][ 1 ] + ',' + atom[ 3 ][ 2 ] + ')';
-						text.textContent = atom[ 4 ];
-						//text.textContent = i;
-
-						var label = new CSS2DObject( text );
-						label.position.copy( object.position );
-						root.add( label );
-
-						text = document.createElement( 'div' );
-						text.className = 'label';
-						text.style.color = 'rgb(1,1 1)';
-						text.textContent = 'Copper-oxide plane';
-						label = new CSS2DObject( text );
-						label.position.copy( new THREE.Vector3(0,-100,400) );
-						root.add( label );
-
-						text = document.createElement( 'div' );
-						text.className = 'label';
-						text.style.color = 'rgb(1,1 1)';
-						text.textContent = 'Copper-oxide chain';
-						label = new CSS2DObject( text );
-						label.position.copy( new THREE.Vector3(-150,430,430) );
-						root.add( label );
-
-					}
-
-					positions = geometryBonds.getAttribute( 'position' );
-
-					var start = new THREE.Vector3();
-					var end = new THREE.Vector3();
-
-					for ( var i = 0; i < positions.count; i += 2 ) {
-
-						start.x = positions.getX( i );
-						start.y = positions.getY( i );
-						start.z = positions.getZ( i );
-
-						end.x = positions.getX( i + 1 );
-						end.y = positions.getY( i + 1 );
-						end.z = positions.getZ( i + 1 );
-
-						start.multiplyScalar( 75 );
-						end.multiplyScalar( 75 );
-
-						var object = new THREE.Mesh( boxGeometry, new THREE.MeshPhongMaterial( 0xffffff ) );
-						object.position.copy( start );
-						object.position.lerp( end, 0.5 );
-						object.scale.set( 5, 5, start.distanceTo( end ) );
-						object.lookAt( end );
-						root.add( object );
-
-					}
-
-                    //https://threejsfundamentals.org/threejs/lessons/threejs-primitives.html
-                    //http://whitesapphires.blogspot.com/2014/10/a-simple-triangle.html
-                    //triangle
-					/*
-                    var geom = new THREE.Geometry();
-    geom.vertices.push(new THREE.Vector3(0, 0, 0));
-    geom.vertices.push(new THREE.Vector3(400, 0, 0));
-    geom.vertices.push(new THREE.Vector3(0, 600, 0));
-    var face = new THREE.Face3(0, 1, 2);
-    face.vertexColors.push(new THREE.Color(0xff0000));
-    face.vertexColors.push(new THREE.Color(0x00ff00));
-    face.vertexColors.push(new THREE.Color(0x0000ff));
-    geom.faces.push(face);
-	*/
-    // material
-    //var mat = new THREE.MeshBasicMaterial( {vertexColors: THREE.VertexColors, side: THREE.DoubleSide })
-    //  mesh
-    //var mesh = new THREE.Mesh(geom, mat);
-
-    //var mat = new THREE.MeshBasicMaterial({color: 'rgb(255,0,0)', opacity: 0.5, transparent: true, side: THREE.DoubleSide})
-    //var mesh = new THREE.Mesh(geom, mat);
-    //scene.add(mesh);
-
-	positions = geometryAtoms.getAttribute( 'position' );
-	//triangle vertices
-	
-	var join = [56,52,14,56,51,14,46,52,14,46,51,14,55,51,13,55,50,13,45,51,13,45,50,13,54,49,12,54,48,12,44,49,12,44,48,12,53,48,11,53,47,11,
-	43,48,11,43,47,11];//chains
-	drawTriangles(join,positions);
-
-	join = [57,62,15,57,61,15,67,62,15,67,61,15,58,63,16,58,62,16,68,63,16,68,62,16,
-	59,65,17,59,64,17,69,65,17,69,64,17,60,66,18,60,65,18,70,66,18,70,65,18];//chains
-	drawTriangles(join,positions);
-
-	join = [42,36,10,36,40,10,40,35,10,35,42,10,
-	42,36,46,36,40,46,40,35,46,35,42,46,
-	35,39,9,35,41,9,39,34,9,34,41,9,
-	35,39,45,35,41,45,39,34,45,34,41,45,
-	40,33,8,40,32,8,38,32,8,38,33,8,
-	40,33,44,40,32,44,38,32,44,38,33,44,
-	37,32,7,39,32,7,39,31,7,31,37,7,
-	37,32,43,39,32,43,39,31,43,31,37,43];
-	drawTriangles(join,positions);
-
-	join = [24,30,6,24,29,6,22,30,6,22,29,6,
-	24,30,60,24,29,60,22,30,60,22,29,60,
-	23,29,5,23,28,5,21,29,5,21,28,5,
-	23,29,59,23,28,59,21,29,59,21,28,59,
-	22,27,4,22,26,4,20,27,4,20,26,4,
-	22,27,58,22,26,58,20,27,58,20,26,58,
-	21,26,3,21,25,3,19,26,3,19,25,3,
-	21,26,57,21,25,57,19,26,57,19,25,57
-	];
-	drawTriangles(join,positions);
-
-
-					render();
-
-				} );
-
-			}
-
-			function drawTriangles(join, positions){
-				var v1 = new THREE.Vector3();
-	var v2 = new THREE.Vector3();
-	var v3 = new THREE.Vector3();
-	var i = 0;
-	const L = join.length/3;
-	while(i<L){
-	v1.x = 75*positions.getX( join[3*i] );
-	v1.y = 75*positions.getY( join[3*i] );
-	v1.z = 75*positions.getZ( join[3*i] );
-	v2.x = 75*positions.getX( join[3*i+1] );
-	v2.y = 75*positions.getY( join[3*i+1] );
-	v2.z = 75*positions.getZ( join[3*i+1] );
-	v3.x = 75*positions.getX( join[3*i+2] );
-	v3.y = 75*positions.getY( join[3*i+2] );
-	v3.z = 75*positions.getZ( join[3*i+2] );
-	
-
-	var geom = new THREE.BufferGeometry();
-// create a simple square shape. We duplicate the top left and bottom right
-// vertices because each vertex needs to appear once per triangle.
-var vertices = new Float32Array( [
-	v1.x,v1.y,v1.z,
-	v2.x,v2.y,v2.z,
-	v3.x,v3.y,v3.z,
-] );
-
-// itemSize = 3 because there are 3 values (components) per vertex
-geom.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
-var mat = new THREE.MeshBasicMaterial( { color: 0x00ffff,opacity: 0.5, transparent: true, side: THREE.DoubleSide } );
-var mesh = new THREE.Mesh( geom, mat );
-scene.add(mesh);
-i++;
-	}
-			}
-
-			//
-
-			function onWindowResize() {
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				labelRenderer.setSize( window.innerWidth, window.innerHeight );
-
-				render();
-
-			}
-
-			function animate() {
-
-				requestAnimationFrame( animate );
-				controls.update();
-
-				var time = Date.now() * 0.0004;
-
-				root.rotation.x = time;
-				root.rotation.y = time * 0.7;
-
-				render();
-
-			}
-
-			function render() {
-
-				renderer.render( scene, camera );
-				labelRenderer.render( scene, camera );
-
-			}
-
-		</script>
-
-
-<div class="content">
-	<h1>Crystal Structure</h1>
-    <p>The layered structure of the copper-oxide-based high-temperature superconductor YBa<sub>2</sub>Cu<sub>3</sub>O<sub>7</sub>. The supercurrent flows predominantly through the copper-oxide planes. (Click and drag to rotate, mousewheel to zoom.)</p>
-	<div class="credit">By J.G. Storey </div>  
-</div>
-		
-<a href="https://robinsonresearchinstitute.github.io/conductors/htswire.html">
-      <div class="arrow">
-        <div class="arrow-top"></div>
-        <div class="arrow-bottom"></div>
-      </div></a>
-  
-	</body>
+                var object = root.children[0];
+                object.parent.remove(object);
+
+            }
+
+            loader.load(url, function (pdb) {
+
+                var geometryAtoms = pdb.geometryAtoms;
+                var geometryBonds = pdb.geometryBonds;
+                var json = pdb.json;
+
+                var boxGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
+                var sphereGeometry = new THREE.IcosahedronBufferGeometry(1, 2);
+
+                geometryAtoms.computeBoundingBox();
+                geometryAtoms.boundingBox.getCenter(offset).negate();
+
+                geometryAtoms.translate(offset.x, offset.y, offset.z);
+                geometryBonds.translate(offset.x, offset.y, offset.z);
+
+                var positions = geometryAtoms.getAttribute('position');
+                var colors = geometryAtoms.getAttribute('color');
+
+                var position = new THREE.Vector3();
+                var color = new THREE.Color();
+
+                for (var i = 0; i < positions.count; i++) {
+
+                    position.x = positions.getX(i);
+                    position.y = positions.getY(i);
+                    position.z = positions.getZ(i);
+
+                    color.r = colors.getX(i);
+                    color.g = colors.getY(i);
+                    color.b = colors.getZ(i);
+
+                    var material = new THREE.MeshPhongMaterial({ color: color });
+
+                    var object = new THREE.Mesh(sphereGeometry, material);
+                    object.position.copy(position);
+                    object.position.multiplyScalar(75);
+                    object.scale.multiplyScalar(25);
+                    root.add(object);
+
+                    var atom = json.atoms[i];
+                    //console.log(atom);
+                    var text = document.createElement('div');
+                    text.className = 'label';
+                    text.style.color = 'rgb(' + atom[3][0] + ',' + atom[3][1] + ',' + atom[3][2] + ')';
+                    text.textContent = atom[4];
+                    //text.textContent = i;
+
+                    var label = new CSS2DObject(text);
+                    label.position.copy(object.position);
+                    root.add(label);
+
+                    text = document.createElement('div');
+                    text.className = 'label';
+                    text.style.color = 'rgb(1,1 1)';
+                    text.textContent = 'Copper-oxide plane';
+                    label = new CSS2DObject(text);
+                    label.position.copy(new THREE.Vector3(0, -100, 400));
+                    root.add(label);
+
+                    text = document.createElement('div');
+                    text.className = 'label';
+                    text.style.color = 'rgb(1,1 1)';
+                    text.textContent = 'Copper-oxide chain';
+                    label = new CSS2DObject(text);
+                    label.position.copy(new THREE.Vector3(-150, 430, 430));
+                    root.add(label);
+
+                }
+
+                positions = geometryBonds.getAttribute('position');
+
+                var start = new THREE.Vector3();
+                var end = new THREE.Vector3();
+
+                for (var i = 0; i < positions.count; i += 2) {
+
+                    start.x = positions.getX(i);
+                    start.y = positions.getY(i);
+                    start.z = positions.getZ(i);
+
+                    end.x = positions.getX(i + 1);
+                    end.y = positions.getY(i + 1);
+                    end.z = positions.getZ(i + 1);
+
+                    start.multiplyScalar(75);
+                    end.multiplyScalar(75);
+
+                    var object = new THREE.Mesh(boxGeometry, new THREE.MeshPhongMaterial(0xffffff));
+                    object.position.copy(start);
+                    object.position.lerp(end, 0.5);
+                    object.scale.set(5, 5, start.distanceTo(end));
+                    object.lookAt(end);
+                    root.add(object);
+
+                }
+
+               
+
+                positions = geometryAtoms.getAttribute('position');
+                //triangle vertices
+
+                var join = [56, 52, 14, 56, 51, 14, 46, 52, 14, 46, 51, 14, 55, 51, 13, 55, 50, 13, 45, 51, 13, 45, 50, 13, 54, 49, 12, 54, 48, 12, 44, 49, 12, 44, 48, 12, 53, 48, 11, 53, 47, 11,
+                    43, 48, 11, 43, 47, 11];//chains
+                drawTriangles(join, positions);
+
+                join = [57, 62, 15, 57, 61, 15, 67, 62, 15, 67, 61, 15, 58, 63, 16, 58, 62, 16, 68, 63, 16, 68, 62, 16,
+                    59, 65, 17, 59, 64, 17, 69, 65, 17, 69, 64, 17, 60, 66, 18, 60, 65, 18, 70, 66, 18, 70, 65, 18];//chains
+                drawTriangles(join, positions);
+
+                join = [42, 36, 10, 36, 40, 10, 40, 35, 10, 35, 42, 10,
+                    42, 36, 46, 36, 40, 46, 40, 35, 46, 35, 42, 46,
+                    35, 39, 9, 35, 41, 9, 39, 34, 9, 34, 41, 9,
+                    35, 39, 45, 35, 41, 45, 39, 34, 45, 34, 41, 45,
+                    40, 33, 8, 40, 32, 8, 38, 32, 8, 38, 33, 8,
+                    40, 33, 44, 40, 32, 44, 38, 32, 44, 38, 33, 44,
+                    37, 32, 7, 39, 32, 7, 39, 31, 7, 31, 37, 7,
+                    37, 32, 43, 39, 32, 43, 39, 31, 43, 31, 37, 43];
+                drawTriangles(join, positions);
+
+                join = [24, 30, 6, 24, 29, 6, 22, 30, 6, 22, 29, 6,
+                    24, 30, 60, 24, 29, 60, 22, 30, 60, 22, 29, 60,
+                    23, 29, 5, 23, 28, 5, 21, 29, 5, 21, 28, 5,
+                    23, 29, 59, 23, 28, 59, 21, 29, 59, 21, 28, 59,
+                    22, 27, 4, 22, 26, 4, 20, 27, 4, 20, 26, 4,
+                    22, 27, 58, 22, 26, 58, 20, 27, 58, 20, 26, 58,
+                    21, 26, 3, 21, 25, 3, 19, 26, 3, 19, 25, 3,
+                    21, 26, 57, 21, 25, 57, 19, 26, 57, 19, 25, 57
+                ];
+                drawTriangles(join, positions);
+
+
+                render();
+
+            });
+
+        }
+
+        function drawTriangles(join, positions) {
+            var v1 = new THREE.Vector3();
+            var v2 = new THREE.Vector3();
+            var v3 = new THREE.Vector3();
+            var i = 0;
+            const L = join.length / 3;
+            while (i < L) {
+                v1.x = 75 * positions.getX(join[3 * i]);
+                v1.y = 75 * positions.getY(join[3 * i]);
+                v1.z = 75 * positions.getZ(join[3 * i]);
+                v2.x = 75 * positions.getX(join[3 * i + 1]);
+                v2.y = 75 * positions.getY(join[3 * i + 1]);
+                v2.z = 75 * positions.getZ(join[3 * i + 1]);
+                v3.x = 75 * positions.getX(join[3 * i + 2]);
+                v3.y = 75 * positions.getY(join[3 * i + 2]);
+                v3.z = 75 * positions.getZ(join[3 * i + 2]);
+
+
+                var geom = new THREE.BufferGeometry();
+                // create a simple square shape. We duplicate the top left and bottom right
+                // vertices because each vertex needs to appear once per triangle.
+                var vertices = new Float32Array([
+                    v1.x, v1.y, v1.z,
+                    v2.x, v2.y, v2.z,
+                    v3.x, v3.y, v3.z,
+                ]);
+
+                // itemSize = 3 because there are 3 values (components) per vertex
+                geom.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+                var mat = new THREE.MeshBasicMaterial({ color: 0x00ffff, opacity: 0.5, transparent: true, side: THREE.DoubleSide });
+                var mesh = new THREE.Mesh(geom, mat);
+                scene.add(mesh);
+                i++;
+            }
+        }
+
+        //
+
+        function onWindowResize() {
+
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+
+            render();
+
+        }
+
+        function animate() {
+
+            requestAnimationFrame(animate);
+            controls.update();
+
+            var time = Date.now() * 0.0004;
+
+            root.rotation.x = time;
+            root.rotation.y = time * 0.7;
+
+            render();
+
+        }
+
+        function render() {
+
+            renderer.render(scene, camera);
+            labelRenderer.render(scene, camera);
+
+        }
+
+    </script>
+
+</body>
+
 </html>
