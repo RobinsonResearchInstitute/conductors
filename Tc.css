@@ -10,19 +10,23 @@ body{
     stroke-width: 2px;
 }
 
-/*
-  .float-container {
-    width:96%;
-    height:100%;
-    border: 3px solid red;
-    padding: 20px;
+
+  .grid {
+    border: 3px solid black;
+    
+    display:grid;
+
+    grid-auto-flow: row;
+    
+    /*grid-template-rows: 100% 100%;*/
 }
-*/
+
 
 .float-child {
     /*width: 40%;
     height: 300px;*/
     /*float: left;*/
+   
     border: 2px solid black;
 } 
 
@@ -58,13 +62,20 @@ rect.btn {
 #chart{
     /*float:left;
     width:50%;
-    height:500px;*/
+    height:50%;*/
     border: 2px solid black;
+    height:300px;
   }
+  
+  .svg-content{
+      width:100%;
+      height:100%;
+  }
+  
 
   .yAxis text, .xAxis text{
     fill: white;
-    font-size:1rem;
+    font-size:0.8rem;
   }
 
   .yAxis path, .xAxis path{
@@ -108,7 +119,8 @@ h1{
  }
 
 
-@media screen and (min-width: 900px) and (min-height:700px) {
+@media screen and (min-width: 1200px) and (min-height:700px) {
+    /*
     .float-container{
         padding-top:10vh;
     }
@@ -122,6 +134,23 @@ h1{
         float:right;
         margin-right:10%;
     }
+    */
+    
+    .grid{
+        padding-top:10vh;
+        grid-template-columns: 35% 60%;
+    }
+   
+    #chart{
+      height:500px;
+    }
+    /*
+    .svg-content{
+        width:100%;
+        height:500px;
+    }
+    */
+
     .credit{
         position:absolute;
         bottom:0;
@@ -134,6 +163,8 @@ h1{
     }
     
 }
+
+
 
 .credit {
     color: #9E9E9E;
