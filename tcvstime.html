@@ -1,535 +1,418 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
 <head>
-<script src="//d3js.org/d3.v6.min.js"></script>    
-<style>
+    <script src="//d3js.org/d3.v6.min.js"></script>
 
-    body {
-        font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
-        background-color: black;
-    }
+    <link rel="stylesheet" href="tcvstime.css">
 
-    h1{
-        color:white;
-    }
+    <title>Tc vs Time</title>
 
-    svg{
-        margin-left:auto;
-        margin-right:auto;
-        display:block;
-    }
-
-    .content {
-  
-  position:fixed;
-  bottom:10px;
-  font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background: rgba(0, 0, 0, 0.0);
-  color: #f1f1f1;
-  padding-left:20px;
-  padding-right:20px;
-  z-index: 200;
-}
-
-
-    .axis path,
-    .axis line {
-        fill: none;
-        stroke: white;
-        shape-rendering: crispEdges;
-    }
-
-    .axis text{
-        fill: white;
-    }
-
-   
-
-    .line {
-        fill: none;
-        stroke-width: 1.5px;
-    }
-
-    .xaxis, .yaxis{
-        font: 1.5vw "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color:white;
-        stroke-width: 2px;
-        
-    }
-    
-    .titles{
-        fill:white;
-        font: 1.7vw "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-   
-    
-
-    div.tooltip {
-  position: absolute;
-  text-align: center;
-  width: 110px;
-  height: 40px;
-  padding-top: 5px;
-  font: 14px sans-serif;
-  background: white;
-  border: 0px;
-  border-radius: 2px;
- 
-}
-
-    .credit {
-        color: #9E9E9E;
-    font-size: 10px;
-    margin-bottom: 10px;
-    text-align:right;
-    }
-    
-    .arrow {
-	 cursor: pointer;
-	 height: 120px;
-	 right: 0%;
-	 position: absolute;
-	 top: 50%;
-	 transform: translateX(-50%) translateY(-50%);
-	 transition: transform 0.1s;
-	 width: 80px;
-}
- .arrow-top, .arrow-bottom {
-	 background-color: #666;
-	 height: 4px;
-	 left: -5px;
-	 position: absolute;
-	 top: 50%;
-	 width: 100%;
-}
- .arrow-top:after, .arrow-bottom:after {
-	 background-color: #fff;
-	 content: '';
-	 height: 100%;
-	 position: absolute;
-	 top: 0;
-	 transition: all 0.15s;
-}
- .arrow-top {
-	 transform: rotate(45deg);
-	 transform-origin: bottom right;
-}
- .arrow-top:after {
-	 left: 100%;
-	 right: 0;
-	 transition-delay: 0s;
-}
- .arrow-bottom {
-	 transform: rotate(-45deg);
-	 transform-origin: top right;
-}
- .arrow-bottom:after {
-	 left: 0;
-	 right: 100%;
-	 transition-delay: 0.15s;
-}
- .arrow:hover .arrow-top:after {
-	 left: 0;
-	 transition-delay: 0.15s;
-}
- .arrow:hover .arrow-bottom:after {
-	 right: 0;
-	 transition-delay: 0s;
-}
- .arrow:active {
-	 transform: translateX(-50%) translateY(-50%) scale(0.9);
-}
-
-</style>
-<title>Tc vs Time</title>
 </head>
+
+
 <body>
     <h1>The Rise of Superconductivity</h1>
+    
+    
+    <div class="content">
+        <p>The discovery of superconductors that operate at higher temperatures follows an unpredictable path. They can
+            be grouped into <span style="color: #46a6f5">conventional</span>, <span style="color: #ff0000">cuprate
+                high-temperature</span>, <span style="color: #ff00ff">carbon-based</span>, <span
+                style="color: #00ff00">iron-based high-temperature</span> and <span style="color: #ffff00">polycyclic
+                hydrocarbon</span> superconductors. Triangle symbols denote materials that become superconductors at
+            extreme pressures. (Mouseover and click points for information.)</p>
+    </div>
+
     <div class="graph"></div>
-<script>
 
-var svg,x,y;
+    <div class="credit">By J.G. Storey </div>
 
-var w1 = window.innerWidth*0.7,
-          h1 = window.innerHeight*0.6;
-    /*
-    var margin = { top: 30, right: 120, bottom: 80, left: 100 },
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom,
-        */
-     //var   tooltip = { width: 100, height: 100, x: 10, y: -30 };
-    
-    // Set default width and height, calculate ratio
-var default_width = w1;
-var default_height = h1;
-var default_ratio = default_width / default_height;
-
-console.log(w1);
-    console.log(h1);
-
-// Current (non-responsive) width and height are calcuated from the default, minus the margins
-var margin = {top: 0.1*h1, right: 0.1*w1, bottom: 0.15*h1, left: 0.1*w1},
-    width = default_width - margin.left - margin.right,
-    height = default_height - margin.top - margin.bottom;
-
-// Determine current size, which determines vars
-function set_vars() {
-  //alert('setting vars')
-  current_width = window.innerWidth*0.7;
-    current_height = window.innerHeight*0.6;
-    //console.log(current_width);
-    //console.log(current_height);
-  current_ratio = current_width / current_height;
-
-  // Check if height is limiting factor
-  if ( current_ratio > default_ratio ){
-    h = current_height;
-    w = h * default_ratio;
-  // Else width is limiting
-  } else {
-    w = current_width;
-    h = w / default_ratio;
-  }
-
-  // Set new width and height based on graph dimensions
-  margin = {top: 0.1*h, right: 0.1*w, bottom: 0.15*h, left: 0.1*w},
-  width = w - margin.left - margin.right;
-  height = h - margin.top - margin.bottom;
-  w1 = window.innerWidth;
-  h1 = window.innerHeight;
-
-};
-    
-set_vars();
-function drawGraphic(){
-    var radius = 6;    
-
-    
-    var bisectDate = d3.bisector(function(d) { return d.year; }).left;
-
-    x = d3.scaleTime()
-            .range([0, width]);
-
-    y = d3.scaleLinear()
-            .range([height, 0]);
-
-    var xAxis = d3.axisBottom()
-        .scale(x)
-        .tickFormat(d3.format(""));
-
-    var yAxis = d3.axisLeft()
-        .scale(y)
-        .ticks(6)
-        .tickFormat(d3.format(""))
-
-    var line = d3.line()
-        .x(function(d) { return x(d.year); })
-        .y(function(d) { return y(d.Tc); });
-
-          // We're passing in a function in d3.max to tell it what we're maxing (x value)
-          var xScale = d3.scaleLinear()
-          .domain([1910, 2020])
-          .range([margin.left, w1 - margin.right]);  // Set margins for x specific
-
-      // We're passing in a function in d3.max to tell it what we're maxing (y value)
-      var yScale = d3.scaleLinear()
-          .domain([0, 300])
-          .range([margin.top, h1 - margin.bottom]);  // Set margins for y specific
-
-          var div = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("display","none");
-    
-          
-    svg = d3.select(".graph").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+    <a href="https://robinsonresearchinstitute.github.io/conductors/structure.html">
+        <div class="arrow">
+            <div class="arrow-top"></div>
+            <div class="arrow-bottom"></div>
+        </div>
+    </a>
 
 
     
+    <script>
 
-         var datasets = [
-            {
-                "category": "Elements",
-                "data":[
-                    {"year": 1911, "Tc": 4.2, "name": "Hg"},
-                    {"year": 1913, "Tc": 4.2, "name": "Hg"},
-                    {"year": 1913, "Tc": 7.2, "name": "Pb"},
-                    {"year": 1932, "Tc": 7.2, "name": "Pb"},
-                    {"year": 1932, "Tc": 11.5, "name": "NbC"},
-                    {"year": 1941, "Tc": 11.5, "name": "NbC"},
-                    {"year": 1941, "Tc": 16.1, "name": "NbN"},
-                    {"year": 1953, "Tc": 16.1, "name": "NbN"},
-                    {"year": 1953, "Tc": 17.1, "name": "V3Si"},
-                    {"year": 1954, "Tc": 17.1, "name": "V3Si"},
-                    {"year": 1954, "Tc": 18.05, "name": "Nb3Sn"},
-                    {"year": 1967, "Tc": 18.05, "name": "Nb3Sn"},
-                    {"year": 1967, "Tc": 20.7, "name": "NbGeAl"},
-                    {"year": 1974, "Tc": 20.7, "name": "NbGeAl"},
-                    {"year": 1986, "Tc": 20.7, "name": "NbGeAl"},
-                    {"year": 1988, "Tc": 20.7, "name": "NbGeAl"},
-                    {"year": 1988, "Tc": 32, "name": "BaKBiO"},
-                    {"year": 2001, "Tc": 32, "name": "BaKBiO"},
-                    {"year": 2001, "Tc": 39, "name": "MgB2"},
-                    
-                ]
-            },
-            {
-                "category": "Cuprates",
-                "data":[
-                    {"year": 1986, "Tc": 30, "name": "LaBaCuO"},
-                    {"year": 1987, "Tc": 30, "name": "LaBaCuO"},
-                    {"year": 1987, "Tc": 93, "name": "YBaCuO"},
-                    {"year": 1988, "Tc": 93, "name": "YBaCuO"},
-                    {"year": 1988, "Tc": 120, "name": "TlBaCaCuO"},
-                    {"year": 1993, "Tc": 120, "name": "TlBaCaCuO"},
-                    {"year": 1993, "Tc": 133, "name": "HgBaCaCuO"},
-                    {"year": 1995, "Tc": 133, "name": "HgBaCaCuO"},
-                    {"year": 1995, "Tc": 138, "name": "HgTlBaCaCuO"},
-                ]
-            },
-            {
-                "category": "Carbon",
-                "data":[
-                    {"year": 1991, "Tc": 19.3, "name": "K3C60"},
-                    {"year": 1991, "Tc": 33, "name": "RbCs2C60"},
-                   
-                ]
-            },
-            {
-                "category": "Pnictides",
-                "data":[
-                    {"year": 2008, "Tc": 26, "name": "LaFeAsOF"},
-                    {"year": 2008, "Tc": 55, "name": "SmFeAsOF"},
-                   
-                ]
-            },
-            {
-                "category": "Aromatics",
-                "data":[
-                    {"year": 2010, "Tc": 18, "name": "C22H14"},
-                    {"year": 2012, "Tc": 18, "name": "C22H14"},
-                    {"year": 2012, "Tc": 33, "name": "C30H18"},
-                   
-                ]
-            },
-            {
-                "category": "Hydrides",
-                "data":[
-                    {"year": 2015, "Tc": 203, "name": "H3S"},
-                    {"year": 2019, "Tc": 203, "name": "H3S"},
-                    {"year": 2019, "Tc": 250, "name": "H10La"},
-                    {"year": 2019, "Tc": 250, "name": "H10La"},
-                    {"year": 2019, "Tc": 280, "name": "LaH10\u{00B1}x"},
-                    {"year": 2020, "Tc": 280, "name": "LaH10\u{00B1}x"},
-                    {"year": 2020, "Tc": 287.7, "name": "C-S-H"},
-                   
-                ]
-            }
-        ];
+        var svg, x, y;
 
-        var colors = ["#46a6f5","#FF0000","#FF00FF","#00FF00","#FFFF00","#46a6f5"]
-        
-        //https://physics.info/condensed-matter/
-
-        var datapoints = 
-            [{"year": 1911, "Tc": 4.2, "name": "Hg", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":"https://www.dwc.knaw.nl/toegangen/digital-library-knaw/?pagetype=publDetail&pId=PU00013358"},
-            {"year": 1913, "Tc": 7.2, "name": "Pb", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":"https://www.dwc.knaw.nl/toegangen/digital-library-knaw/?pagetype=publDetail&pId=PU00012901"},
-            {"year": 1932, "Tc": 9.25, "name": "Nb", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":"https://onlinelibrary.wiley.com/doi/abs/10.1002/andp.19334090602"},
-            {"year": 1932, "Tc": 11.5, "name": "NbC", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":"https://onlinelibrary.wiley.com/doi/abs/10.1002/andp.19334090602"},
-            {"year": 1941, "Tc": 16.1, "name": "NbN", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":""},
-            {"year": 1953, "Tc": 17.1, "name": "V3Si", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":"https://journals.aps.org/pr/abstract/10.1103/PhysRev.89.884"},
-            {"year": 1954, "Tc": 18.05, "name": "Nb3Sn", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":"https://journals.aps.org/pr/abstract/10.1103/PhysRev.95.1435"},
-            {"year": 1967, "Tc": 20.7, "name": "NbAlGe", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":"https://www.pnas.org/content/61/2/621"},
-            {"year": 1974, "Tc": 23.2, "name": "Nb3Ge", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":"https://aip.scitation.org/doi/10.1063/1.1663717"},
-            {"year": 1986, "Tc": 30, "name": "LaBaCuO", "color":colors[1],"fillcolor":colors[1],"symbol":"circle","paper":"https://link.springer.com/article/10.1007/BF01303701#rightslink"},
-            {"year": 1987, "Tc": 93, "name": "YBaCuO", "color":colors[1],"fillcolor":colors[1],"symbol":"circle","paper":"https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.58.908"},
-            {"year": 1988, "Tc": 105, "name": "BiSrCaCuO", "color":colors[1],"fillcolor":colors[1],"symbol":"circle","paper":"https://iopscience.iop.org/article/10.1143/JJAP.27.L209"},
-            {"year": 1988, "Tc": 120, "name": "TlBaCaCuO", "color":colors[1],"fillcolor":colors[1],"symbol":"circle","paper":"https://www.nature.com/articles/332138a0"},
-            {"year": 1988, "Tc": 32, "name": "BaKBiO", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":"https://www.nature.com/articles/332814a0"},
-            {"year": 1991, "Tc": 19.3, "name": "K3C60", "color":colors[2],"fillcolor":colors[2],"symbol":"circle","paper":"https://science.sciencemag.org/content/252/5009/1154"},
-            {"year": 1991, "Tc": 33, "name": "RbCs2C60", "color":colors[2],"fillcolor":colors[2],"symbol":"circle","paper":"https://www.nature.com/articles/352222a0"},
-            {"year": 1993, "Tc": 133, "name": "HgBaCaCuO", "color":colors[1],"fillcolor":colors[1],"symbol":"circle","paper":"https://www.nature.com/articles/363056a0"},
-            {"year": 1994, "Tc": 23, "name": "YPd2B2C", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":"https://www.nature.com/articles/367146a0"},
-            {"year": 1994, "Tc": 164, "name": "HgBaCaCuO", "color":colors[1],"fillcolor":"white","symbol":"square","paper":"https://journals.aps.org/prb/abstract/10.1103/PhysRevB.50.4260"},
-            {"year": 1995, "Tc": 138, "name": "HgTlBaCaCuO", "color":colors[1],"fillcolor":colors[1],"symbol":"circle","paper":"https://doi.org/10.1016/0921-4534(94)02461-8"},
-            {"year": 1995, "Tc": 38, "name": "Cs3C60", "color":colors[2],"fillcolor":"white","symbol":"square","paper":"https://www.nature.com/articles/352222a0"},
-            {"year": 2001, "Tc": 39, "name": "MgB2", "color":colors[0],"fillcolor":colors[0],"symbol":"circle","paper":"https://www.nature.com/articles/35065039"},
-            {"year": 2008, "Tc": 26, "name": "LaFeAsOF", "color":colors[3],"fillcolor":colors[3],"symbol":"circle","paper":"https://pubs.acs.org/doi/10.1021/ja800073m"},
-            {"year": 2008, "Tc": 38, "name": "BaKFeAs", "color":colors[3],"fillcolor":colors[3],"symbol":"circle","paper":"https://doi.org/10.1103/PhysRevLett.101.107006"},
-            {"year": 2008, "Tc": 55, "name": "SmFeAsOF", "color":colors[3],"fillcolor":colors[3],"symbol":"circle","paper":"https://doi.org/10.1088/0256-307X/25/6/080"},
-            {"year": 2010, "Tc": 18, "name": "KxC22H14", "color":colors[4],"fillcolor":colors[4],"symbol":"circle","paper":"https://www.nature.com/articles/nature08859"},
-            {"year": 2012, "Tc": 33, "name": "KxC30H18", "color":colors[4],"fillcolor":colors[4],"symbol":"circle","paper":"https://www.nature.com/articles/srep00389"},
-            {"year": 2015, "Tc": 203, "name": "H3S", "color":colors[0],"fillcolor":"white","symbol":"square","paper":"https://www.nature.com/articles/nature14964"},
-            {"year": 2019, "Tc": 250, "name": "H10La", "color":colors[0],"fillcolor":"white","symbol":"square","paper":"https://www.nature.com/articles/s41586-019-1201-8"},
-            {"year": 2019, "Tc": 280, "name": "LaH10\u{00B1}x", "color":colors[0],"fillcolor":"white","symbol":"square","paper":"https://arxiv.org/abs/1808.07695"},
-            {"year": 2020, "Tc": 287.7, "name": "C-S-H", "color":colors[0],"fillcolor":"white","symbol":"square","paper":"https://www.nature.com/articles/s41586-020-2801-z"}
-        ];
-
-    //add a function to calculate axis limits automatically
-    x.domain([1900, 2020]);
-    y.domain([0,300]);
-
-    
-    svg.append("g")
-            .attr("class", "xaxis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
-    
-
-
-        svg.append("g")
-            .attr("class", "yaxis")
-            .call(yAxis)
-            .append("text");
-           
-            
-
-                  // Add X axis label:
-svg.append("text")
-.attr("class", "titles")
-.attr("transform",
-            "translate(" + (width/2) + " ," + 
-                           (height + margin.top) + ")")
-                           .attr("dy","0.5em")
-            .attr("text-anchor", "middle")
-            .text("Year");
-
-// Y axis label:
-svg.append("text")
-    .attr("text-anchor", "middle")
-    .attr("transform", "rotate(-90)")
-    .attr("y", -margin.left)
-    .attr("x", -height/2)
-    .attr("dy", "1.5em")
-    .attr("class", "titles")
-    .text("Critical Temperature (K)");
-
-
-
-    //draw the lines
-    datasets.forEach(function(dataset, i) {  
-        dataset.data.forEach(function(d) {
-            d.Tc = +d.Tc;
-        });
-        
-       
-        svg.append("path")
-            .datum(dataset.data)
-            .attr("class", "line")
-            .attr("stroke", colors[i])
-            .attr("d", line);
-       
-
-         
-
-        
-    } );
-
-    var sym = 
-d3.symbol().type(d3.symbolTriangle).size(500);
-var addr;
-svg
-        // Add the points!
-    svg.selectAll(".point")
-        .data(datapoints)
-        .enter().append("path")
-        .attr("class", "point")
-        .attr("d", d3.symbol().type(function(d){
-            if(d.symbol == "circle") return d3.symbolCircle;
-            else return d3.symbolTriangle;}))
-        .attr("transform", function(d) { return "translate(" + x(d.year) + "," + y(d.Tc) + ")"; })
-        .attr("stroke",function(d) { return d.color })  
-        .attr("fill", function(d) { return d.fillcolor })
-        .on("mouseover", function(event,d) {
-           addr = d.paper;
-       div.transition()
-         //.duration(200)
-         .style("display", null);
-       div.html("<b>"+d.name+"</b>" + "<br/> Tc: <b>" + d.Tc+" K</b>")
-         .style("left", (event.pageX+20) + "px")
-         .style("top", (event.pageY - 28) + "px")
-         //.style("opacity",1);
-         d3.select(this).attr("fill", "orange");
-       })
-     .on("mouseout", function(d) {
-        d3.select(this).attr("fill", function(d){return d.fillcolor});
-       div.transition()
-         //.duration(500)
-         //.style("opacity",0);
-         .style("display", "none");
-       })
-       .on("click", function(d){
-           console.log(addr);
-            //location.href=addr;
-            window.open(addr, "_blank");
-       });
-    
-        
+        var w1 = window.innerWidth * 0.7,
+            h1 = window.innerHeight * 0.6;
         /*
-        svg
-        .selectAll(".dot")
-    .data(datapoints)
-    .enter()
-    .append("circle") // Uses the enter().append() method
-    .attr("class", "dot") // Assign a class for styling
-    .attr("cx", function(d) { return x(d.year) })
-    .attr("cy", function(d) { return y(d.Tc) })
-    .attr("r", 5)
-    .attr("stroke",function(d) { return d.color })  
-        .attr("fill", function(d) { return d.fillcolor })
-        .on("mouseover", function(event,d) {
-       div.transition()
-         //.duration(200)
-         .style("display", null);
-       div.html("<b>"+d.name+"</b>" + "<br/> Tc: <b>" + d.Tc+" K</b>")
-         .style("left", (event.pageX+20) + "px")
-         .style("top", (event.pageY - 28) + "px")
-         //.style("opacity",1);
-         d3.select(this).attr("fill", "orange");
-       })
-     .on("mouseout", function(d) {
-        d3.select(this).attr("fill", function(d){return d.fillcolor});
-       div.transition()
-         //.duration(500)
-         //.style("opacity",0);
-         .style("display", "none");
-       });
-       */
-   
-    }
-       
-drawGraphic();
-        
-        
-        
-    var resizeTimer;
-window.onresize = function(event) {
- clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(function()
-  {
-    var s = d3.selectAll('svg');
-    s = s.remove();
-    set_vars();
-    drawGraphic();
-  }, 100);
-}
+        var margin = { top: 30, right: 120, bottom: 80, left: 100 },
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom,
+            */
+        //var   tooltip = { width: 100, height: 100, x: 10, y: -30 };
 
-</script>
+        // Set default width and height, calculate ratio
+        var default_width = w1;
+        var default_height = h1;
+        var default_ratio = default_width / default_height;
 
-<div class="content">
-    <p>The discovery of superconductors that operate at higher temperatures follows an unpredictable path. They can be grouped into <span style="color: #46a6f5">conventional</span>, <span style="color: #ff0000">cuprate high-temperature</span>, <span style="color: #ff00ff">carbon-based</span>, <span style="color: #00ff00">iron-based high-temperature</span> and <span style="color: #ffff00">polycyclic hydrocarbon</span> superconductors. Triangle symbols denote materials that become superconductors at extreme pressures. (Mouseover and click points for information.)</p>
-  </div>
-  <div class="credit">By J.G. Storey </div>
-  
- <a href="https://robinsonresearchinstitute.github.io/conductors/structure.html">
-      <div class="arrow">
-        <div class="arrow-top"></div>
-        <div class="arrow-bottom"></div>
-      </div></a>
+        var yearticks = 10;
 
+        console.log(w1);
+        console.log(h1);
+
+        // Current (non-responsive) width and height are calcuated from the default, minus the margins
+        var margin = { top: 0.1 * h1, right: 0.1 * w1, bottom: 0.15 * h1, left: 0.1 * w1 },
+            width = default_width - margin.left - margin.right,
+            height = default_height - margin.top - margin.bottom;
+
+        // Determine current size, which determines vars
+        function set_vars() {
+            //alert('setting vars')
+            current_width = window.innerWidth;
+            current_height = window.innerHeight;
+            //console.log(current_width);
+            //console.log(current_height);
+            current_ratio = current_width / current_height;
+            console.log(current_ratio);
+            // Check if height is limiting factor
+            /*
+            if (current_ratio > default_ratio) {
+                console.log("normal aspect");
+                yearticks = 10;
+                h = current_height;
+                w = h * default_ratio;
+                margin = { top: 0.1 * h, right: 0.1 * w, bottom: 0.15 * h, left: 0.1 * w };
+                // Else width is limiting
+            } else {
+                yearticks = 5;
+                w = window.innerWidth*0.7;
+                h = w / default_ratio;
+                console.log('width limiting');
+                margin = { top: 0.1 * h, right: 0.1 * w, bottom: 0.15 * h, left: 0.25 * w };
+            }
+            */
+
+            // Set new width and height based on graph dimensions
+            
+            w = current_width;
+            h = current_height;
+
+            if(w>h){
+                yearticks=10;
+                margin = { top: 100, right: 50, bottom: 100, left: 100 };
+                width = 0.6*w - margin.left - margin.right;
+                height = 0.7*h - margin.top - margin.bottom;
+            }
+            else{
+                yearticks=5;
+                margin = { top: 100, right: 60, bottom: 100, left: 90 };
+                width = w - margin.left - margin.right;
+                height = 0.7*h - margin.top - margin.bottom;
+            }
+
+            
+            w1 = window.innerWidth;
+            h1 = window.innerHeight;
+
+        };
+
+        set_vars();
+        function drawGraphic() {
+            var radius = 6;
+
+
+            var bisectDate = d3.bisector(function (d) { return d.year; }).left;
+
+            x = d3.scaleTime()
+                .range([0, width]);
+
+            y = d3.scaleLinear()
+                .range([height, 0]);
+
+            var xAxis = d3.axisBottom()
+                .scale(x)
+                .ticks(yearticks)
+                .tickFormat(d3.format(""));
+                
+            var yAxis = d3.axisLeft()
+                .scale(y)
+                .ticks(6)
+                .tickFormat(d3.format(""))
+
+            var line = d3.line()
+                .x(function (d) { return x(d.year); })
+                .y(function (d) { return y(d.Tc); });
+
+            // We're passing in a function in d3.max to tell it what we're maxing (x value)
+            var xScale = d3.scaleLinear()
+                .domain([1910, 2020])
+                .range([margin.left, w1 - margin.right]);  // Set margins for x specific
+
+            // We're passing in a function in d3.max to tell it what we're maxing (y value)
+            var yScale = d3.scaleLinear()
+                .domain([0, 300])
+                .range([margin.top, h1 - margin.bottom]);  // Set margins for y specific
+
+            var div = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("display", "none");
+
+
+            svg = d3.select(".graph").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+
+
+            var datasets = [
+                {
+                    "category": "Elements",
+                    "data": [
+                        { "year": 1911, "Tc": 4.2, "name": "Hg" },
+                        { "year": 1913, "Tc": 4.2, "name": "Hg" },
+                        { "year": 1913, "Tc": 7.2, "name": "Pb" },
+                        { "year": 1932, "Tc": 7.2, "name": "Pb" },
+                        { "year": 1932, "Tc": 11.5, "name": "NbC" },
+                        { "year": 1941, "Tc": 11.5, "name": "NbC" },
+                        { "year": 1941, "Tc": 16.1, "name": "NbN" },
+                        { "year": 1953, "Tc": 16.1, "name": "NbN" },
+                        { "year": 1953, "Tc": 17.1, "name": "V3Si" },
+                        { "year": 1954, "Tc": 17.1, "name": "V3Si" },
+                        { "year": 1954, "Tc": 18.05, "name": "Nb3Sn" },
+                        { "year": 1967, "Tc": 18.05, "name": "Nb3Sn" },
+                        { "year": 1967, "Tc": 20.7, "name": "NbGeAl" },
+                        { "year": 1974, "Tc": 20.7, "name": "NbGeAl" },
+                        { "year": 1986, "Tc": 20.7, "name": "NbGeAl" },
+                        { "year": 1988, "Tc": 20.7, "name": "NbGeAl" },
+                        { "year": 1988, "Tc": 32, "name": "BaKBiO" },
+                        { "year": 2001, "Tc": 32, "name": "BaKBiO" },
+                        { "year": 2001, "Tc": 39, "name": "MgB2" },
+
+                    ]
+                },
+                {
+                    "category": "Cuprates",
+                    "data": [
+                        { "year": 1986, "Tc": 30, "name": "LaBaCuO" },
+                        { "year": 1987, "Tc": 30, "name": "LaBaCuO" },
+                        { "year": 1987, "Tc": 93, "name": "YBaCuO" },
+                        { "year": 1988, "Tc": 93, "name": "YBaCuO" },
+                        { "year": 1988, "Tc": 120, "name": "TlBaCaCuO" },
+                        { "year": 1993, "Tc": 120, "name": "TlBaCaCuO" },
+                        { "year": 1993, "Tc": 133, "name": "HgBaCaCuO" },
+                        { "year": 1995, "Tc": 133, "name": "HgBaCaCuO" },
+                        { "year": 1995, "Tc": 138, "name": "HgTlBaCaCuO" },
+                    ]
+                },
+                {
+                    "category": "Carbon",
+                    "data": [
+                        { "year": 1991, "Tc": 19.3, "name": "K3C60" },
+                        { "year": 1991, "Tc": 33, "name": "RbCs2C60" },
+
+                    ]
+                },
+                {
+                    "category": "Pnictides",
+                    "data": [
+                        { "year": 2008, "Tc": 26, "name": "LaFeAsOF" },
+                        { "year": 2008, "Tc": 55, "name": "SmFeAsOF" },
+
+                    ]
+                },
+                {
+                    "category": "Aromatics",
+                    "data": [
+                        { "year": 2010, "Tc": 18, "name": "C22H14" },
+                        { "year": 2012, "Tc": 18, "name": "C22H14" },
+                        { "year": 2012, "Tc": 33, "name": "C30H18" },
+
+                    ]
+                },
+                {
+                    "category": "Hydrides",
+                    "data": [
+                        { "year": 2015, "Tc": 203, "name": "H3S" },
+                        { "year": 2019, "Tc": 203, "name": "H3S" },
+                        { "year": 2019, "Tc": 250, "name": "H10La" },
+                        { "year": 2019, "Tc": 250, "name": "H10La" },
+                        { "year": 2019, "Tc": 280, "name": "LaH10\u{00B1}x" },
+                        { "year": 2020, "Tc": 280, "name": "LaH10\u{00B1}x" },
+                        { "year": 2020, "Tc": 287.7, "name": "C-S-H" },
+
+                    ]
+                }
+            ];
+
+            var colors = ["#46a6f5", "#FF0000", "#FF00FF", "#00FF00", "#FFFF00", "#46a6f5"]
+
+            //https://physics.info/condensed-matter/
+
+            var datapoints =
+                [{ "year": 1911, "Tc": 4.2, "name": "Hg", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.dwc.knaw.nl/toegangen/digital-library-knaw/?pagetype=publDetail&pId=PU00013358" },
+                { "year": 1913, "Tc": 7.2, "name": "Pb", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.dwc.knaw.nl/toegangen/digital-library-knaw/?pagetype=publDetail&pId=PU00012901" },
+                { "year": 1932, "Tc": 9.25, "name": "Nb", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://onlinelibrary.wiley.com/doi/abs/10.1002/andp.19334090602" },
+                { "year": 1932, "Tc": 11.5, "name": "NbC", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://onlinelibrary.wiley.com/doi/abs/10.1002/andp.19334090602" },
+                { "year": 1941, "Tc": 16.1, "name": "NbN", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "" },
+                { "year": 1953, "Tc": 17.1, "name": "V3Si", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.89.884" },
+                { "year": 1954, "Tc": 18.05, "name": "Nb3Sn", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.95.1435" },
+                { "year": 1967, "Tc": 20.7, "name": "NbAlGe", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.pnas.org/content/61/2/621" },
+                { "year": 1974, "Tc": 23.2, "name": "Nb3Ge", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://aip.scitation.org/doi/10.1063/1.1663717" },
+                { "year": 1986, "Tc": 30, "name": "LaBaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://link.springer.com/article/10.1007/BF01303701#rightslink" },
+                { "year": 1987, "Tc": 93, "name": "YBaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.58.908" },
+                { "year": 1988, "Tc": 105, "name": "BiSrCaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://iopscience.iop.org/article/10.1143/JJAP.27.L209" },
+                { "year": 1988, "Tc": 120, "name": "TlBaCaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://www.nature.com/articles/332138a0" },
+                { "year": 1988, "Tc": 32, "name": "BaKBiO", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.nature.com/articles/332814a0" },
+                { "year": 1991, "Tc": 19.3, "name": "K3C60", "color": colors[2], "fillcolor": colors[2], "symbol": "circle", "paper": "https://science.sciencemag.org/content/252/5009/1154" },
+                { "year": 1991, "Tc": 33, "name": "RbCs2C60", "color": colors[2], "fillcolor": colors[2], "symbol": "circle", "paper": "https://www.nature.com/articles/352222a0" },
+                { "year": 1993, "Tc": 133, "name": "HgBaCaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://www.nature.com/articles/363056a0" },
+                { "year": 1994, "Tc": 23, "name": "YPd2B2C", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.nature.com/articles/367146a0" },
+                { "year": 1994, "Tc": 164, "name": "HgBaCaCuO", "color": colors[1], "fillcolor": "white", "symbol": "square", "paper": "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.50.4260" },
+                { "year": 1995, "Tc": 138, "name": "HgTlBaCaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://doi.org/10.1016/0921-4534(94)02461-8" },
+                { "year": 1995, "Tc": 38, "name": "Cs3C60", "color": colors[2], "fillcolor": "white", "symbol": "square", "paper": "https://www.nature.com/articles/352222a0" },
+                { "year": 2001, "Tc": 39, "name": "MgB2", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.nature.com/articles/35065039" },
+                { "year": 2008, "Tc": 26, "name": "LaFeAsOF", "color": colors[3], "fillcolor": colors[3], "symbol": "circle", "paper": "https://pubs.acs.org/doi/10.1021/ja800073m" },
+                { "year": 2008, "Tc": 38, "name": "BaKFeAs", "color": colors[3], "fillcolor": colors[3], "symbol": "circle", "paper": "https://doi.org/10.1103/PhysRevLett.101.107006" },
+                { "year": 2008, "Tc": 55, "name": "SmFeAsOF", "color": colors[3], "fillcolor": colors[3], "symbol": "circle", "paper": "https://doi.org/10.1088/0256-307X/25/6/080" },
+                { "year": 2010, "Tc": 18, "name": "KxC22H14", "color": colors[4], "fillcolor": colors[4], "symbol": "circle", "paper": "https://www.nature.com/articles/nature08859" },
+                { "year": 2012, "Tc": 33, "name": "KxC30H18", "color": colors[4], "fillcolor": colors[4], "symbol": "circle", "paper": "https://www.nature.com/articles/srep00389" },
+                { "year": 2015, "Tc": 203, "name": "H3S", "color": colors[0], "fillcolor": "white", "symbol": "square", "paper": "https://www.nature.com/articles/nature14964" },
+                { "year": 2019, "Tc": 250, "name": "H10La", "color": colors[0], "fillcolor": "white", "symbol": "square", "paper": "https://www.nature.com/articles/s41586-019-1201-8" },
+                { "year": 2019, "Tc": 280, "name": "LaH10\u{00B1}x", "color": colors[0], "fillcolor": "white", "symbol": "square", "paper": "https://arxiv.org/abs/1808.07695" },
+                { "year": 2020, "Tc": 287.7, "name": "C-S-H", "color": colors[0], "fillcolor": "white", "symbol": "square", "paper": "https://www.nature.com/articles/s41586-020-2801-z" }
+                ];
+
+            //add a function to calculate axis limits automatically
+            x.domain([1900, 2020]);
+            y.domain([0, 300]);
+
+
+            svg.append("g")
+                .attr("class", "xaxis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis)
+                .selectAll("text")	
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-65)");
+
+
+
+            svg.append("g")
+                .attr("class", "yaxis")
+                .call(yAxis)
+                .append("text");
+
+
+
+            // Add X axis label:
+            svg.append("text")
+                .attr("class", "titles")
+                .attr("transform",
+                    "translate(" + (width / 2) + " ," +
+                    (height + margin.top/2) + ")")
+                .attr("dy", "1.5em")
+                .attr("text-anchor", "middle")
+                .text("Year");
+
+            // Y axis label:
+            svg.append("text")
+                .attr("text-anchor", "middle")
+                .attr("transform", "rotate(-90)")
+                .attr("y", -margin.left)
+                .attr("x", -height / 2)
+                .attr("dy", "1.5em")
+                .attr("class", "titles")
+                .text("Critical Temperature (K)");
+
+
+
+            //draw the lines
+            datasets.forEach(function (dataset, i) {
+                dataset.data.forEach(function (d) {
+                    d.Tc = +d.Tc;
+                });
+
+
+                svg.append("path")
+                    .datum(dataset.data)
+                    .attr("class", "line")
+                    .attr("stroke", colors[i])
+                    .attr("d", line);
+
+
+
+
+
+            });
+
+            var sym =
+                d3.symbol().type(d3.symbolTriangle).size(500);
+            var addr;
+            svg
+            // Add the points!
+            svg.selectAll(".point")
+                .data(datapoints)
+                .enter().append("path")
+                .attr("class", "point")
+                .attr("d", d3.symbol().type(function (d) {
+                    if (d.symbol == "circle") return d3.symbolCircle;
+                    else return d3.symbolTriangle;
+                }))
+                .attr("transform", function (d) { return "translate(" + x(d.year) + "," + y(d.Tc) + ")"; })
+                .attr("stroke", function (d) { return d.color })
+                .attr("fill", function (d) { return d.fillcolor })
+                .on("mouseover", function (event, d) {
+                    addr = d.paper;
+                    div.transition()
+                        //.duration(200)
+                        .style("display", null);
+                    div.html("<b>" + d.name + "</b>" + "<br/> Tc: <b>" + d.Tc + " K</b>")
+                        .style("left", (event.pageX + 20) + "px")
+                        .style("top", (event.pageY - 28) + "px")
+                    //.style("opacity",1);
+                    d3.select(this).attr("fill", "orange");
+                })
+                .on("mouseout", function (d) {
+                    d3.select(this).attr("fill", function (d) { return d.fillcolor });
+                    div.transition()
+                        //.duration(500)
+                        //.style("opacity",0);
+                        .style("display", "none");
+                })
+                .on("click", function (d) {
+                    console.log(addr);
+                    //location.href=addr;
+                    window.open(addr, "_blank");
+                });
+
+
+
+        }
+
+        drawGraphic();
+
+
+
+        var resizeTimer;
+        window.onresize = function (event) {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                var s = d3.selectAll('svg');
+                s = s.remove();
+                set_vars();
+                drawGraphic();
+            }, 100);
+        }
+
+    </script>
+
+    
 
 </body>
