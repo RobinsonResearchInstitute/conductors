@@ -1,21 +1,22 @@
+
 * {
     box-sizing: border-box;
   }
   
+
+
   body {
     margin: 0;
     font-family: Arial;
     background-color:black;
   }
   
+ 
+
   #myVideo {
-    position: absolute;
-    left: 0;
-    top: 50%;
+    
     max-height: 100%; 
     max-width:100%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
     border:2px solid black;
   }
   
@@ -26,6 +27,7 @@
     color: #f1f1f1;
     width: 100%;
     padding: 1.25rem;
+    
   }
   
   #myBtn {
@@ -46,10 +48,24 @@
 
   @media screen and (min-width: 1200px) and (min-height:700px) {
   .content{
-    position: fixed;
+    position: absolute;
+    top:auto;
     bottom: 0;
     font-size:1.25rem;
   }
+
+  #myVideo {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    max-height: 100%; 
+    max-width:100%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    border:2px solid black;
+    z-index:-1;
+  }
+  
 
 }
 
