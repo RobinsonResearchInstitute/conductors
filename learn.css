@@ -1,0 +1,111 @@
+body{
+  font-family:  'Roboto','Source Sans Pro','Open Sans','Lato',Helvetica, Arial, sans-serif;
+  /*font-size:100%;*/
+}
+
+.topnav {
+overflow: hidden;
+background-color: #333;
+box-shadow:  0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+float: left;
+display: block;
+color: white;
+text-align: center;
+padding: 0.9rem 1rem;
+text-decoration: none;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover:not(.active) {
+background-color: #111;
+}
+
+/* Style the "active" element to highlight the current page */
+.topnav a.active {
+background-color: rgb(0,71,48);
+color: white;
+}
+
+
+
+
+
+
+/* When the screen is less than 600px wide, stack the links and the search field vertically instead of horizontally */
+/*@media screen and (max-width: 600px) {*/
+  
+  /*
+    @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+    html { font-size: 1.5rem}
+   
+    .topnav a,.button-container, .button-container button  {
+  float: none;
+  display: block;
+  text-align: center;
+  width: 100%;
+  
+}
+
+h1{
+  text-align:center;
+}
+
+.topnav a{
+  font-size:1.2rem;
+}
+
+}
+*/
+
+
+h1{
+  background-color:rgb(0,71,48);
+  color: rgb(255,255,255);
+  padding: 1.25rem;
+  /*font: 400 15px/1.8 sans-serif;*/
+  font: 400 0.9rem/1.8 sans-serif;
+  font-size:1.9rem;
+  letter-spacing: 0;
+}
+
+
+.credit {
+  color: #9E9E9E;
+  font-size: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+
+.gallery{
+    margin-left: auto;
+    margin-right:auto;
+    margin-bottom:1rem;
+    width: 90%;
+    display:grid;
+    /*grid-auto-flow: column;
+    grid-auto-columns: 1fr;*/
+    /*grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    */
+    grid-template-columns: repeat(auto-fit, minmax(30ch, 1fr));
+    gap:1em;
+}
+
+.gallery-item{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    background-color: #f1f1f1;
+    width:100%;
+}
+
+.gallery-item img, p{
+   display:block;
+   margin-left:auto;
+   margin-right:auto;
+   max-width:90%;
+   margin-top:1rem;
+}
