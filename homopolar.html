@@ -83,7 +83,8 @@
 
 		import { OrbitControls } from 'https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js';
 		import { GLTFLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/GLTFLoader.js';
-		import { EXRLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/EXRLoader.js';
+		import { RGBELoader } from 'https://unpkg.com/three@0.124.0/examples/jsm/loaders/RGBELoader.js';
+
 
 		var renderer, scene, camera, raycaster;
 		var rotorlumps1, rotorlumps2, plane, grid, stator;
@@ -178,24 +179,25 @@
 			camera.add(light);
 
 
+			//hdri
 			const pmremGenerator = new THREE.PMREMGenerator(renderer);
 			pmremGenerator.compileEquirectangularShader();
-			async function loadEXR() {
-				const exrLoader = new EXRLoader()
-					.setDataType(THREE.FloatType);
-				// const texture = await exrLoader.loadAsync('086_hdrmaps_com_free.exr'); 
-				const texture = await exrLoader.loadAsync('sky1k.exr');
 
 
+			async function loadHDRI() {
+				const rgbeLoader = new RGBELoader()
+					.setDataType(THREE.UnsignedByteType);
+				//.setPath( 'textures/equirectangular/' );
+
+				const texture = await rgbeLoader.loadAsync('HDR_029_Sky_Cloudy_Env.hdr');
 				const envMap = pmremGenerator.fromEquirectangular(texture).texture;
 
 				//scene.background = envMap;
 				scene.environment = envMap;
 				texture.dispose();
 				pmremGenerator.dispose();
-
 			}
-			loadEXR();
+			loadHDRI();
 
 
 			plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(10000, 10000), new THREE.MeshPhongMaterial({ color: 'rgb(0,127,127)', depthWrite: false, opacity: 0.2, transparent: true }));
