@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta property="og:title" content="HTS Wire" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://robinson.ac.nz/conductors/htswire.html" />
+    <meta property="og:site_name" content="Robinson Research Institute"/>
+    <meta property="og:image" content="https://robinson.ac.nz/conductors/img/htswire.jpg" />
+    <meta property="og:description" content="The layered structure of a typical second-generation high-temperature superconductor wire." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="robinson.ac.nz" />    
+    <meta name="twitter:title" content="HTS Wire" />
+    <meta name="twitter:description" content="The layered structure of a typical second-generation high-temperature superconductor wire." />  
+    <meta name="twitter:image" content="https://robinson.ac.nz/conductors/img/htswire.jpg" />
+    
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">    
+    
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="htswire.css">
+<title>HTS Wire</title>
+</head>
+<body>
+    
+
+<div class="content">
+  <h1>HTS Wire</h1>
+  <p>Layered structure of a typical second-generation high-temperature superconductor wire. The total thickness of the wire is about 0.1 mm, and the superconducting layer is only 0.0016 mm thick. A 1 cm-wide tape is capable of carrying several hundred amps of electric current.</p>
+  <button id="myBtn" onclick="myFunction()">Pause</button>
+</div>
+
+
+    <video autoplay muted playsinline loop id="myVideo">
+        <source src="vids/0001-0190.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+    
+
+  
+  <a href="https://robinsonresearchinstitute.github.io/conductors/htsroebel.html">
+      <div class="arrow">
+        <div class="arrow-top"></div>
+        <div class="arrow-bottom"></div>
+      </div></a>
+
+<script>
+var video = document.getElementById("myVideo");
+var btn = document.getElementById("myBtn");
+
+function myFunction() {
+  if (video.paused) {
+    video.play();
+    btn.innerHTML = "Pause";
+  } else {
+    video.pause();
+    btn.innerHTML = "Play";
+  }
+}
+</script>
+
+</body>
+</html>
