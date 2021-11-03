@@ -102,6 +102,7 @@ h1{
     width:100%;
   border-style:solid;
   border-color:#f1f1f1;
+  border-witdh:2px;
 }
 
 .gallery-item:hover {
