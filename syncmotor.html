@@ -476,7 +476,7 @@
 			document.getElementById("infobutton").addEventListener('click', function () {
 				document.getElementById("d1").innerHTML = "<p id='line1'></p>";
 				i = 0;
-				infoFunction(loz + " Superconducting Homopolar Motor/Generator\n\nMotor Rating: 2 MW\nRated Speed: 25000 RPM\nPower Density: 5.4 kW/kg\nEfficiency: 99.1 %");
+				infoFunction(loz + " Superconducting Syncrhonous Motor\n\nMotor Rating: 3 MW\nRated Speed: 4500 RPM\nPower Density: 39.5 kW/kg\nEfficiency: 99.4 %");
 
 
 			});
@@ -489,11 +489,16 @@
 
 		function onClick(event) {
 			console.log("on click");
+			document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+			i = 0;
+			
+
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 			var intersects = raycaster.intersectObjects(scene.children);
 			if (intersects.length > 0) {
 				console.log(intersects.length);
+				/*
 				if (intersects[0].object == stator) {
 					//intersects[0].object.material.opacity -=0.1;
 					infoFunction(loz + " 36-Slot Laminated Stator\n\nMaterial: 10JNEX900 Super Core\nChamfered to Minimize Weight\nDiameter: 548 mm\nAir Gap: 3 mm");
@@ -519,6 +524,8 @@
 					document.getElementById("d1").innerHTML = "<p id='line1'></p>";
 					i = 0;
 				}
+				*/
+				
 			}
 
 
