@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta property="og:title" content="Synchronous Motor" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://robinson.ac.nz/conductors/homopolar.html" />
+    <meta property="og:site_name" content="Robinson Research Institute"/>
+    <meta property="og:image" content="https://robinson.ac.nz/conductors/img/synchronous2.jpg" />
+    <meta property="og:description" content="3 superconducting synchronous motor." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="robinson.ac.nz" />    
+    <meta name="twitter:title" content="Synchronous Motor" />
+    <meta name="twitter:description" content="3 megawatt superconducting synchronous motor/generator." />  
+    <meta name="twitter:image" content="https://robinson.ac.nz/conductors/img/synchronous2.jpg" />
+    
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    
+    <meta name="description" content="3 megawatt superconducting synchronous motor.">
+	<title>Synchronous Motor</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link type="text/css" rel="stylesheet" href="homopolar.css">
+	<link type="text/css" rel="stylesheet" href="arrows.css">
+	<link rel="stylesheet" type="text/css" href="text-cursor.css">
+</head>
+
+<body>
+	<div id="info">
+		<h1>Superconducting Synchronous Motor</h1>
+		<button id="infobutton">Info</button>
+		<button id="stator">Stator</button>
+		<!--<button id="armature">Armature</button>-->
+		<button id="fieldcoil">EM Shield</button>
+		<button id="rotor">Rotor</button>
+		<button id="aboutBtn">About</button>
+		<br>
+		
+		<div id="d1">
+			<p id='line1'></p>
+		</div>
+	</div>
+
+	
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<p>Made by James Storey, Robinson Research Institute, 2022.</p>
+			<p>Use buttons to show or hide components.</p>
+			<p>Red/blue colours illustrate positive/negative currents being induced in the stator coils.</p>
+			<!--<p>Click on a component to show information.</p>-->
+		</div>
+
+	</div>
+	
+	<a href="https://robinson.ac.nz/conductors/aircraft.html">
+        <div class="arrow">
+            <div class="arrow-top"></div>
+            <div class="arrow-bottom"></div>
+        </div>
+    </a>
+	
+	<a href="https://robinson.ac.nz/conductors/dynamo.html">
+        <div class="barrow">
+            <div class="barrow-top"></div>
+            <div class="barrow-bottom"></div>
+        </div>
+    </a>
+
+	<!--<div id="logo">
+		<a href="https://www.wgtn.ac.nz/robinson">
+			<img src="RRILogoSmall.png" alt="Logo">
+		</a>
+	</div>-->
+
+	
+
+	<script type="module">
+
+		import * as THREE from 'https://unpkg.com/three@0.126.0/build/three.module.js';
+
+		import { OrbitControls } from 'https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js';
+		import { GLTFLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/GLTFLoader.js';
+		import { RGBELoader } from 'https://unpkg.com/three@0.124.0/examples/jsm/loaders/RGBELoader.js';
+
+
+		var renderer, scene, camera, raycaster;
+		var rotorlumps1, rotorlumps2, plane, grid, stator;
+		var rotortube,rotorphase2, flux1, w1, w2, w3, coil;
+		var statorvisible = false;
+		var light1;
+		var th = 0;
+		var loz = String.fromCharCode(9671);
+		var sq = String.fromCharCode(178);
+		var mmx, mmy;
+		var theta = 0;
+
+		var mouse = new THREE.Vector2(), INTERSECTED;
+
+		init();
+		animate();
+
+		function init() {
+
+
+			const params = {
+				exposure: 0.8,
+				toneMapping: 'ACESFilmic'
+			};
+
+			const toneMappingOptions = {
+				None: THREE.NoToneMapping,
+				Linear: THREE.LinearToneMapping,
+				Reinhard: THREE.ReinhardToneMapping,
+				Cineon: THREE.CineonToneMapping,
+				ACESFilmic: THREE.ACESFilmicToneMapping,
+				Custom: THREE.CustomToneMapping
+			};
+
+
+			// renderer
+			renderer = new THREE.WebGLRenderer({ antialias: true });
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			document.body.appendChild(renderer.domElement);
+
+
+			renderer.toneMapping = toneMappingOptions[params.toneMapping];
+			renderer.toneMappingExposure = params.exposure;
+			renderer.outputEncoding = THREE.sRGBEncoding;
+
+
+
+
+
+			raycaster = new THREE.Raycaster();
+			raycaster.layers.set(0);
+
+
+			// scene
+			scene = new THREE.Scene();
+			//scene.background = new THREE.Color( 'skyblue' )
+			scene.fog = new THREE.Fog(0x000000, 250, 1400);
+
+			// camera
+			camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 1000);
+			camera.layers.enable(0);
+
+
+			camera.position.set(100, 30, 120);
+			scene.add(camera);
+
+			// controls
+			var controls = new OrbitControls(camera, renderer.domElement);
+			controls.addEventListener('change', render);
+			controls.minDistance = 10;
+			controls.maxDistance = 400;
+			controls.enablePan = false;
+
+
+			// ambient
+			scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+			// light
+
+			//var sphere = new THREE.SphereBufferGeometry( 0.5, 16, 8 );
+			//lights
+			//light1 = new THREE.PointLight( 0xff0040, 50, 10, 1);
+			//light1.castShadow = true;
+			//light1.position.z = 15
+
+			//light1.add( new THREE.Mesh( sphere, new THREE.MeshStandardMaterial( {
+			//	color: 0xff0040}) ) );
+			//scene.add( light1 );
+
+			var light = new THREE.DirectionalLight(0xffffff, 1.0);
+			//light.position.set(0,90,100);
+			camera.add(light);
+
+
+			//hdri
+			const pmremGenerator = new THREE.PMREMGenerator(renderer);
+			pmremGenerator.compileEquirectangularShader();
+
+
+			async function loadHDRI() {
+				const rgbeLoader = new RGBELoader()
+					.setDataType(THREE.UnsignedByteType);
+				//.setPath( 'textures/equirectangular/' );
+
+				const texture = await rgbeLoader.loadAsync('HDR_029_Sky_Cloudy_Env.hdr');
+				const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+
+				//scene.background = envMap;
+				scene.environment = envMap;
+				texture.dispose();
+				pmremGenerator.dispose();
+			}
+			loadHDRI();
+
+
+			plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(10000, 10000), new THREE.MeshPhongMaterial({ color: 'rgb(0,127,127)', depthWrite: false, opacity: 0.2, transparent: true }));
+			plane.position.y = -50;
+			plane.rotation.x = - Math.PI / 2;
+			scene.add(plane);
+
+
+			grid = new THREE.GridHelper(10000, 100, 'rgb(127,255,255)', 'rgb(127,255,255)');
+			grid.material.opacity = 0.5;
+			grid.material.transparent = true
+			grid.position.y = -50;
+			scene.add(grid);
+
+
+
+			// model
+
+			var loader = new GLTFLoader();
+			
+			loader.load('models/Rotor1Phase02.glb', function (gltf) {
+
+				gltf.scene.traverse(function (child) {
+
+					if (child.isMesh) {
+
+
+						child.geometry.center();
+						child.geometry.computeFaceNormals();
+						child.geometry.computeVertexNormals();
+						//child.material =  new THREE.MeshPhongMaterial({color: 0x660066,shininess:5,reflectivity:1.0,opacity:1.0,transparent:false});
+						//child.material = new THREE.MeshPhongMaterial(
+						//{ color: 0x0000ff, specular: 0xffffff, shininess: 10, opacity: 0.3, transparent: true, wireframe: false });
+						//child.material = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+
+						child.material.side = THREE.DoubleSide;
+						child.rotation.x = Math.PI / 2.0;
+						child.scale.multiplyScalar(0.1);
+						//light1.add(child);
+						//recenter
+
+						new THREE.Box3().setFromObject(child).getCenter(child.position).multiplyScalar(- 1);
+						rotortube = child;
+						rotortube.layers.set(0);
+						scene.add(child);
+
+						document.getElementById("rotor").addEventListener('click', function () {
+
+
+							rotortube.layers.toggle(0);
+
+
+						});
+
+					}
+
+				});
+
+
+
+				render();
+
+			});
+			
+
+			
+			loader.load('models/Rotor1Phase02.glb', function (gltf) {
+
+			gltf.scene.traverse(function (child) {
+
+				if (child.isMesh) {
+
+
+					child.geometry.center();
+					child.geometry.computeFaceNormals();
+					child.geometry.computeVertexNormals();
+					//child.material =  new THREE.MeshPhongMaterial({color: 0x660066,shininess:5,reflectivity:1.0,opacity:1.0,transparent:false});
+					//child.material = new THREE.MeshPhongMaterial(
+					//{ color: 0x0000ff, specular: 0xffffff, shininess: 10, opacity: 0.3, transparent: true, wireframe: false });
+					child.material = new THREE.MeshStandardMaterial({ color: 0xaaaa00, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+
+					//child.material.side = THREE.DoubleSide;
+					child.rotation.x = Math.PI / 2.0;
+					child.rotation.y = Math.PI / 2.0;
+					child.scale.multiplyScalar(0.1);
+					//light1.add(child);
+					//recenter
+
+					new THREE.Box3().setFromObject(child).getCenter(child.position).multiplyScalar(- 1);
+					rotorphase2 = child;
+					rotorphase2.layers.set(0);
+					scene.add(child);
+					
+					document.getElementById("rotor").addEventListener('click', function () {
+
+
+						rotorphase2.layers.toggle(0);
+
+
+					});
+					
+				}
+
+			});
+
+
+
+			render();
+
+			});
+			
+			
+			loader.load('models/Shield.glb', function (gltf) {
+
+				gltf.scene.traverse(function (child) {
+
+					if (child.isMesh) {
+
+						//
+						child.geometry.center();
+
+						child.geometry.computeFaceNormals();
+						child.geometry.computeVertexNormals();
+						//child.material =  new THREE.MeshPhongMaterial({color: 0xaaa9ad,shininess:30,reflectivity:0.8,transparent:false});
+						child.material = new THREE.MeshStandardMaterial({ color: 0xaaa9ad, emissive: 0x303030, roughness: 0.5, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+						child.material.side = THREE.DoubleSide;
+						child.rotation.x = Math.PI / 2.0;
+						child.scale.multiplyScalar(0.1);
+
+						// recenter
+
+						//new THREE.Box3().setFromObject( child ).getCenter( child.position ).multiplyScalar( - 1 );
+						//rotor=child;
+						scene.add(child);
+						coil = child;
+						coil.layers.set(0);
+						document.getElementById("fieldcoil").addEventListener('click', function () {
+
+
+							coil.layers.toggle(0);
+
+						});
+
+
+					}
+
+				});
+
+
+
+				render();
+
+			});
+
+			
+			loader.load('models/Stator1Phase02.glb', function (gltf) {
+
+				gltf.scene.traverse(function (child) {
+
+					if (child.isMesh) {
+
+						child.geometry.computeFaceNormals();
+						child.geometry.computeVertexNormals();
+						//child.geometry.center();
+
+						//child.material =  new THREE.MeshPhongMaterial({color: 0x005500,shininess:30,reflectivity:1.0,transparent:true});
+						child.material = new THREE.MeshStandardMaterial({ color: 0xa000000, emissive: 0x595959, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: true });
+
+						child.rotation.x = Math.PI / 2.0;
+						child.scale.multiplyScalar(0.1);
+
+						scene.add(child);
+						w1 = child;
+						document.getElementById("stator").addEventListener('click', function () {
+							child.layers.toggle(0);
+						});
+
+					}
+
+				});
+				render();
+
+			});
+
+
+			
+			loader.load('models/Stator1Phase02.glb', function (gltf) {
+
+			gltf.scene.traverse(function (child) {
+
+				if (child.isMesh) {
+
+					child.geometry.computeFaceNormals();
+					child.geometry.computeVertexNormals();
+					//child.geometry.center();
+
+					//child.material =  new THREE.MeshPhongMaterial({color: 0x005500,shininess:30,reflectivity:1.0,transparent:true});
+					child.material = new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x595959, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: true });
+
+					child.rotation.x = Math.PI / 2.0;
+					child.rotation.y = 2.0*Math.PI / 3.0;
+					child.scale.multiplyScalar(0.1);
+
+					scene.add(child);
+					
+					w2 = child;
+					document.getElementById("stator").addEventListener('click', function () {
+
+
+						child.layers.toggle(0);
+
+					});
+					
+					
+				}
+
+			});
+			render();
+			});
+			
+			
+			loader.load('models/Stator1Phase02.glb', function (gltf) {
+
+			gltf.scene.traverse(function (child) {
+
+				if (child.isMesh) {
+
+					child.geometry.computeFaceNormals();
+					child.geometry.computeVertexNormals();
+					//child.geometry.center();
+
+					//child.material =  new THREE.MeshPhongMaterial({color: 0x005500,shininess:30,reflectivity:1.0,transparent:true});
+					child.material = new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x595959, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: true });
+
+					child.rotation.x = Math.PI / 2.0;
+					child.rotation.y = 4.0*Math.PI / 3.0;
+					child.scale.multiplyScalar(0.1);
+
+					scene.add(child);
+					
+					w3 = child;
+					document.getElementById("stator").addEventListener('click', function () {
+
+
+						child.layers.toggle(0);
+
+					});
+					
+
+				}
+
+			});
+			render();
+
+			});
+			
+		
+
+
+			window.addEventListener('resize', onWindowResize, false);
+			document.addEventListener('mousemove', onDocumentMouseMove, false);
+
+
+			document.getElementById("infobutton").addEventListener('click', function () {
+				document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+				i = 0;
+				infoFunction(loz + " Superconducting Homopolar Motor/Generator\n\nMotor Rating: 2 MW\nRated Speed: 25000 RPM\nPower Density: 5.4 kW/kg\nEfficiency: 99.1 %");
+
+
+			});
+
+			renderer.domElement.addEventListener("click", onClick, false);
+		}
+
+
+
+
+		function onClick(event) {
+			console.log("on click");
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			var intersects = raycaster.intersectObjects(scene.children);
+			if (intersects.length > 0) {
+				console.log(intersects.length);
+				if (intersects[0].object == stator) {
+					//intersects[0].object.material.opacity -=0.1;
+					infoFunction(loz + " 36-Slot Laminated Stator\n\nMaterial: 10JNEX900 Super Core\nChamfered to Minimize Weight\nDiameter: 548 mm\nAir Gap: 3 mm");
+				}
+
+				//else if(intersects[0].object==rotortube || intersects[0].object==rotorlumps1 || intersects[0].object==rotorlumps2){
+				//	infoFunction(loz+" 6-Pole High-Speed Rotor\n\nMaterial: Aermet 310 Magnetic Steel\nActive Pole Length: 100 mm\nOne-Piece Construction")
+				//}
+				if (intersects[0].object == rotortube) {
+					infoFunction(loz + " 6-Pole High-Speed Rotor\n\nMaterial: Aermet 310 Magnetic Steel\nActive Pole Length: 100 mm\nOne-Piece Construction")
+				}
+				else if (intersects[0].object == coil) {
+					infoFunction(loz + " High-Temperature Superconductor Field Coil\n\nMaterial: Rare-Earth Barium Copper Oxide (REBCO)\nOperating Temperature: 50 K\nCurrent at Rated Load: 364 A\n\Number of Turns: 60");
+				}
+				else if (intersects[0].object == w1 || intersects[0].object == w2 || intersects[0].object == w3) {
+					infoFunction(loz + " Double-Layer 3-Phase Armature Winding\n\nMaterial: Litz Copper Wire\n6 A/mm" + sq + " Strands\nLiquid-Cooled");
+				}
+
+				else if (intersects[0].object == flux1) {
+					infoFunction("Flux path");
+				}
+				else {
+					document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+					i = 0;
+				}
+			}
+
+
+		}
+
+
+		function onWindowResize() {
+
+			renderer.setSize(window.innerWidth, window.innerHeight);
+
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+
+			render();
+
+		}
+
+		function onDocumentMouseMove(event) {
+			event.preventDefault();
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+		}
+
+
+
+		function animate() {
+			requestAnimationFrame(animate);
+			theta+=0.01;
+			if (rotortube)
+				rotortube.rotation.y = theta;
+			if(rotorphase2)
+				rotorphase2.rotation.y = theta+Math.PI/2.0;	
+			if(coil)
+				coil.rotation.y=theta;	
+			if(w1){
+				//w1.material.color.r=Math.max(0,Math.cos(2*theta));
+				//w1.material.color.b=Math.max(0,-Math.cos(2*theta));
+
+				var a = Math.cos(2*theta);
+				if(a>=0){
+					w1.material.color.r=1;
+					w1.material.color.b=1-a;
+					w1.material.color.g=1-a;
+				}
+				else{
+					w1.material.color.r=1+a;
+					w1.material.color.b=1;
+					w1.material.color.g=1+a;
+				}
+
+
+			}
+			
+			if(w2){
+				//w2.material.color.r=Math.max(0,Math.cos(2*(theta+Math.PI/3.0)));
+				//w2.material.color.b=Math.max(0,-Math.cos(2*(theta+Math.PI/3.0)));
+				var a = Math.cos(2*(theta+Math.PI/3.0));
+				if(a>=0){
+					w2.material.color.r=1;
+					w2.material.color.b=1-a;
+					w2.material.color.g=1-a;
+				}
+				else{
+					w2.material.color.r=1+a;
+					w2.material.color.b=1;
+					w2.material.color.g=1+a;
+				}
+			}
+
+			if(w3){
+				//w3.material.color.r=Math.max(0,Math.cos(2*(theta+2.0*Math.PI/3.0)));
+				//w3.material.color.b=Math.max(0,-Math.cos(2*(theta+2.0*Math.PI/3.0)));
+				var a = Math.cos(2*(theta+2.0*Math.PI/3.0));
+				if(a>=0){
+					w3.material.color.r=1;
+					w3.material.color.b=1-a;
+					w3.material.color.g=1-a;
+				}
+				else{
+					w3.material.color.r=1+a;
+					w3.material.color.b=1;
+					w3.material.color.g=1+a;
+				}
+			}
+			render();
+		}
+
+
+		function render() {
+
+			renderer.render(scene, camera);
+
+		}
+
+	</script>
+	<script>
+
+
+		var i = 0;
+		var txt = 'Superconducting field coil\nREBCO conductor'; /* The text */
+		var speed = 20; /* The speed/duration of the effect in milliseconds */
+
+		function infoFunction(text) {
+			txt = text;
+			var x = document.getElementById("d1");
+
+			x.innerHTML = "<p id='line1'></p>";
+			i = 0;
+			typeWriter();
+
+
+
+
+		}
+
+
+
+		function typeWriter() {
+			if (i < txt.length) {
+				if (txt.charAt(i) == '\n') {
+					document.getElementById("line1").innerHTML += '<br>';
+				} else {
+					document.getElementById("line1").innerHTML += txt.charAt(i);
+				}
+				i++;
+				setTimeout(typeWriter, speed);
+			}
+			else if (i == txt.length) {
+				document.getElementById("d1").innerHTML += "<p id='cursor-line' class='visible'> <span class='typed-cursor'>&#9608;</span></p>";
+				i++;
+			}
+		}
+	</script>
+
+
+	<script>
+		// Get the modal
+		var modal = document.getElementById("myModal");
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("aboutBtn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks the button, open the modal 
+		btn.onclick = function () {
+			modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+
+
+	</script>
+</body>
+
+</html>
