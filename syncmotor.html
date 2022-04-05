@@ -8,12 +8,12 @@
     <meta property="og:url" content="https://robinson.ac.nz/conductors/homopolar.html" />
     <meta property="og:site_name" content="Robinson Research Institute"/>
     <meta property="og:image" content="https://robinson.ac.nz/conductors/img/synchronous2.jpg" />
-    <meta property="og:description" content="3 superconducting synchronous motor." />
+    <meta property="og:description" content="Superconducting synchronous motor." />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="robinson.ac.nz" />    
     <meta name="twitter:title" content="Synchronous Motor" />
-    <meta name="twitter:description" content="3 megawatt superconducting synchronous motor/generator." />  
+    <meta name="twitter:description" content="Superconducting synchronous motor/generator." />  
     <meta name="twitter:image" content="https://robinson.ac.nz/conductors/img/synchronous2.jpg" />
     
     
@@ -24,7 +24,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
     
-    <meta name="description" content="3 megawatt superconducting synchronous motor.">
+    <meta name="description" content="Superconducting synchronous motor.">
 	<title>Synchronous Motor</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -58,7 +58,8 @@
 			<span class="close">&times;</span>
 			<p>Made by James Storey, Robinson Research Institute, 2022.</p>
 			<p>Use buttons to show or hide components.</p>
-			<p>Red/blue colours illustrate positive/negative currents being induced in the stator coils.</p>
+			<p>Click on a part to show information.</p>
+			<p>Red and blue colours illustrate differences in polarity.</p>
 			<!--<p>Click on a component to show information.</p>-->
 		</div>
 
@@ -227,7 +228,7 @@
 
 			var loader = new GLTFLoader();
 			
-			loader.load('models/Rotor1Phase02.glb', function (gltf) {
+			loader.load('models/ParametricRotor.glb', function (gltf) {
 
 				gltf.scene.traverse(function (child) {
 
@@ -240,7 +241,7 @@
 						//child.material =  new THREE.MeshPhongMaterial({color: 0x660066,shininess:5,reflectivity:1.0,opacity:1.0,transparent:false});
 						//child.material = new THREE.MeshPhongMaterial(
 						//{ color: 0x0000ff, specular: 0xffffff, shininess: 10, opacity: 0.3, transparent: true, wireframe: false });
-						//child.material = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+						child.material = new THREE.MeshStandardMaterial({ color: 0xaa0000, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
 
 
 						child.material.side = THREE.DoubleSide;
@@ -274,7 +275,7 @@
 			
 
 			
-			loader.load('models/Rotor1Phase02.glb', function (gltf) {
+			loader.load('models/ParametricRotor.glb', function (gltf) {
 
 			gltf.scene.traverse(function (child) {
 
@@ -287,7 +288,7 @@
 					//child.material =  new THREE.MeshPhongMaterial({color: 0x660066,shininess:5,reflectivity:1.0,opacity:1.0,transparent:false});
 					//child.material = new THREE.MeshPhongMaterial(
 					//{ color: 0x0000ff, specular: 0xffffff, shininess: 10, opacity: 0.3, transparent: true, wireframe: false });
-					child.material = new THREE.MeshStandardMaterial({ color: 0xaaaa00, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+					child.material = new THREE.MeshStandardMaterial({ color: 0x0000aa, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
 
 
 					//child.material.side = THREE.DoubleSide;
@@ -333,7 +334,9 @@
 						child.geometry.computeFaceNormals();
 						child.geometry.computeVertexNormals();
 						//child.material =  new THREE.MeshPhongMaterial({color: 0xaaa9ad,shininess:30,reflectivity:0.8,transparent:false});
-						child.material = new THREE.MeshStandardMaterial({ color: 0xaaa9ad, emissive: 0x303030, roughness: 0.5, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+						child.material = new THREE.MeshStandardMaterial({ color: 0xda8a67, emissive: 0x303030, roughness: 0.5, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+						//child.material = new THREE.MeshStandardMaterial({ color: 0xc87533, emissive: 0x303030, roughness: 0.5, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
 
 						child.material.side = THREE.DoubleSide;
 						child.rotation.x = Math.PI / 2.0;
@@ -365,7 +368,7 @@
 			});
 
 			
-			loader.load('models/Stator1Phase02.glb', function (gltf) {
+			loader.load('models/ParametricStator.glb', function (gltf) {
 
 				gltf.scene.traverse(function (child) {
 
@@ -396,7 +399,7 @@
 
 
 			
-			loader.load('models/Stator1Phase02.glb', function (gltf) {
+			loader.load('models/ParametricStator.glb', function (gltf) {
 
 			gltf.scene.traverse(function (child) {
 
@@ -431,7 +434,7 @@
 			});
 			
 			
-			loader.load('models/Stator1Phase02.glb', function (gltf) {
+			loader.load('models/ParametricStator.glb', function (gltf) {
 
 			gltf.scene.traverse(function (child) {
 
@@ -476,7 +479,7 @@
 			document.getElementById("infobutton").addEventListener('click', function () {
 				document.getElementById("d1").innerHTML = "<p id='line1'></p>";
 				i = 0;
-				infoFunction(loz + " Superconducting Synchronous Motor\n\nMotor Rating: 3 MW\nRated Speed: 4500 RPM\nPower Density: 39.5 kW/kg\nEfficiency: 99.4 %");
+				infoFunction(loz + " Hybrid Superconducting Synchronous Motor\n\nMotor Rating: 100 kW\nRated Speed: 4500 RPM");
 
 
 			});
@@ -495,10 +498,14 @@
 
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+			raycaster.setFromCamera( mouse, camera ); //this was the magic line to get the mouse click detection working!
+
+
 			var intersects = raycaster.intersectObjects(scene.children);
 			if (intersects.length > 0) {
 				console.log(intersects.length);
-				/*
+				
 				if (intersects[0].object == stator) {
 					//intersects[0].object.material.opacity -=0.1;
 					infoFunction(loz + " 36-Slot Laminated Stator\n\nMaterial: 10JNEX900 Super Core\nChamfered to Minimize Weight\nDiameter: 548 mm\nAir Gap: 3 mm");
@@ -508,13 +515,13 @@
 				//	infoFunction(loz+" 6-Pole High-Speed Rotor\n\nMaterial: Aermet 310 Magnetic Steel\nActive Pole Length: 100 mm\nOne-Piece Construction")
 				//}
 				if (intersects[0].object == rotortube) {
-					infoFunction(loz + " 6-Pole High-Speed Rotor\n\nMaterial: Aermet 310 Magnetic Steel\nActive Pole Length: 100 mm\nOne-Piece Construction")
+					infoFunction(loz + " 4-Pole Superconducting Rotor\n\nREBCO conductor-on-round-core (CORC) cable\nActive Pole Length: 150 mm\nCurrent: 67 kA-turns per pole\nOperating Temperature: 30 K")
 				}
 				else if (intersects[0].object == coil) {
-					infoFunction(loz + " High-Temperature Superconductor Field Coil\n\nMaterial: Rare-Earth Barium Copper Oxide (REBCO)\nOperating Temperature: 50 K\nCurrent at Rated Load: 364 A\n\Number of Turns: 60");
+					infoFunction(loz + " Rotating Harmonic Shield\n\nMaterial: Aluminium\n");
 				}
 				else if (intersects[0].object == w1 || intersects[0].object == w2 || intersects[0].object == w3) {
-					infoFunction(loz + " Double-Layer 3-Phase Armature Winding\n\nMaterial: Litz Copper Wire\n6 A/mm" + sq + " Strands\nLiquid-Cooled");
+					infoFunction(loz + " 3-Phase Conventional Stator\n\n6 Copper litz wire saddle coils\n24 turns per coil\nLiquid-cooled");
 				}
 
 				else if (intersects[0].object == flux1) {
@@ -524,7 +531,7 @@
 					document.getElementById("d1").innerHTML = "<p id='line1'></p>";
 					i = 0;
 				}
-				*/
+				
 				
 			}
 
