@@ -255,7 +255,7 @@ getCurve(x6,y6,z6,'blue','white','blue')
 ]);*/
 
 var layout = {
-  height : 600,
+  height : 700,
   width : 1200,
   showlegend:false,
   /*title: 'Superconducting Transition Temperature vs Year and Pressure',*/
@@ -269,11 +269,17 @@ var layout = {
       z: 0.75
     },
     camera:{
+    center:{
+        z:-0.4,
+    },    
     eye:{
         x:0.7*0.2+2,
         y:0.7*-2,
-        z:0.7*1
-    }
+        z:0.4
+    },
+    /*projection:{
+        type:'orthographic',
+    }*/   
   }
   },
   autosize: true,
