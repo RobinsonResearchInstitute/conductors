@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superconducting Tc</title>
+
+    <meta property="og:title" content="Superconducting Tc" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://robinson.ac.nz/conductors" />
+    <meta property="og:site_name" content="Robinson Research Institute"/>
+    <meta property="og:image" content="https://robinson.ac.nz/conductors/img/screenshot.jpg" />
+    <meta property="og:description" content="Superconducting Transition Temperature vs Year and Pressure." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="robinson.ac.nz" />    
+    <meta name="twitter:title" content="Superconducting Tc" />
+    <meta name="twitter:description" content="Superconducting Transition Temperature vs Year and Pressure." />  
+    <meta name="twitter:image" content="https://robinson.ac.nz/conductors/img/screenshot.jpg" />
+    
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    
+    <meta name="description" content="Superconducting Transition Temperature vs Year and Pressure.">
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="learn.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://cdn.plot.ly/plotly-2.18.2.min.js"></script>
+
+    <style>
+        
+    </style>
+
+</head>
+<body>
+
+    <div class="topnav">
+       
+        <div class="dropdown">
+          <!--<button class="dropbtn">Dropdown
+            <i class="fa fa-caret-down"></i>
+          </button>-->
+          <button class="dropbtn" onclick="location.href='https://robinson.ac.nz/home'"><img src="favicon-32x32.png" alt="HOME"></img>
+          </button>
+          <div class="dropdown-content">
+            <a href="https://robinson.ac.nz/home">Home</a>
+            <a href="https://robinson.ac.nz/newsmedia">News</a>
+            <a href="https://robinson.ac.nz/research/brochure.html">Research</a>
+            <a href="https://robinson.ac.nz/publications">Publications</a>
+            <a href="https://robinson.ac.nz/publications/theses.html">Theses</a>
+            <a href="https://robinson.ac.nz/conductors/">Superconductivity</a>
+            <a href="https://robinson.ac.nz/hts-wire-database/">Wire Database</a>
+            <a href="https://robinson.ac.nz/home#contact-page">Vacancies</a>
+          </div>
+        </div>  
+           <!-- <a href="https://robinsonresearchinstitute.github.io/home/index.html">HOME</a>-->
+    
+        </div>
+    
+        <h1>Superconducting Transition Temperature vs Year and Pressure</h1>
+    
+
+    <div id="myDiv"></div>
+    <hr>
+    <div class="credit texts">Compiled by James Storey </div>
+</body>
+<script>
+    var pointCount = 31;
+
+var i, r;
+
+//LTS
+var x = [1911,1913,1913,1932,1932,1941,1941,1953,1953,1954,1954,1967,1967,1974,1986,1988,1988,2001,2001];
+
+var y = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+var z = [4.2,4.2,7.2,7.2,11.5,11.5,16.1,16.1,17.1,17.1,18.05,18.05,20.7,20.7,20.7,20.7,32,32,39];
+
+var c = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
+
+//cuprates
+var x2 = [1986,1987,1987,1988,1988,1993,1993,1994, 1994,  1994, 1995, 1995, 1995];
+
+var y2 = [0,   0,   0,   0,   0,   0,   0,   0,    0,        0,    0,    0,    0];
+
+var z2 = [30,  30,  93,  93,  120, 120, 133, 133,  164,    133,  133,  138,  138];
+
+var c2 = [0,1,2,3,4,5,6,7,8,9];
+
+
+var x2p = [1994,1994];
+var y2p = [0,31];
+var z2p = [164,164]
+
+//carbon
+var x3 = [1991,1991,1995,1995];
+
+var y3 = [0,   0,   0,   0 ];
+
+var z3 = [19.3,33,33,38,38];
+
+var c3 = [0,1,2,3,4];
+
+var x3p = [1995,1995];
+var y3p = [0,0.7];
+var z3p = [38,38];
+
+
+//pnictides
+var x4 = [2008,2008];
+
+var y4 = [0,0];
+
+var z4 = [26,55];
+
+var c4 = [0,1];
+
+//polycyclic
+var x5 = [2010,2012,2012];
+var y5 = [0,0,0];
+var z5 = [18,18,33];
+var c5 = [0,1,2];
+
+//hydrides
+var x6a = [2015,2019,2019,2019,2019,2019,2020,2023,2023,2023];
+var y6a = [150, 150, 170, 170, 170, 190, 190, 190, 1,   1];
+var z6a = [203, 203, 203, 250, 250, 250, 280, 280, 280, 297];
+var c6a = [0,1,2,3,4,5,6,78];
+
+//hydrides
+var x6 = [2015,2019, 2019, 2019, 2023, 2023];
+var y6 = [0,   0,    0,        0,    0,    0];
+var z6 = [203, 203,  250,    280,  280,  297];
+var c6 = [0,1,2,3,4,5,6,7];
+
+var x6p1 = [2015,2015];
+var y6p1 = [0,   150];
+var z6p1 = [203, 203];
+var c6p1 = [0,1];
+
+var x6p2 = [2019,2019];
+var y6p2 = [0,   170];
+var z6p2 = [250, 250];
+var c6p2 = [0,1];
+
+var x6p3 = [2019,2019];
+var y6p3 = [0,   190];
+var z6p3 = [280, 280];
+var c6p3 = [0,1];
+
+var x6p4 = [2023,2023];
+var y6p4 = [0,   1];
+var z6p4 = [297, 297];
+var c6p4 = [0,1];
+
+
+var colors = ["#46a6f5", "#FF0000", "#FF00FF", "#00FF00", "#FFFF00", "#46a6f5"]
+
+var ltspoints =
+                [{ "year": 1911, "Tc": 4.2, "pressure":0, "name": "Hg", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.dwc.knaw.nl/toegangen/digital-library-knaw/?pagetype=publDetail&pId=PU00013358" },
+                { "year": 1913, "Tc": 7.2, "pressure":0, "name": "Pb", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.dwc.knaw.nl/toegangen/digital-library-knaw/?pagetype=publDetail&pId=PU00012901" },
+                { "year": 1932, "Tc": 9.25, "pressure":0, "name": "Nb", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://onlinelibrary.wiley.com/doi/abs/10.1002/andp.19334090602" },
+                { "year": 1932, "Tc": 11.5, "pressure":0, "name": "NbC", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://onlinelibrary.wiley.com/doi/abs/10.1002/andp.19334090602" },
+                { "year": 1941, "Tc": 16.1, "pressure":0, "name": "NbN", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "" },
+                { "year": 1953, "Tc": 17.1, "pressure":0, "name": "V3Si", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.89.884" },
+                { "year": 1954, "Tc": 18.05, "pressure":0, "name": "Nb3Sn", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.95.1435" },
+                { "year": 1967, "Tc": 20.7, "pressure":0, "name": "NbAlGe", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.pnas.org/content/61/2/621" },
+                { "year": 1974, "Tc": 23.2, "pressure":0, "name": "Nb3Ge", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://aip.scitation.org/doi/10.1063/1.1663717" },
+                { "year": 1988, "Tc": 32, "pressure":0, "name": "BaKBiO", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.nature.com/articles/332814a0" },
+                { "year": 1994, "Tc": 23, "pressure":0, "name": "YPd2B2C", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.nature.com/articles/367146a0" },
+                { "year": 2001, "Tc": 39, "pressure":0, "name": "MgB2", "color": colors[0], "fillcolor": colors[0], "symbol": "circle", "paper": "https://www.nature.com/articles/35065039" },
+                ];
+
+                var hydridepoints =
+                [{ "year": 2015, "Tc": 203, "pressure":150, "name": "H3S", "color": colors[0], "fillcolor": "white", "symbol": "square", "paper": "https://www.nature.com/articles/nature14964" },
+                { "year": 2019, "Tc": 250, "pressure":170, "name": "H10La", "color": colors[0], "fillcolor": "white", "symbol": "square", "paper": "https://www.nature.com/articles/s41586-019-1201-8" },
+                { "year": 2019, "Tc": 280, "pressure":190, "name": "LaH10\u{00B1}x", "color": colors[0], "fillcolor": "white", "symbol": "square", "paper": "https://link.aps.org/doi/10.1103/PhysRevLett.122.027001" },
+                { "year": 2023, "Tc": 294, "pressure":1, "name": "LuH3−δNε", "color": colors[0], "fillcolor": "white", "symbol": "square", "paper": "https://www.nature.com/articles/s41586-023-05742-0" }
+                ];
+
+var cupratepoints =
+                [{ "year": 1986, "Tc": 30, "pressure":0, "name": "LaBaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://link.springer.com/article/10.1007/BF01303701#rightslink" },
+                { "year": 1987, "Tc": 93, "pressure":0, "name": "YBaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.58.908" },
+                { "year": 1988, "Tc": 105, "pressure":0, "name": "BiSrCaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://iopscience.iop.org/article/10.1143/JJAP.27.L209" },
+                { "year": 1988, "Tc": 120, "pressure":0, "name": "TlBaCaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://www.nature.com/articles/332138a0" },
+                { "year": 1993, "Tc": 133, "pressure":0, "name": "HgBaCaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://www.nature.com/articles/363056a0" },
+                { "year": 1995, "Tc": 138, "pressure":0, "name": "HgTlBaCaCuO", "color": colors[1], "fillcolor": colors[1], "symbol": "circle", "paper": "https://doi.org/10.1016/0921-4534(94)02461-8" },
+                ];
+
+
+                var Pcupratepoints =
+                [{ "year": 1994, "Tc": 164, "pressure":31, "name": "HgBaCaCuO", "color": colors[1], "fillcolor": "white", "symbol": "square", "paper": "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.50.4260" },
+                ];
+                
+                var carbonpoints =
+                [{ "year": 1991, "Tc": 19.3, "pressure":0, "name": "K3C60", "color": colors[2], "fillcolor": colors[2], "symbol": "circle", "paper": "https://science.sciencemag.org/content/252/5009/1154" },
+                { "year": 1991, "Tc": 33, "pressure":0, "name": "RbCs2C60", "color": colors[2], "fillcolor": colors[2], "symbol": "circle", "paper": "https://www.nature.com/articles/352222a0" },
+                ];
+
+                var Pcarbonpoints =
+                [{ "year": 1995, "Tc": 38, "pressure":0.7, "name": "Cs3C60", "color": colors[2], "fillcolor": "white", "symbol": "square", "paper": "https://www.nature.com/articles/nmat2179" },
+                ];
+
+                var ironpoints =
+                [{ "year": 2008, "Tc": 26, "pressure":0, "name": "LaFeAsOF", "color": colors[3], "fillcolor": colors[3], "symbol": "circle", "paper": "https://pubs.acs.org/doi/10.1021/ja800073m" },
+                { "year": 2008, "Tc": 38, "pressure":0, "name": "BaKFeAs", "color": colors[3], "fillcolor": colors[3], "symbol": "circle", "paper": "https://doi.org/10.1103/PhysRevLett.101.107006" },
+                { "year": 2008, "Tc": 55, "pressure":0, "name": "SmFeAsOF", "color": colors[3], "fillcolor": colors[3], "symbol": "circle", "paper": "https://doi.org/10.1088/0256-307X/25/6/080" },
+                ];
+
+                var polypoints =
+                [{ "year": 2010, "Tc": 18, "pressure":0, "name": "KxC22H14", "color": colors[4], "fillcolor": colors[4], "symbol": "circle", "paper": "https://www.nature.com/articles/nature08859" },
+                { "year": 2012, "Tc": 33, "pressure":0, "name": "KxC30H18", "color": colors[4], "fillcolor": colors[4], "symbol": "circle", "paper": "https://www.nature.com/articles/srep00389" },
+                ];
+            
+                
+
+
+/*
+for(i = 0; i < pointCount; i++) 
+
+{
+
+   r = 10 * Math.cos(i / 10);
+
+   x.push(r * Math.cos(i));
+
+   y.push(r * Math.sin(i));
+
+   z.push(i);
+
+   c.push(i)
+
+}
+*/
+
+
+/*Plotly.newPlot('myDiv', [
+
+getCurve(x,y,z,'blue','blue','blue'),
+getCurve(x2,y2,z2,'red','red','red'),
+getCurve(x3,y3,z3,'pink','pink','pink'),
+getCurve(x4,y4,z4,'green','green','green'),
+getCurve(x5,y5,z5,'yellow','yellow','yellow'),
+getCurve(x6,y6,z6,'blue','white','blue')
+
+]);*/
+
+var layout = {
+  height : 600,
+  width : 1200,
+  showlegend:false,
+  /*title: 'Superconducting Transition Temperature vs Year and Pressure',*/
+  scene: {
+    xaxis: { title: 'Year' },
+    yaxis: { title: 'Tc (K)' },
+    zaxis: { title: 'Pressure (GPa)' },
+    aspectratio: {
+      x: 1.5,
+      y: 1.0,
+      z: 0.75
+    },
+    camera:{
+    eye:{
+        x:0.7*0.2+2,
+        y:0.7*-2,
+        z:0.7*1
+    }
+  }
+  },
+  autosize: true,
+  margin: {
+    l: 0,
+    r: 0,
+    b: 100,
+    t: 0,
+    pad: 0
+  },
+  
+};
+
+Plotly.newPlot('myDiv', [
+
+getLine(x,z,y,'blue'),
+getMarkers(ltspoints,'blue','blue'),
+
+getLine(x2,z2,y2,'red'),
+getMarkers(cupratepoints,'red','red'),
+
+getLine(x2p,z2p,y2p,'red'),
+getMarkers(Pcupratepoints,'white','red'),
+
+
+getLine(x3,z3,y3,'pink'),
+getMarkers(carbonpoints,'pink','pink'),
+
+getLine(x3p,z3p,y3p,'pink'),
+getMarkers(Pcarbonpoints,'white','pink'),
+
+getLine(x4,z4,y4,'green'),
+getMarkers(ironpoints,'green','green'),
+
+getLine(x5,z5,y5,'yellow'),
+getMarkers(polypoints,'yellow','yellow'),
+
+getLine(x6,z6,y6,'blue'),
+getLine(x6p1,z6p1,y6p1,'blue'),
+getLine(x6p2,z6p2,y6p2,'blue'),
+getLine(x6p3,z6p3,y6p3,'blue'),
+getLine(x6p4,z6p4,y6p4,'blue'),
+getMarkers(hydridepoints,'white','blue'),
+
+
+],layout);
+
+
+function getLine(x,y,z,line){
+    return {
+
+type: 'scatter3d',
+
+mode: 'lines',
+
+x: x,
+
+y: y,
+
+z: z,
+
+line: {
+
+  width: 6,
+
+  color: line,
+
+  /*colorscale: "Viridis"*/},
+
+}
+}
+
+function getMarkers(points,markerfill,markeroutline){
+    
+    let x = [];
+    let y = [];
+    let z = [];
+    
+    for(let i = 0; i<points.length; i++){
+        x.push(points[i].year);
+        z.push(points[i].pressure);
+        y.push(points[i].Tc);
+    }
+    
+
+    return {
+
+    type: 'scatter3d',
+
+    mode: 'markers',
+
+    x: x,
+
+    y: y,
+
+    z: z,
+
+    
+    marker: {
+
+    size: 3.5,
+
+    /*symbol:"triangle",*/
+
+    color: markerfill,
+
+    /*colorscale: "Greens",
+
+    cmin: -20,
+
+    cmax: 50*/
+
+    line: {
+        /*color : 'rgb(231, 99, 250)',*/
+        color : markeroutline,
+        width : 2
+    }
+
+    }}
+}
+
+
+function getCurve(x,y,z,line,markerfill,markeroutline){
+    return {
+
+type: 'scatter3d',
+
+mode: 'lines+markers',
+
+x: x,
+
+y: y,
+
+z: z,
+
+line: {
+
+  width: 6,
+
+  color: line,
+
+  /*colorscale: "Viridis"*/},
+
+marker: {
+
+  size: 3.5,
+
+  /*symbol:"triangle",*/
+
+  color: markerfill,
+
+  /*colorscale: "Greens",
+
+  cmin: -20,
+
+  cmax: 50*/
+
+  line: {
+            /*color : 'rgb(231, 99, 250)',*/
+            color : markeroutline,
+            width : 2
+  }
+
+}}
+}
+
+</script>
+</html>
