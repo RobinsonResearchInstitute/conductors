@@ -10,14 +10,14 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://robinson.ac.nz/conductors" />
     <meta property="og:site_name" content="Robinson Research Institute"/>
-    <meta property="og:image" content="https://robinson.ac.nz/conductors/img/3dTc1200.png" />
+    <meta property="og:image" content="https://robinson.ac.nz/conductors/img/screenshot.jpg" />
     <meta property="og:description" content="Superconducting Transition Temperature vs Year and Pressure." />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="robinson.ac.nz" />    
     <meta name="twitter:title" content="Superconducting Tc" />
     <meta name="twitter:description" content="Superconducting Transition Temperature vs Year and Pressure." />  
-    <meta name="twitter:image" content="https://robinson.ac.nz/conductors/img/3dTc1200.png" />
+    <meta name="twitter:image" content="https://robinson.ac.nz/conductors/img/screenshot.jpg" />
     
     
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -68,7 +68,7 @@
     
         <h1>Superconducting Transition Temperature vs Year and Pressure</h1>
     
-
+    <button id="toggleAxis" onclick="toggleAxis()">Log</button>
     <div id="myDiv"></div>
     <hr>
     <div class="credit texts">Compiled by James Storey </div>
@@ -77,6 +77,8 @@
     var pointCount = 31;
 
 var i, r;
+
+var linear = true;
 
 //LTS
 var x = [1911,1913,1913,1932,1932,1941,1941,1953,1953,1954,1954,1967, 1967,1974,1974,1988,1988,2001,2001];
@@ -261,7 +263,8 @@ var layout = {
   /*title: 'Superconducting Transition Temperature vs Year and Pressure',*/
   scene: {
     xaxis: { title: 'Year' },
-    yaxis: { title: 'Tc (K)' },
+    yaxis: { title: 'Tc (K)',
+  },
     zaxis: { title: 'Pressure (GPa)' },
     aspectratio: {
       x: 1.5,
@@ -292,6 +295,31 @@ var layout = {
   },
   
 };
+
+
+
+function toggleAxis(){
+  if(linear){
+  document.getElementById('toggleAxis').innerText='Linear';
+  layout.scene.yaxis={
+
+   title: 'Tc (K)',type:'log',
+    /*dtick:"D1",*/
+    tickmode:'array',
+    tickvals:[1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100,200,300],
+    ticktext: ['','2','','4','','6','','','','10','20','','40','','60','','','','100','200','300'],  
+  }
+
+}else{
+  document.getElementById('toggleAxis').innerText='Log';
+  layout.scene.yaxis={
+    title: 'Tc (K)',
+  }
+}
+
+linear = !linear;
+Plotly.relayout('myDiv',layout);
+}
 
 Plotly.newPlot('myDiv', [
 
