@@ -70,7 +70,6 @@
     
     <div>Scale <button id="toggleAxis" onclick="toggleAxis()">Log</button></div>
     <div id="myDiv"></div>
-    
     <div class="content">
       <p>Some compounds, represented by the open circles, become superconductors when squeezed by external pressure. Colours denote <span style="color: #0000ff">conventional</span>, <span style="color: #ff0000">cuprate high-temperature</span>, <span style="color: #f392f3">carbon-based</span>, <span style="color: #006100">iron-based high-temperature</span> and <span style="color: #ffae00">polycyclic hydrocarbon</span> superconductors.</p>
   </div>
@@ -374,7 +373,7 @@ x: x,
 y: y,
 
 z: z,
-
+hoverinfo:'skip',
 line: {
 
   width: 6,
@@ -391,11 +390,13 @@ function getMarkers(points,markerfill,markeroutline){
     let x = [];
     let y = [];
     let z = [];
+    let label = [];
     
     for(let i = 0; i<points.length; i++){
         x.push(points[i].year);
         z.push(points[i].pressure);
         y.push(points[i].Tc);
+        label.push(points[i].name);
     }
     
 
@@ -432,7 +433,17 @@ function getMarkers(points,markerfill,markeroutline){
         width : 2
     }
 
-    }}
+    },
+
+    hovertemplate: '<b>%{text}</b> (%{x})'
+                      +'<br>T<sub>c</sub>: %{y:.1f} K'
+                      +'<br>Pressure: %{z:.1f} GPa',
+                      //+  '<br>Year: %{x}',
+
+        text: label,
+  
+  
+  }
 }
 
 
