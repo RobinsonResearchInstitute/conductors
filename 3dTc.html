@@ -68,8 +68,8 @@
     
         <h1>Superconducting Transition Temperature vs Year and Pressure</h1>
     
-    <button id="toggleAxis" onclick="toggleAxis()">Log</button>
-    <div id="myDiv"></div>
+    <div>Scale <button id="toggleAxis" onclick="toggleAxis()">Log</button></div>
+    <div id="myDiv" style="height:auto;"></div>
     <hr>
     <div class="credit texts">Compiled by James Storey </div>
 </body>
@@ -256,9 +256,11 @@ getCurve(x6,y6,z6,'blue','white','blue')
 
 ]);*/
 
+var config = {responsive:true};
+
 var layout = {
-  height : 700,
-  width : 1200,
+  /*height : 700,
+  width : 1200,*/
   showlegend:false,
   /*title: 'Superconducting Transition Temperature vs Year and Pressure',*/
   scene: {
@@ -273,23 +275,23 @@ var layout = {
     },
     camera:{
     center:{
-        z:-0.4,
+        z:-0.2,
     },    
     eye:{
-        x:0.7*0.2+2,
-        y:0.7*-2,
-        z:0.4
+        x:2.2*0.8,
+        y:-1.4*0.8,
+        z:0.4*0.8
     },
     /*projection:{
         type:'orthographic',
     }*/   
   }
   },
-  autosize: true,
+  /*autosize: true,*/
   margin: {
     l: 0,
     r: 0,
-    b: 100,
+    b: 0,
     t: 0,
     pad: 0
   },
@@ -318,7 +320,7 @@ function toggleAxis(){
 }
 
 linear = !linear;
-Plotly.relayout('myDiv',layout);
+Plotly.relayout('myDiv',layout,config);
 }
 
 Plotly.newPlot('myDiv', [
