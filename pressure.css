@@ -1,0 +1,71 @@
+body {
+    font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: black;
+    color:white;
+}
+
+h1{
+    color:white;
+}
+
+
+button{
+    background-color: #383838;
+    color:white;
+    padding-left:1rem;
+    padding-right:1rem;
+    text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  border: 2px solid 'white';
+}
+
+button:hover {
+    background-color: #666; /* Green */
+    color: white;
+  }
+
+.content {
+
+    font: 1rem "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: rgba(0, 0, 0, 0.0);
+    color: #f1f1f1;
+    padding-left:1.25rem;
+    padding-right:1.25rem;
+    z-index: 200;
+}
+
+.content a{
+    text-decoration: none;
+    color:rgb(155, 195, 255);
+}
+
+.content a:hover{
+    background-color: #383838;
+}
+
+
+.credit {
+    color: #9E9E9E;
+    font-size: 0.6rem;
+    margin-bottom: 0.6rem;
+    text-align:right;
+}
+
+
+@media screen and (min-width: 1200px) and (min-height:700px) {
+    .credit{
+        position:absolute;
+        bottom:0;
+        right:0;
+
+    }
+    .content{
+        position:absolute;
+        bottom:1.125rem;
+        font-size:1.25rem;
+    }
+}
+
+
+
