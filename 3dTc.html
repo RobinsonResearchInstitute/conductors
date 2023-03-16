@@ -270,9 +270,14 @@ var layout = {
   /*title: 'Superconducting Transition Temperature vs Year and Pressure',*/
   scene: {
     xaxis: { title: '<b>Year</b>' },
-    yaxis: { title: '<b>T<sub>c</sub> (K)</b>',
+    yaxis: { 
+        title: '<b>T<sub>c</sub> (K)</b>',
+        range:[0,300],
   },
-    zaxis: { title: '<b>Pressure (GPa)</b>' },
+    zaxis: { 
+        title: '<b>Pressure (GPa)</b>',
+        range:[0,200],
+    },
     aspectratio: {
       x: 1.5,
       y: 1.0,
@@ -321,6 +326,7 @@ function toggleAxis(){
   document.getElementById('toggleAxis').innerText='Log';
   layout.scene.yaxis={
     title: 'T<sub>c</sub> (K)',
+      range:[0,300],
   }
 }
 
