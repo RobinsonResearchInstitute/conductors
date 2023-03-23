@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>Elemental Superconductors</title>
+
+		<link rel="stylesheet" href="arrows.css">
+		<style>
+			html, body {
+				height: 100%;
+			}
+
+			body {
+				background-color: #000000;
+				
+				font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+				/*overflow: hidden;*/
+			}
+
+			h1{
+    color:white;
+}
+
+			a {
+				color: #ffffff;
+			}
+
+			#info {
+				position: absolute;
+				width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				font-weight: bold;
+				text-align: center;
+			}
+
+			#menu {
+				position: absolute;
+				bottom: 20px;
+				width: 100%;
+				text-align: center;
+			}
+
+			.element {
+				width: 140px;
+				height: 190px;
+				box-shadow: 0px 0px 20px rgba(0,255,255,0.5);
+				border: 1px solid rgba(127,255,255,0.25);
+				cursor: default;
+			}
+
+			.element:hover {
+				box-shadow: 0px 0px 20px rgba(0,255,255,0.75);
+				border: 1px solid rgba(127,255,255,0.75);
+			}
+
+				.element .number {
+					position: absolute;
+					top: 20px;
+					right: 20px;
+					font-size: 20px;
+					color: rgba(127,255,255,0.75);
+				}
+
+				.element .symbol {
+					position: absolute;
+					top: 40px;
+					width: 100%;
+					font-size: 60px;
+					text-align: center;
+					color: rgba(255,255,255,0.75);
+					font-weight: bold;
+
+					-webkit-filter: drop-shadow(0px 0px 20px rgba(0,255,255,0.95));
+					-moz-filter: drop-shadow(0px 0px 20px rgba(0,255,255,0.95));
+					-o-filter: drop-shadow(0px 0px 20px rgba(0,255,255,0.95));
+					-ms-filter: drop-shadow(0px 0px 20px rgba(0,255,255,0.95));
+					filter: drop-shadow(0px 0px 20px rgba(0,255,255,0.95));
+				}
+
+				.element .details {
+					position: absolute;
+					top: 115px;
+					width: 100%;
+					font-size: 18px;
+					text-align: center;
+					color: rgba(127,255,255,0.75);
+				}
+
+			button {
+				color: rgba(127,255,255,0.75);
+				background: transparent;
+				outline: 1px solid rgba(127,255,255,0.75);
+				border: 0px;
+				padding: 5px 10px;
+				cursor: pointer;
+			}
+			button:hover {
+				background-color: rgba(0,255,255,0.5);
+			}
+			button:active {
+				color: #000000;
+				background-color: rgba(0,255,255,0.75);
+			}
+
+            .element .linkbutton{
+		position: relative;
+		width: 140px;
+	height: 190px;
+	box-shadow: 0px 0px 12px rgba(0,255,255,0.5);
+	text-align: center;
+	cursor: pointer;
+    border:3px solid white
+
+	}
+
+	.credit {
+    color: #9E9E9E;
+    font-size: 0.6rem;
+    margin-bottom: 0.6rem;
+    text-align:right;
+}
+
+
+@media screen and (min-width: 1200px) and (min-height:700px) {
+    .credit{
+        position:absolute;
+        bottom:0;
+        right:0;
+
+    }
+    .content{
+        position:absolute;
+        bottom:1.125rem;
+        font-size:1.25rem;
+    }
+}
+
+
+		</style>
+	</head>
+	<body>
+		
+
+		<script src="js/three.min.js"></script>
+		<script src="js/tween.min.js"></script>
+		<script src="js/controls/TrackballControls.js"></script>
+		<script src="js/renderers/CSS3DRenderer.js"></script>
+
+		<h1>Elemental Superconductors</h1>
+		<div id="container"></div>
+		
+		<div class="credit">By J.G. Storey </div>
+
+    <a href="https://robinson.ac.nz/conductors/structure.html">
+        <div class="arrow">
+            <div class="arrow-top"></div>
+            <div class="arrow-bottom"></div>
+        </div>
+        </a>
+        <a href="https://robinson.ac.nz/conductors/tcvstime.html">
+        <div class="barrow">
+            <div class="barrow-top"></div>
+            <div class="barrow-bottom"></div>
+        </div>
+        
+    </a>
+        <!--<div id="menu">
+			<button id="table">TABLE</button>
+			<button id="sphere">SPHERE</button>
+			<button id="helix">HELIX</button>
+			<button id="grid">GRID</button>
+        -->
+
+		<script>
+            //https://iopscience.iop.org/article/10.1088/0953-2048/18/1/R01/pdf
+			//https://www.sciencedirect.com/science/article/pii/S0921453415000593?via%3Dihub
+			//https://www.sciencedirect.com/science/article/pii/S0921453407000755?via%3Dihub#fig1
+			var table = [
+				[ "H", "Hydrogen", "1.00794", 1, 1, "","N", "", "" ],
+				[ "He", "Helium", "4.002602", 18, 1, "", "N", "" ],
+				[ "Li", "Lithium", "6.941", 1, 2, "0.4 mK", "A", "", "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.91.167001" ],
+				[ "Be", "Beryllium", "9.012182", 2, 2, "26 mK", "A", "" ],
+				[ "B", "Boron", "10.811", 13, 2, "11.2 K", "P", "250 GPa", "https://www.science.org/doi/full/10.1126/science.1062286" ],
+				[ "C", "Carbon", "12.0107", 14, 2, "15 K", "A", "Nanotube", "https://www.science.org/doi/10.1126/science.1060470" ],
+				[ "N", "Nitrogen", "14.0067", 15, 2, "", "N", "" ],
+				[ "O", "Oxygen", "15.9994", 16, 2, "0.6 K", "P", "120 GPa", "https://www.nature.com/articles/31656" ],
+				[ "F", "Fluorine", "18.9984032", 17, 2, "", "N", "" ],
+				[ "Ne", "Neon", "20.1797", 18, 2, "", "N", "" ],
+				[ "Na", "Sodium", "22.98976...", 1, 3, "", "N", "" ],
+				[ "Mg", "Magnesium", "24.305", 2, 3, "", "N", "" ],
+				[ "Al", "Aluminium", "26.9815386", 13, 3, "1.18 K", "A", "" ],
+				[ "Si", "Silicon", "28.0855", 14, 3, "8.2 K", "P", "15 GPa", "https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.54.2375"],
+				[ "P", "Phosphorus", "30.973762", 15, 3, "13 K", "P", "30 GPa", "https://iopscience.iop.org/article/10.7567/JJAPS.26S3.921/meta" ],
+				[ "S", "Sulfur", "32.065", 16, 3, "17 K", "P", "160 GPa", "https://www.nature.com/articles/37074"],
+				[ "Cl", "Chlorine", "35.453", 17, 3, "", "N", "" ],
+				[ "Ar", "Argon", "39.948", 18, 3, "", "N", "" ],
+				[ "K", "Potassium", "39.948", 1, 4, "", "N", "" ],
+				[ "Ca", "Calcium", "40.078", 2, 4, "29 K", "P", "216 GPa", "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.83.220512" ],
+				[ "Sc", "Scandium", "44.955912", 3, 4, "19.6 K", "P", "107 GPa", "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.78.064519" ],
+				[ "Ti", "Titanium", "47.867", 4, 4, "0.50 K", "A", "", "https://www.nature.com/articles/s41467-022-33077-3" ],
+				[ "V", "Vanadium", "50.9415", 5, 4, "5.4 K", "A", "", "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.61.R3823" ],
+				[ "Cr", "Chromium", "51.9961", 6, 4, "", "N", "" ],
+				[ "Mn", "Manganese", "54.938045", 7, 4, "", "N", "" ],
+				[ "Fe", "Iron", "55.845", 8, 4, "2 K", "P", "21 GPa", "https://www.nature.com/articles/35085536" ],
+				[ "Co", "Cobalt", "58.933195", 9, 4, "", "N", "" ],
+				[ "Ni", "Nickel", "58.6934", 10, 4, "", "N", "" ],
+				[ "Cu", "Copper", "63.546", 11, 4, "", "N", "" ],
+				[ "Zn", "Zinc", "65.38", 12, 4, "0.85 K", "A", "" ],
+				[ "Ga", "Gallium", "69.723", 13, 4, "1.08 K", "A", "" ],
+				[ "Ge", "Germanium", "72.63", 14, 4, "5.4 K", "P", "11.5 GPa", "https://link.springer.com/article/10.1007/bf01328889?utm_source=getftr&utm_medium=getftr&utm_campaign=getftr_pilot" ],
+				[ "As", "Arsenic", "74.9216", 15, 4, "2.4 K", "P", "32 GPa", "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.46.5523"],
+				[ "Se", "Selenium", "78.96", 16, 4, "7 K", "P", "13 GPa", "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.15.159" ],
+				[ "Br", "Bromine", "79.904", 17, 4, "1.4 K", "P", "150 GPa", "https://iopscience.iop.org/article/10.1088/0953-8984/10/49/008" ],
+				[ "Kr", "Krypton", "83.798", 18, 4, "", "N", "" ],
+				[ "Rb", "Rubidium", "85.4678", 1, 5, "", "N", "" ],
+				[ "Sr", "Strontium", "87.62", 2, 5, "4 K", "P", "50 GPa", "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.25.194" ],
+				[ "Y", "Yttrium", "88.90585", 3, 5, "19.5 K", "P", "115 GPa", "https://www.sciencedirect.com/science/article/pii/S0921453406008082" ],
+				[ "Zr", "Zirconium", "91.224", 4, 5, "0.6 K", "A", "", "https://journals.jps.jp/doi/10.1143/JPSJ.59.3843" ],
+				[ "Nb", "Niobium", "92.90628", 5, 5, "9.25 K", "A", ""],
+				[ "Mo", "Molybdenum", "95.96", 6, 5, "0.92 K", "A", "" ],
+				[ "Tc", "Technetium", "(98)", 7, 5, "8.2 K", "A", "" ],
+				[ "Ru", "Ruthenium", "101.07", 8, 5, "0.5 K", "A", "" ],
+				[ "Rh", "Rhodium", "102.9055", 9, 5, "35 uK", "A", "" ],
+				[ "Pd", "Palladium", "106.42", 10, 5, "3.2 K", "P", "Irradiated", "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.42.1769" ],
+				[ "Ag", "Silver", "107.8682", 11, 5, "", "N", "" ],
+				[ "Cd", "Cadmium", "112.411", 12, 5, "0.52 K", "A", "" ],
+				[ "In", "Indium", "114.818", 13, 5, "3.4 K", "A", "" ],
+				[ "Sn", "Tin", "118.71", 14, 5, "3.7 K", "A", "" ],
+				[ "Sb", "Antimony", "121.76", 15, 5, "3.6 K", "P", "8.5 GPa", "https://www.sciencedirect.com/science/article/pii/0022369769902029" ],
+				[ "Te", "Tellurium", "127.6", 16, 5, "7.4 K", "P", "35 GPa", "https://www.sciencedirect.com/science/article/pii/003810989290093O"],
+				[ "I", "Iodine", "126.90447", 17, 5, "1.2 K", "P", "25 GPa", "https://iopscience.iop.org/article/10.1088/0953-8984/10/49/008" ],
+				[ "Xe", "Xenon", "131.293", 18, 5, "", "N", "" ],
+				[ "Cs", "Caesium", "132.9054", 1, 6, "1.3 K", "P", "12 GPa", "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.24.812" ],
+				[ "Ba", "Barium", "132.9054", 2, 6, "8 K", "P", "40 GPa", "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.96.184514" ],
+				[ "La", "Lanthanum", "138.90547", 4, 9, "6 K", "A", "", "https://journals.aps.org/prb/pdf/10.1103/PhysRevB.53.8238" ],
+				[ "Ce", "Cerium", "140.116", 5, 9, "1.75 K", "P", "5 GPa", "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.21.1250" ],
+				[ "Pr", "Praseodymium", "140.90765", 6, 9, "", "N", "" ],
+				[ "Nd", "Neodymium", "144.242", 7, 9, "", "N", "" ],
+				[ "Pm", "Promethium", "(145)", 8, 9, "", "N", "" ],
+				[ "Sm", "Samarium", "150.36", 9, 9, "", "N", "" ],
+				[ "Eu", "Europium", "151.964", 10, 9, "", "N", "" ],
+				[ "Gd", "Gadolinium", "157.25", 11, 9, "", "N", "" ],
+				[ "Tb", "Terbium", "158.92535", 12, 9, "", "N", "" ],
+				[ "Dy", "Dysprosium", "162.5", 13, 9, "", "N", "" ],
+				[ "Ho", "Holmium", "164.93032", 14, 9, "", "N", "" ],
+				[ "Er", "Erbium", "167.259", 15, 9, "", "N", "" ],
+				[ "Tm", "Thulium", "168.93421", 16, 9, "", "N", "" ],
+				[ "Yb", "Ytterbium", "173.054", 17, 9, "", "N", "" ],
+				[ "Lu", "Lutetium", "174.9668", 18, 9, "0.1 K", "A", "" ],
+				[ "Hf", "Hafnium", "178.49", 4, 6, "0.12 K", "A", "", "https://link.springer.com/article/10.1134/1.1857274" ],
+				[ "Ta", "Tantalum", "180.94788", 5, 6, "4.4 K", "A", "" ],
+				[ "W", "Tungsten", "183.84", 6, 6, "0.01 K", "A", "" ],
+				[ "Re", "Rhenium", "186.207", 7, 6, "1.7 K", "A", "" ],
+				[ "Os", "Osmium", "190.23", 8, 6, "0.7 K", "A", "" ],
+				[ "Ir", "Iridium", "192.217", 9, 6, "0.1 K", "A", "" ],
+				[ "Pt", "Platinum", "195.084", 10, 6, "", "N", "" ],
+				[ "Au", "Gold", "196.966569", 11, 6, "", "N", "" ],
+				[ "Hg", "Mercury", "200.59", 12, 6, "4.15 K", "A", "" ],
+				[ "Tl", "Thallium", "204.3833", 13, 6, "2.4 K", "A", "" ],
+				[ "Pb", "Lead", "207.2", 14, 6, "7.2 K", "A", "" ],
+				[ "Bi", "Bismuth", "208.9804", 15, 6, "8.5 K", "P", "9 GPa", "http://jetp.ras.ru/cgi-bin/e/index/e/34/6/p1263?a=list" ],
+				[ "Po", "Polonium", "(209)", 16, 6, "", "N", "" ],
+				[ "At", "Astatine", "(210)", 17, 6, "", "N", "" ],
+				[ "Rn", "Radon", "(222)", 18, 6, "", "N", "" ],
+				[ "Fr", "Francium", "(223)", 1, 7, "", "N", "" ],
+				[ "Ra", "Radium", "(226)", 2, 7, "", "N", "" ],
+				[ "Ac", "Actinium", "(227)", 4, 10, "", "N", "" ],
+				[ "Th", "Thorium", "232.03806", 5, 10, "1.4 K", "A", "" ],
+				[ "Pa", "Protactinium", "231.0588", 6, 10, "1.4 K", "A", "" ],
+				[ "U", "Uranium", "238.02891", 7, 10, "1.3 K", "A", "" ],
+				[ "Np", "Neptunium", "(237)", 8, 10, "", "N", "" ],
+				[ "Pu", "Plutonium", "(244)", 9, 10, "", "N", ""],
+				[ "Am", "Americium", "(243)", 10, 10, "1 K", "A", "" ],
+				[ "Cm", "Curium", "(247)", 11, 10, "", "N", "" ],
+				[ "Bk", "Berkelium", "(247)", 12, 10, "", "N", "" ],
+				[ "Cf", "Californium", "(251)", 13, 10, "", "N", "" ],
+				[ "Es", "Einstenium", "(252)", 14, 10, "", "N", "" ],
+				[ "Fm", "Fermium", "(257)", 15, 10, "", "N", "" ],
+				[ "Md", "Mendelevium", "(258)", 16, 10, "", "N", "" ],
+				[ "No", "Nobelium", "(259)", 17, 10, "", "N", "" ],
+				[ "Lr", "Lawrencium", "(262)", 18, 10, "", "N", "" ],
+				[ "Rf", "Rutherfordium", "(267)", 4, 7, "", "N", "" ],
+				[ "Db", "Dubnium", "(268)", 5, 7, "", "N", "" ],
+				[ "Sg", "Seaborgium", "(271)", 6, 7, "", "N", "" ],
+				[ "Bh", "Bohrium", "(272)", 7, 7, "", "N", "" ],
+				[ "Hs", "Hassium", "(270)", 8, 7, "", "N", "" ],
+				[ "Mt", "Meitnerium", "(276)", 9, 7, "", "N", "" ],
+				[ "Ds", "Darmstadium", "(281)", 10, 7, "", "N", "" ],
+				[ "Rg", "Roentgenium", "(280)", 11, 7, "", "N", "" ],
+				[ "Cn", "Copernicium", "(285)", 12, 7, "", "N", "" ],
+				[ "Uut", "Unutrium", "(284)", 13, 7, "", "N", "" ],
+				[ "Fl", "Flerovium", "(289)", 14, 7, "", "N", "" ],
+				[ "Uup", "Ununpentium", "(288)", 15, 7, "", "N", "" ],
+				[ "Lv", "Livermorium", "(293)", 16, 7, "", "N", "" ],
+				[ "Uus", "Ununseptium", "(294)", 17, 7, "", "N", "" ],
+				[ "Uuo", "Ununoctium", "(294)", 18, 7, "", "N", "" ]
+			];
+
+			var camera, scene, renderer;
+			var geometry, material, mesh;
+
+			var controls;
+
+			var objects = [];
+			var targets = { table: [], sphere: [], helix: [], grid: [] };
+
+			init();
+			animate();
+
+			function init() {
+
+				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 5000 );
+				camera.position.z = 1800;
+
+				scene = new THREE.Scene();
+
+				for ( var i = 0; i < table.length; i ++ ) {
+
+					var item = table[ i ];
+
+					var element = document.createElement( 'div' );
+					element.className = 'element';
+                    if(item[6]=='A'){
+                        element.style.backgroundColor = 'rgba(0,0,230,' + ( 0.4 ) + ')';
+                    }
+                    else if(item[6]=='P'){
+					    element.style.backgroundColor = 'rgba(230,230,0,' + ( 0.4 ) + ')';
+                    }
+                    else{
+                        element.style.backgroundColor = 'rgba(0,127,127,' + ( 0.2) + ')';
+                    }
+
+					var number = document.createElement( 'div' );
+					number.className = 'number';
+					number.textContent = i + 1;
+					element.appendChild( number );
+
+					var symbol = document.createElement( 'div' );
+					symbol.className = 'symbol';
+					symbol.textContent = item[ 0 ];
+					element.appendChild( symbol );
+
+					var details = document.createElement( 'div' );
+					details.className = 'details';
+					details.innerHTML = item[ 1 ] + '<br>' + item[ 5 ]+'<br>'+item[7];
+					element.appendChild( details );
+
+                    if(item[8]!=null && item[8]!=""){
+                        var linkbutton = document.createElement('a');
+                    //linkbutton.className = 'linkbutton';
+                    linkbutton.href = item[8];
+                    linkbutton.target = "_blank"; 
+                    linkbutton.id = "link";
+                    linkbutton.innerHTML = '<div class="linkbutton"></div>';
+                    element.appendChild(linkbutton);
+                    }
+                    
+
+					var object = new THREE.CSS3DObject( element );
+					object.position.x = Math.random() * 4000 - 2000;
+					object.position.y = Math.random() * 4000 - 2000;
+					object.position.z = Math.random() * 4000 - 2000;
+					scene.add( object );
+
+					objects.push( object );
+
+				}
+
+				// table
+
+				for ( var i = 0; i < objects.length; i ++ ) {
+
+					var item = table[ i ];
+					var object = objects[ i ];
+
+					var object = new THREE.Object3D();
+					object.position.x = ( item[ 3 ] * 160 ) - 1540;
+					object.position.y = - ( item[ 4 ] * 210 ) + 1100;
+
+					targets.table.push( object );
+
+				}
+
+				// sphere
+
+				var vector = new THREE.Vector3();
+
+				for ( var i = 0, l = objects.length; i < l; i ++ ) {
+
+					var object = objects[ i ];
+
+					var phi = Math.acos( -1 + ( 2 * i ) / l );
+					var theta = Math.sqrt( l * Math.PI ) * phi;
+
+					var object = new THREE.Object3D();
+
+					object.position.x = 1000 * Math.cos( theta ) * Math.sin( phi );
+					object.position.y = 1000 * Math.sin( theta ) * Math.sin( phi );
+					object.position.z = 1000 * Math.cos( phi );
+
+					vector.copy( object.position ).multiplyScalar( 2 );
+
+					object.lookAt( vector );
+
+					targets.sphere.push( object );
+
+				}
+
+				// helix
+
+				var vector = new THREE.Vector3();
+
+				for ( var i = 0, l = objects.length; i < l; i ++ ) {
+
+					var object = objects[ i ];
+
+					var phi = i * 0.175 + Math.PI;
+
+					var object = new THREE.Object3D();
+
+					object.position.x = 1100 * Math.sin( phi );
+					object.position.y = - ( i * 8 ) + 450;
+					object.position.z = 1100 * Math.cos( phi );
+
+					vector.copy( object.position );
+					vector.x *= 2;
+					vector.z *= 2;
+
+					object.lookAt( vector );
+
+					targets.helix.push( object );
+
+				}
+
+				// grid
+
+				for ( var i = 0; i < objects.length; i ++ ) {
+
+					var object = objects[ i ];
+
+					var object = new THREE.Object3D();
+
+					object.position.x = ( ( i % 5 ) * 400 ) - 800;
+					object.position.y = ( - ( Math.floor( i / 5 ) % 5 ) * 400 ) + 800;
+					object.position.z = ( Math.floor( i / 25 ) ) * 1000 - 2000;
+
+					targets.grid.push( object );
+
+				}
+
+				//
+
+				renderer = new THREE.CSS3DRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.domElement.style.position = 'absolute';
+				renderer.domElement.style.top = 0;
+				document.getElementById( 'container' ).appendChild( renderer.domElement );
+
+				//
+
+				controls = new THREE.TrackballControls( camera, renderer.domElement );
+				controls.rotateSpeed = 0.5;
+				controls.addEventListener( 'change', render );
+                /*
+				var button = document.getElementById( 'table' );
+				button.addEventListener( 'click', function ( event ) {
+
+					transform( targets.table, 2000 );
+
+				}, false );
+
+				var button = document.getElementById( 'sphere' );
+				button.addEventListener( 'click', function ( event ) {
+
+					transform( targets.sphere, 2000 );
+
+				}, false );
+
+				var button = document.getElementById( 'helix' );
+				button.addEventListener( 'click', function ( event ) {
+
+					transform( targets.helix, 2000 );
+
+				}, false );
+
+				var button = document.getElementById( 'grid' );
+				button.addEventListener( 'click', function ( event ) {
+
+					transform( targets.grid, 2000 );
+
+				}, false );
+                */
+				transform( targets.table, 5000 );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function transform( targets, duration ) {
+
+				TWEEN.removeAll();
+
+				for ( var i = 0; i < objects.length; i ++ ) {
+
+					var object = objects[ i ];
+					var target = targets[ i ];
+
+					new TWEEN.Tween( object.position )
+						.to( { x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+
+					new TWEEN.Tween( object.rotation )
+						.to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+
+				}
+
+				new TWEEN.Tween( this )
+					.to( {}, duration * 2 )
+					.onUpdate( render )
+					.start();
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				TWEEN.update();
+				controls.update();
+
+			}
+
+			function render() {
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+
+<script type="text/javascript">( function(){ window.SIG_EXT = {}; } )()</script>
+	</body>
+</html>
