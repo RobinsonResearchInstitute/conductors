@@ -603,7 +603,12 @@ render();
 				//console.log("explode");
 				//console.log(scene.children);
 				explode=!explode;
-				
+				if(explode){
+					this.innerHTML='Compact';
+				}
+				else{
+					this.innerHTML='Explode';
+				}
 				document.getElementById('access').disabled=explode;
 
 				if(explode){
