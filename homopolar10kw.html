@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta property="og:title" content="Homopolar Motor" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://robinson.ac.nz/conductors/homopolar.html" />
+    <meta property="og:site_name" content="Robinson Research Institute"/>
+    <meta property="og:image" content="https://robinson.ac.nz/conductors/img/homopolar2.jpg" />
+    <meta property="og:description" content="2 megawatt superconducting homopolar motor/generator." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="robinson.ac.nz" />    
+    <meta name="twitter:title" content="Homopolar Motor" />
+    <meta name="twitter:description" content="2 megawatt superconducting homopolar motor/generator." />  
+    <meta name="twitter:image" content="https://robinson.ac.nz/conductors/img/homopolar2.jpg" />
+    
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    
+    <meta name="description" content="2 megawatt superconducting homopolar motor/generator.">
+	<title>Homopolar Motor</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link type="text/css" rel="stylesheet" href="10kWhomopolar.css">
+	<link type="text/css" rel="stylesheet" href="arrows.css">
+	<link rel="stylesheet" type="text/css" href="text-cursor.css">
+</head>
+
+<body>
+	<div id="info">
+		<h1>Superconducting Homopolar Motor/Generator</h1>
+		<button id="infobutton">Info</button>
+		<!--<button id="supports">Supports</button>
+        <button id="stator">Stator</button>
+		<button id="armature">Armature</button>
+        <button id="rippleshield">EM Shield</button>
+		<button id="fieldcoil">Field Coil</button>
+		<button id="rotor">Rotor</button>-->
+		
+		<button id="explode">Explode</button>
+		<button id="access">Coil Access</button>
+
+		<!--<label class="container">Stator
+			<input type="checkbox" id='stator'>
+			<span class="checkmark"></span>
+		  </label>
+		-->
+
+		<input type="checkbox" id="supports">
+		<label for="supports">Supports</label>
+
+		<input type="checkbox" id="stator">
+		<label for="stator">Stator</label>
+
+		<input type="checkbox" id="armature">
+		<label for="armature">Armature</label>
+
+		<input type="checkbox" id="rippleshield">
+		<label for="rippleshield">EM Shield</label>
+
+		<input type="checkbox" id="fieldcoil">
+		<label for="fieldcoil">Field Coil</label>
+
+		<input type="checkbox" id="rotor">
+		<label for="rotor">Rotor</label>
+
+		<button id="aboutBtn">Help</button>
+		<br>
+		
+		<div id="d1">
+			<p id='line1'></p>
+		</div>
+	</div>
+
+	
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<p>Use checkboxes to show or hide components.</p>
+			<p>Click on a component to show information.</p>
+			<p>Left-click & drag to rotate, mousewheel to zoom, right-click & drag to pan.</p>
+			<p>Motor design by Kent Hamilton, webpage by James Storey.</p>
+			<p>Robinson Research Institute, 2023.</p>
+			
+		</div>
+
+	</div>
+	<!--
+	<a href="https://robinson.ac.nz/conductors/syncmotor.html">
+        <div class="arrow">
+            <div class="arrow-top"></div>
+            <div class="arrow-bottom"></div>
+        </div>
+    </a>
+	
+	<a href="https://robinson.ac.nz/conductors/dynamo.html">
+        <div class="barrow">
+            <div class="barrow-top"></div>
+            <div class="barrow-bottom"></div>
+        </div>
+    </a>
+-->
+
+	<!--<div id="logo">
+		<a href="https://www.wgtn.ac.nz/robinson">
+			<img src="RRILogoSmall.png" alt="Logo">
+		</a>
+	</div>-->
+
+	
+
+	<script type="module">
+
+		import * as THREE from 'https://unpkg.com/three@0.126.0/build/three.module.js';
+
+		import { OrbitControls } from 'https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js';
+		import { GLTFLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/GLTFLoader.js';
+		import { RGBELoader } from 'https://unpkg.com/three@0.124.0/examples/jsm/loaders/RGBELoader.js';
+
+
+		var renderer, scene, camera, raycaster,controls;
+		var rotorlumps1, rotorlumps2, plane, grid, stator;
+		var rotortube, flux1, w1, w2, w3, coil;
+		var statorvisible = false;
+		var light1;
+		var th = 0;
+		var loz = String.fromCharCode(9671);
+		var sq = String.fromCharCode(178);
+		var mmx, mmy;
+		var explode = false;
+        var accesscoil = false;
+		var movedirection = 0;
+		var moveprogress = 0;
+		var movespeed = 1;
+
+
+		var mouse = new THREE.Vector2(), INTERSECTED;
+
+		init();
+		animate();
+
+		function init() {
+
+
+			const params = {
+				exposure: 0.8,
+				toneMapping: 'ACESFilmic'
+			};
+
+			const toneMappingOptions = {
+				None: THREE.NoToneMapping,
+				Linear: THREE.LinearToneMapping,
+				Reinhard: THREE.ReinhardToneMapping,
+				Cineon: THREE.CineonToneMapping,
+				ACESFilmic: THREE.ACESFilmicToneMapping,
+				Custom: THREE.CustomToneMapping
+			};
+
+
+			// renderer
+			renderer = new THREE.WebGLRenderer({ antialias: true });
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			document.body.appendChild(renderer.domElement);
+
+
+			renderer.toneMapping = toneMappingOptions[params.toneMapping];
+			renderer.toneMappingExposure = params.exposure;
+			renderer.outputEncoding = THREE.sRGBEncoding;
+
+
+
+
+
+			raycaster = new THREE.Raycaster();
+			raycaster.layers.set(0);
+
+
+			// scene
+			scene = new THREE.Scene();
+			//scene.background = new THREE.Color( 'skyblue' )
+			scene.fog = new THREE.Fog(0x000000, 250, 2400);
+
+			// camera
+			camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 2000);
+			camera.layers.enable(0);
+
+
+			//camera.position.set(100, 30, 120);
+			camera.position.set(-100, 30, 120);
+			scene.add(camera);
+
+			//const helper = new THREE.CameraHelper( camera );
+			//scene.add( helper );
+
+			// controls
+			controls = new OrbitControls(camera, renderer.domElement);
+			controls.addEventListener('change', render);
+			controls.minDistance = 10;
+			controls.maxDistance = 800;
+			//controls.enablePan = false;
+
+
+			// ambient
+			scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+			// light
+
+			//var sphere = new THREE.SphereBufferGeometry( 0.5, 16, 8 );
+			//lights
+			//light1 = new THREE.PointLight( 0xff0040, 50, 10, 1);
+			//light1.castShadow = true;
+			//light1.position.z = 15
+
+			//light1.add( new THREE.Mesh( sphere, new THREE.MeshStandardMaterial( {
+			//	color: 0xff0040}) ) );
+			//scene.add( light1 );
+
+			var light = new THREE.DirectionalLight(0xffffff, 1.0);
+			//light.position.set(0,90,100);
+			camera.add(light);
+
+
+			//hdri
+			const pmremGenerator = new THREE.PMREMGenerator(renderer);
+			pmremGenerator.compileEquirectangularShader();
+
+
+			async function loadHDRI() {
+				const rgbeLoader = new RGBELoader()
+					.setDataType(THREE.UnsignedByteType);
+				//.setPath( 'textures/equirectangular/' );
+
+				const texture = await rgbeLoader.loadAsync('HDR_029_Sky_Cloudy_Env.hdr');
+				const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+
+				//scene.background = envMap;
+				scene.environment = envMap;
+				texture.dispose();
+				pmremGenerator.dispose();
+			}
+			loadHDRI();
+
+
+			plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(10000, 10000), new THREE.MeshPhongMaterial({ color: 'rgb(0,127,127)', depthWrite: false, opacity: 0.2, transparent: true }));
+			plane.position.y = -200;
+			plane.rotation.x = - Math.PI / 2;
+			scene.add(plane);
+
+
+			grid = new THREE.GridHelper(10000, 100, 'rgb(127,255,255)', 'rgb(127,255,255)');
+			grid.material.opacity = 0.5;
+			grid.material.transparent = true
+			grid.position.y = -200;
+			scene.add(grid);
+
+
+
+			// model
+
+			var loader = new GLTFLoader();
+            
+			loader.load('RotorFine.glb', function (gltf) {
+
+				gltf.scene.traverse(function (child) {
+
+					if (child.isMesh) {
+
+
+						child.geometry.center();
+						child.geometry.computeFaceNormals();
+						child.geometry.computeVertexNormals();
+						//child.material =  new THREE.MeshPhongMaterial({color: 0x660066,shininess:5,reflectivity:1.0,opacity:1.0,transparent:false});
+						//child.material = new THREE.MeshPhongMaterial(
+						//{ color: 0x0000ff, specular: 0xffffff, shininess: 10, opacity: 0.3, transparent: true, wireframe: false });
+						child.material = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+
+						child.material.side = THREE.DoubleSide;
+						child.rotation.x = Math.PI / 2.0;
+						child.scale.multiplyScalar(0.1);
+                        child.position.y = 5.3;
+						//light1.add(child);
+						//recenter
+
+						new THREE.Box3().setFromObject(child).getCenter(child.position).multiplyScalar(- 1);
+						rotortube = child;
+						rotortube.layers.set(0);
+						scene.add(child);
+
+						document.getElementById("rotor").addEventListener('click', function () {
+
+
+							rotortube.layers.toggle(0);
+
+
+						});
+
+					}
+
+				});
+
+
+
+				render();
+
+			});
+            
+
+
+
+            
+
+
+
+
+
+
+
+var platemat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.1, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+var bearingmat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+var G10mat = new THREE.MeshStandardMaterial({ color: 0x203015, emissive: 0x303030, roughness: 1.0, metalness: 0.0, emissiveIntensity: 0.0, transparent: true });
+
+var statormat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: true });
+var laminatedmat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+var rotormat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+var coppermat = new THREE.MeshStandardMaterial({ color: 0xff7744, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+var studmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+var clampmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+var tierodmat= new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+var swagemat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+var nutmat = new THREE.MeshStandardMaterial({ color: 0x666666, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+//Top clamp plate
+loadPart('models/10kW/TopClampPlate1.glb', Math.PI / 2.0, 0, -Math.PI/6, 0, 0, 26.2, platemat, 'topclampplate');  
+
+
+
+//Top bearing plate
+loadPart('models/10kW/TopBearingPlate1.glb', Math.PI / 2.0, 0, -Math.PI/6, 0, 0, 24.75, platemat, 'topbearingplate');  
+
+//Bottom bearing plate
+loadPart('models/10kW/BottomBearingPlate1.glb', -Math.PI / 2.0, 0, Math.PI/2, 0, 0, -25.3, platemat, 'bottombearingplate');  
+
+//Top bearing spacer
+loadPart('models/10kW/TopBearingSpacer1.glb', Math.PI / 2.0, 0, -Math.PI/6, 0, 0, 20, G10mat, 'topbearingspacer');  
+
+//Bottom bearing spacer
+loadPart('models/10kW/BottomBearingSpacer1.glb', -Math.PI / 2.0, 0, 0, 0, 0, -19.9, G10mat, 'bottombearingspacer');  
+
+//Top bearing housing
+loadPart('models/10kW/BearingHousing1.glb', Math.PI / 2.0, 0, 0, 0, 0, 21, bearingmat, 'topbearinghousing');  
+
+//Bottom bearing housing
+loadPart('models/10kW/BearingHousing1.glb', -Math.PI / 2.0, 0, 0, 0, 0, -20.6, bearingmat, 'bottombearinghousing');  
+
+
+//Top locator ring
+loadPart('models/10kW/TopLocatorRing1.glb', Math.PI / 2.0, 0, 0, 0, 0, 15.85, platemat, 'toplocatorring');  
+
+//Upper Laminiation retainer
+loadPart('models/10kW/LaminationRetainer1.glb', Math.PI / 2.0, 0, 0, 0.7*5.4, -0.7*10.7, 15.55, platemat, 'upperlaminationretainerA');  
+loadPart('models/10kW/LaminationRetainer4.glb', Math.PI / 2.0, 0, 0, 0.7*5.4, 0.7*10.7, 15.55, platemat, 'upperlaminationretainerB');  
+loadPart('models/10kW/LaminationRetainer5.glb', Math.PI / 2.0, 0, 0, -0.7*15.4, 0, 15.55, platemat, 'upperlaminationretainerC');  
+
+//Lower Lamination retainer
+loadPart('models/10kW/LaminationRetainer6.glb', Math.PI / 2.0, 0, 0, 0.7*5.4, -0.7*10.7, 2.9, platemat, 'lowerlaminationretainerA'); 
+loadPart('models/10kW/LaminationRetainer7.glb', Math.PI / 2.0, 0, 0, 0.7*5.4, 0.7*10.7, 2.9, platemat, 'lowerlaminationretainerB');  
+loadPart('models/10kW/LaminationRetainer8.glb', Math.PI / 2.0, 0, 0, -0.7*15.4, 0, 2.9, platemat, 'lowerlaminationretainerC');  
+
+
+
+//Removable solid core
+loadPart('models/10kW/RemovableSolidCoreA.glb', Math.PI / 2.0, 0, 0, -13.2, 0, 6.22, statormat, 'removablesolidcoreA'); 
+loadPart('models/10kW/RemovableSolidCoreB.glb', Math.PI / 2.0, 0, 0, 5, -10, 6.22, statormat, 'removablesolidcoreB' ); 
+loadPart('models/10kW/RemovableSolidCoreC.glb', Math.PI / 2.0, 0, 0, 5, 10, 6.22, statormat, 'removablesolidcoreC' ); 
+
+//Lower solid core
+loadPart('models/10kW/SolidLowerCoreA.glb', Math.PI / 2.0, 0, 0, 5, -10, -9.5, statormat, 'lowersolidcoreA' ); 
+loadPart('models/10kW/SolidLowerCoreB.glb', Math.PI / 2.0, 0, 0, -13, 0, -9.5, statormat, 'lowersolidcoreB' ); 
+loadPart('models/10kW/SolidLowerCoreC.glb', Math.PI / 2.0, 0, 0, 5, 10, -9.5, statormat, 'lowersolidcoreC' ); 
+
+
+
+//Removable laminated core
+loadPart('models/10kW/RemovableLaminatedCore1.glb', Math.PI / 2.0, 0, 0, 9.4, -5.65, 9.25, laminatedmat, 'removablelaminatedcoreA' ); 
+loadPart('models/10kW/RemovableLaminatedCore7.glb', Math.PI / 2.0, 0, 0, 9.4, 5.65, 9.25, laminatedmat, 'removablelaminatedcoreB' ); 
+loadPart('models/10kW/RemovableLaminatedCore8.glb', Math.PI / 2.0, 0, 0, 0, 11.65, 9.25, laminatedmat, 'removablelaminatedcoreC' );     
+loadPart('models/10kW/RemovableLaminatedCore9.glb', Math.PI / 2.0, 0, 0, -9.4, 5.65, 9.25, laminatedmat, 'removablelaminatedcoreD' );         
+loadPart('models/10kW/RemovableLaminatedCore10.glb', Math.PI / 2.0, 0, 0, -9.4, -5.65, 9.25, laminatedmat, 'removablelaminatedcoreE' ); 
+loadPart('models/10kW/RemovableLaminatedCore11.glb', Math.PI / 2.0, 0, 0, 0, -11.65, 9.25, laminatedmat, 'removablelaminatedcoreF' );
+
+//Laminated core upper
+loadPart('models/10kW/LaminatedCoreUpper1Fine.glb', Math.PI / 2.0, 0, 0, 5.3, -5.5, 9.25, laminatedmat, 'laminatedcoreupperA');
+loadPart('models/10kW/LaminatedCoreUpper5Fine.glb', Math.PI / 2.0, 0, 0, 5.5, 5.3, 9.25, laminatedmat, 'laminatedcoreupperB' );
+loadPart('models/10kW/LaminatedCoreUpper6Fine.glb', Math.PI / 2.0, 0, 0, -5.3, 5.5, 9.25, laminatedmat, 'laminatedcoreupperC' );
+loadPart('models/10kW/LaminatedCoreUpper7Fine.glb', Math.PI / 2.0, 0, 0, -5.5, -5.3, 9.25, laminatedmat, 'laminatedcoreupperD' );
+
+//Laminated core lower
+loadPart('models/10kW/LaminatedCoreLower1Fine.glb', Math.PI / 2.0, 0, 0, 6.3, -6.5, -9.25, laminatedmat, 'laminatedcorelowerA' );
+loadPart('models/10kW/LaminatedCoreLower5Fine.glb', Math.PI / 2.0, 0, 0, 6.5, 6.3, -9.25, laminatedmat, 'laminatedcorelowerB' );
+loadPart('models/10kW/LaminatedCoreLower6Fine.glb', Math.PI / 2.0, 0, 0, -6.3, 6.5, -9.25, laminatedmat, 'laminatedcorelowerC' );
+loadPart('models/10kW/LaminatedCoreLower7Fine.glb', Math.PI / 2.0, 0, 0, -6.5, -6.3, -9.25, laminatedmat, 'laminatedcorelowerD' );
+
+//ripple shield
+loadPart('models/10kW/RippleShield.glb', Math.PI / 2.0, 0, 0, 0, 0, 0, coppermat, 'rippleshield' ); 
+
+
+//Core spacer
+loadPart('models/10kW/CoreMidFine.glb', Math.PI / 2.0, 0, 0, 0, 0, 0, G10mat, 'spacer' );
+
+//Armature
+loadPart('models/10kW/ArmatureStandard.glb', Math.PI / 2.0, 0, 0, 0, 0, 0, coppermat, 'armature');  
+
+//HTS coil
+loadPart('models/10kW/Coil.glb', Math.PI / 2.0, 0, -Math.PI/6.0, 0.78*9.2, 0.78*15.75, -4.3, coppermat, 'fieldcoil');  
+
+
+
+//Coil supports
+loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0,  12.6*Math.cos(Math.PI/12), 12.6*Math.sin(Math.PI/12), -12.6, G10mat, 'coilsupportA');
+loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0,  12.6*Math.cos(Math.PI+Math.PI/12), 12.6*Math.sin(Math.PI+Math.PI/12), -12.6, G10mat, 'coilsupportB' );
+loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0,  12.6*Math.cos(Math.PI/2+Math.PI/12), 12.6*Math.sin(Math.PI/2+Math.PI/12), -12.6, G10mat, 'coilsupportC' );
+loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0,  12.6*Math.cos(-Math.PI/2+Math.PI/12), 12.6*Math.sin(-Math.PI/2+Math.PI/12), -12.6, G10mat, 'coilsupportD' );
+
+
+
+//Rotor
+//loadPart('RotorFine.glb', Math.PI / 2.0, 0, 0, 0, 0, -5.3, rotormat, 'rotor' );
+
+
+//Upper core clamps
+loadPart('models/10kW/CoreClampUpper7.glb', Math.PI / 2.0, 0, 0, 6, -11, 8, clampmat, 'uppercoreclampA');  
+loadPart('models/10kW/CoreClampUpper10.glb', Math.PI / 2.0, 0, 0, 6.05, 10.9, 8, clampmat, 'uppercoreclampB');  
+loadPart('models/10kW/CoreClampUpper11.glb', Math.PI / 2.0, 0, 0, -15, 0, 8, clampmat, 'uppercoreclampC');  
+
+//Lower core clamps
+loadPart('models/10kW/CoreClampLower4.glb', Math.PI / 2.0, 0, 0, 6, -11, -8, clampmat, 'lowercoreclampA');  
+loadPart('models/10kW/CoreClampLower7.glb', Math.PI / 2.0, 0, 0, 6.05, 10.9, -8, clampmat, 'lowercoreclampB');  
+loadPart('models/10kW/CoreClampLower8.glb', Math.PI / 2.0, 0, 0, -15, 0, -8, clampmat, 'lowercoreclampC');  
+
+//m12 studs
+loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(Math.PI/12), 17.5*Math.sin(Math.PI/12), 1.9, studmat, 'studA');  
+loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-Math.PI/12), 17.5*Math.sin(-Math.PI/12), 1.9, studmat, 'studB'); 
+loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3+Math.PI/12), 17.5*Math.sin(2*Math.PI/3+Math.PI/12), 1.9, studmat, 'studC'); 
+loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3-Math.PI/12), 17.5*Math.sin(2*Math.PI/3-Math.PI/12), 1.9, studmat, 'studD'); 
+loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3+Math.PI/12), 17.5*Math.sin(-2*Math.PI/3+Math.PI/12), 1.9, studmat, 'studE'); 
+loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3-Math.PI/12), 17.5*Math.sin(-2*Math.PI/3-Math.PI/12), 1.9, studmat, 'studF'); 
+
+//tie rod spacers
+loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(Math.PI/12), 17.5*Math.sin(Math.PI/12), 20.5, tierodmat, 'tierodA'); 
+loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-Math.PI/12), 17.5*Math.sin(-Math.PI/12), 20.5, tierodmat, 'tierodB'); 
+
+loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3+Math.PI/12), 17.5*Math.sin(2*Math.PI/3+Math.PI/12), 20.5, tierodmat, 'tierodC'); 
+loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3-Math.PI/12), 17.5*Math.sin(2*Math.PI/3-Math.PI/12), 20.5, tierodmat, 'tierodD'); 
+
+loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3+Math.PI/12), 17.5*Math.sin(-2*Math.PI/3+Math.PI/12), 20.5, tierodmat, 'tierodE'); 
+loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3-Math.PI/12), 17.5*Math.sin(-2*Math.PI/3-Math.PI/12), 20.5, tierodmat, 'tierodF'); 
+
+
+//nuts
+loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3+Math.PI/12), 17.5*Math.sin(-2*Math.PI/3+Math.PI/12), 27.3, nutmat, 'nutA' ); 
+loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3-Math.PI/12), 17.5*Math.sin(-2*Math.PI/3-Math.PI/12), 27.3, nutmat, 'nutB' ); 
+
+loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3+Math.PI/12), 17.5*Math.sin(2*Math.PI/3+Math.PI/12), 27.3, nutmat, 'nutC' ); 
+loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3-Math.PI/12), 17.5*Math.sin(2*Math.PI/3-Math.PI/12), 27.3, nutmat, 'nutD' ); 
+
+loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(Math.PI/12), 17.5*Math.sin(Math.PI/12), 27.3, nutmat, 'nutE' ); 
+loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-Math.PI/12), 17.5*Math.sin(-Math.PI/12), 27.3, nutmat, 'nutF' ); 
+
+/*
+//swagelok parts
+loadPart('Swagelok1.glb', Math.PI / 2.0, 0, -1.5*Math.PI/10, -2.8, -20, -13.1, swagemat ); 
+loadPart('Swagelok2.glb', Math.PI / 2.0, 0, -1.5*Math.PI/10, 18.2*Math.cos(-2*Math.PI/3+Math.PI/7), 18.2*Math.sin(-2*Math.PI/3+Math.PI/7), 16, swagemat ); 
+
+loadPart('Swagelok1.glb', Math.PI / 2.0, 0, -2*Math.PI/10, -16.1, -12.2, -13.1, swagemat ); 
+loadPart('Swagelok2.glb', Math.PI / 2.0, 0, -2*Math.PI/10, 18.2*Math.cos(-2*Math.PI/3-Math.PI/7), 18.2*Math.sin(-2*Math.PI/3-Math.PI/7), 16, swagemat ); 
+
+loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI/2, 20.1*Math.cos(Math.PI/8), 20.1*Math.sin(Math.PI/8), -13.1, swagemat ); 
+loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI/2, 18.1*Math.cos(Math.PI/7), 18.1*Math.sin(Math.PI/7), 16, swagemat ); 
+
+loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI/2, 20.1*Math.cos(-Math.PI/8), 20.1*Math.sin(-Math.PI/8), -13.1, swagemat ); 
+loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI/2, 18.1*Math.cos(-Math.PI/7), 18.1*Math.sin(-Math.PI/7), 16, swagemat ); 
+
+loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI+1.5*Math.PI/10, 20.1*Math.cos(2*Math.PI/3-Math.PI/8), 20.1*Math.sin(2*Math.PI/3-Math.PI/8), -13.1, swagemat ); 
+loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI+1.5*Math.PI/10, 18.2*Math.cos(2*Math.PI/3-Math.PI/6.9), 18.2*Math.sin(2*Math.PI/3-Math.PI/6.9), 16, swagemat ); 
+
+loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI+2*Math.PI/10, 20.1*Math.cos(2*Math.PI/3+Math.PI/8), 20.1*Math.sin(2*Math.PI/3+Math.PI/8), -13.1, swagemat );
+loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI+Math.PI/5, 18.1*Math.cos(2*Math.PI/3+Math.PI/6.9), 18.1*Math.sin(2*Math.PI/3+Math.PI/6.9), 16, swagemat );
+
+*/
+
+
+
+function loadPart(filename, rotx, roty, rotz, posx, posy, posz, material, groupname){
+
+    loader.load(filename, function (gltf) {
+
+gltf.scene.traverse(function (child) {
+
+    if (child.isMesh) {
+
+        child.geometry.center();
+        child.geometry.computeFaceNormals();
+        child.geometry.computeVertexNormals();
+        //child.material =  new THREE.MeshPhongMaterial({color: 0x987933,shininess:30,reflectivity:0.8,transparent:false});
+        //child.material = new THREE.MeshStandardMaterial({ color: 0x990000, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+        child.material = material;
+
+        child.rotation.x = rotx;
+        child.rotation.y = roty;
+        child.rotation.z = rotz;
+        
+        child.scale.multiplyScalar(0.1);
+        child.position.x = posx;
+        child.position.z = posy;
+        child.position.y = posz;
+        //w3 = child;
+        //w3.layers.set(0);
+		child.name=groupname;
+		/*
+        if(groupname=='armature'){
+            w3 = child;
+        }else if(groupname=='stator'){
+            stator = child;
+        }
+        else if(groupname=='fieldcoil'){
+            coil = child;
+        }
+		*/
+        child.layers.set(0);
+        scene.add(child);
+
+        var button = document.getElementById(groupname);
+        if(button!=null){
+            button.addEventListener('click', function () {
+
+
+            child.layers.toggle(0);
+        });
+    }
+    }
+
+});
+
+
+
+render();
+
+});
+}
+
+        
+
+
+
+
+
+
+
+
+
+
+
+            
+
+			window.addEventListener('resize', onWindowResize, false);
+			document.addEventListener('mousemove', onDocumentMouseMove, false);
+
+
+			document.getElementById("infobutton").addEventListener('click', function () {
+				document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+				i = 0;
+				infoFunction(loz + " Superconducting Homopolar Motor/Generator\n\nMotor Rating: 10 kW\nRated Speed: 25000 RPM");
+
+
+			});
+
+			renderer.domElement.addEventListener("click", onClick, false);
+
+
+
+			
+        
+            document.getElementById('explode').addEventListener('click', function () {
+				//console.log("explode");
+				//console.log(scene.children);
+				explode=!explode;
+				
+				document.getElementById('access').disabled=explode;
+
+				if(explode){
+					movedirection = 1;
+				}
+				else{
+					movedirection = -1;
+				}
+        });
+
+
+        document.getElementById('stator').addEventListener('click', function () {
+				hideStator();
+        });
+
+    
+        document.getElementById('supports').addEventListener('click', function () {
+				hideSupports();
+        });
+
+        document.getElementById('access').addEventListener('click', function () {
+            
+               accesscoil=!accesscoil;
+               coilAccess();
+        });
+
+
+		document.getElementById('supports').checked = true;
+		document.getElementById('stator').checked = true;
+		document.getElementById('armature').checked = true;
+		document.getElementById('rippleshield').checked = true;
+		document.getElementById('fieldcoil').checked = true;
+		document.getElementById('rotor').checked = true;
+
+		}
+        
+		function explodeParts(){
+			let prog = 0;
+			camera.position.set(-100-moveprogress/100.0*500*Math.sin(0.69), 30, 120+moveprogress/100.0*500*Math.cos(0.69));
+			//camera.updateProjectionMatrix();
+			
+			controls.update();
+			controls.target=new THREE.Vector3(0, 0+moveprogress/100.0*60, 0);
+			controls.update();
+
+			document.getElementById('supports').checked = true;
+		document.getElementById('stator').checked = true;
+		document.getElementById('armature').checked = true;
+		document.getElementById('rippleshield').checked = true;
+		document.getElementById('fieldcoil').checked = true;
+		document.getElementById('rotor').checked = true;
+		
+			//console.log(moveprogress);
+			for(let i = 0; i<scene.children.length; i++){
+					let child = scene.children[i];
+                    child.layers.enable(0);
+					switch(child.name){
+
+						case 'nutA':
+						case 'nutB':
+						case 'nutC':
+						case 'nutD':
+						case 'nutE':
+						case 'nutF':
+							child.position.y=27.3+moveprogress/100.0*205;	
+							break;
+
+						case 'topclampplate':
+							child.position.y=26.2+moveprogress/100.0*200;	
+							break;
+
+
+						case 'studA':
+						case 'studB':
+						case 'studC':
+						case 'studD':
+						case 'studE':
+						case 'studF':
+							//child.position.y=1.9+moveprogress/100.0*190;
+							child.position.y=1.9-moveprogress/100.0*120;		
+							break;
+
+						case 'topbearingplate':
+							child.position.y=24.75+moveprogress/100.0*190;
+							break;
+
+						case 'tierodA':
+						case 'tierodB':
+						case 'tierodC':
+						case 'tierodD':
+						case 'tierodE':
+						case 'tierodF':
+							child.position.y=20.5+moveprogress/100.0*180;
+							break;
+
+						case 'topbearingspacer':
+							child.position.y=20+moveprogress/100.0*180;
+							break;
+						case 'topbearinghousing':
+							child.position.y=21+moveprogress/100.0*160;
+							break;
+
+						case 'toplocatorring':
+							child.position.y=15.85+moveprogress/100.0*155;
+							break;
+
+							
+						case 'removablesolidcoreA':
+							prog = Math.max(0,2*(moveprogress-50));
+							child.position.x = -13.2-prog/100.0*10;
+							child.position.y=6.22+moveprogress/100.0*150;
+							break;
+						case 'removablesolidcoreB':	
+							prog = Math.max(0,2*(moveprogress-50));
+							child.position.x = 5+prog/100.0*10*Math.sin(0.5); //0.5 is arctan 6/11
+							child.position.z = -10-prog/100.0*10*Math.cos(0.5);
+							child.position.y=6.22+moveprogress/100.0*150;
+							break;
+						case 'removablesolidcoreC':
+							prog = Math.max(0,2*(moveprogress-50));
+							child.position.x = 5+prog/100.0*10*Math.sin(0.5); //0.5 is arctan 6/11
+							child.position.z = 10+prog/100.0*10*Math.cos(0.5);
+							child.position.y=6.22+moveprogress/100.0*150;
+							break;
+
+						case 'uppercoreclampA':
+							child.position.x = 6+moveprogress/100.0*20*Math.sin(0.5); //0.5 is arctan 6/11
+							child.position.z = -11-moveprogress/100.0*20*Math.cos(0.5);
+							child.position.y=8+moveprogress/100.0*150;
+							break;
+						
+						case 'uppercoreclampB':	
+							child.position.x = 6.05+moveprogress/100.0*20*Math.sin(0.5); 
+							child.position.z = 10.9+moveprogress/100.0*20*Math.cos(0.5);
+							child.position.y=8+moveprogress/100.0*150;
+							break;
+						case 'uppercoreclampC':
+							child.position.x = -15-moveprogress/100.0*20; 
+							child.position.z = 0*moveprogress/100.0*20;
+							child.position.y=8+moveprogress/100.0*150;
+							break;	
+
+						case 'upperlaminationretainerA':
+						case 'upperlaminationretainerB':
+						case 'upperlaminationretainerC':	
+							child.position.y=15.55+moveprogress/100.0*125;
+							break;
+
+
+						case 'removablelaminatedcoreA':
+							prog = Math.max(0,5*(moveprogress-80));
+							child.position.x = 9.4+prog/100.0*5*Math.sin(1.03); 
+							child.position.z = -5.65-prog/100.0*5*Math.cos(1.03);
+							child.position.y=9.25+moveprogress/100.0*120;
+							break;
+						case 'removablelaminatedcoreB':
+							prog = Math.max(0,5*(moveprogress-80));
+							child.position.x = 9.4+prog/100.0*5*Math.sin(1.03); 
+							child.position.z = 5.65+prog/100.0*5*Math.cos(1.03);
+							child.position.y=9.25+moveprogress/100.0*120;
+							break;
+						case 'removablelaminatedcoreC':
+							prog = Math.max(0,5*(moveprogress-80));
+							child.position.z = 11.65+prog/100.0*5
+							child.position.y=9.25+moveprogress/100.0*120;
+							break;
+						case 'removablelaminatedcoreD':
+							prog = Math.max(0,5*(moveprogress-80));
+							child.position.x = -9.4-prog/100.0*5*Math.sin(1.03); 
+							child.position.z = 5.65+prog/100.0*5*Math.cos(1.03);
+							child.position.y=9.25+moveprogress/100.0*120;
+							break;
+						case 'removablelaminatedcoreE':
+							prog = Math.max(0,5*(moveprogress-80));
+							child.position.x = -9.4-prog/100.0*5*Math.sin(1.03); 
+							child.position.z = -5.65-prog/100.0*5*Math.cos(1.03);
+							child.position.y=9.25+moveprogress/100.0*120;
+							break;
+						case 'removablelaminatedcoreF':
+							prog = Math.max(0,5*(moveprogress-80));
+							child.position.z = -11.65-prog/100.0*5
+							child.position.y=9.25+moveprogress/100.0*120;
+							break;
+
+						case 'lowerlaminationretainerA':
+						case 'lowerlaminationretainerB':
+						case 'lowerlaminationretainerC':
+							child.position.y=2.9+moveprogress/100.0*115;
+							break;
+
+						case 'laminatedcoreupperA':
+						case 'laminatedcoreupperB':
+						case 'laminatedcoreupperC':
+						case 'laminatedcoreupperD':
+							child.position.y=9.25+moveprogress/100.0*95;
+							break;
+
+						case 'rippleshield':
+							child.position.y=moveprogress/100.0*90;
+							break;
+
+						case 'spacer':
+							child.position.y=moveprogress/100.0*80;
+							break;
+
+						case 'armature':
+							child.position.y=moveprogress/100.0*55;
+							break;
+
+						case 'fieldcoil':
+							child.position.y=-4.3+moveprogress/100.0*30;
+							break;
+
+
+
+						case 'coilsupportA':
+						case 'coilsupportB':
+						case 'coilsupportC':
+						case 'coilsupportD':
+							child.position.y=-12.6-moveprogress/100.0*20;
+							break;
+
+						case 'laminatedcorelowerA':
+						case 'laminatedcorelowerB':
+						case 'laminatedcorelowerC':
+						case 'laminatedcorelowerD':
+							child.position.y=-9.25-moveprogress/100.0*40;
+							break;
+
+
+						
+
+						case 'lowercoreclampA':
+							child.position.x = 6+moveprogress/100.0*20*Math.sin(0.5); //0.5 is arctan 6/11
+							child.position.z = -11-moveprogress/100.0*20*Math.cos(0.5);
+							child.position.y=-8-moveprogress/100.0*60;
+							break;
+						case 'lowercoreclampB':
+							child.position.x = 6.05+moveprogress/100.0*20*Math.sin(0.5); 
+							child.position.z = 10.9+moveprogress/100.0*20*Math.cos(0.5);
+							child.position.y=-8-moveprogress/100.0*60;
+							break;
+						case 'lowercoreclampC':
+							child.position.x = -15-moveprogress/100.0*20; 
+							child.position.z = 0*moveprogress/100.0*20;
+							child.position.y=-8-moveprogress/100.0*60;
+							break;
+
+						case 'lowersolidcoreA':
+							prog = Math.max(0,5*(moveprogress-80));
+							child.position.x = 5+prog/100.0*10*Math.sin(0.5); //0.5 is arctan 6/11
+							child.position.z = -10-prog/100.0*10*Math.cos(0.5);
+							//child.position.x = 5+moveprogress/100.0*10*Math.sin(0.5);
+							//child.position.z = -10-moveprogress/100.0*10*Math.cos(0.5);
+							child.position.y=-9.5-(moveprogress)/100.0*60;
+							break;
+						case 'lowersolidcoreB':
+							prog = Math.max(0,5*(moveprogress-80));
+							child.position.x = -13-prog/100.0*10;
+							//child.position.x = -13-moveprogress/100.0*10;
+							child.position.y=-9.5-(moveprogress)/100.0*60;
+							break;
+						case 'lowersolidcoreC':
+							prog = Math.max(0,5*(moveprogress-80));
+							child.position.x = 5+prog/100.0*10*Math.sin(0.5); 
+							child.position.z = 10+prog/100.0*10*Math.cos(0.5);
+							//child.position.x = 5+moveprogress/100.0*10*Math.sin(0.5); //0.5 is arctan 6/11
+							//child.position.z = 10+moveprogress/100.0*10*Math.cos(0.5);
+							child.position.y=-9.5-(moveprogress)/100.0*60;
+							break;
+
+
+						case 'bottombearinghousing':
+							child.position.y=-20.6-(moveprogress)/100.0*70;
+							break;
+
+						case 'bottombearingspacer':
+							child.position.y=-19.9-(moveprogress)/100.0*90;
+							break;
+						case 'bottombearingplate':
+							child.position.y=-25.3-(moveprogress)/100.0*120;
+							break;
+					}
+						
+					
+				}
+		}
+
+        function coilAccess(){
+			let prog = 0;
+			camera.position.set(-100-moveprogress/100.0*500*Math.sin(0.69), 30, 120+moveprogress/100.0*500*Math.cos(0.69));
+			//camera.updateProjectionMatrix();
+			
+			controls.update();
+			controls.target=new THREE.Vector3(0, 0+moveprogress/100.0*60, 0);
+			controls.update();
+
+			document.getElementById('supports').checked = true;
+		document.getElementById('stator').checked = true;
+		document.getElementById('armature').checked = true;
+		document.getElementById('rippleshield').checked = true;
+		document.getElementById('fieldcoil').checked = true;
+		document.getElementById('rotor').checked = true;
+
+			
+				document.getElementById('supports').disabled = accesscoil;
+		document.getElementById('stator').disabled = accesscoil
+		document.getElementById('armature').disabled = accesscoil
+		document.getElementById('rippleshield').disabled = accesscoil
+		document.getElementById('fieldcoil').disabled = accesscoil
+		document.getElementById('rotor').disabled = accesscoil
+			
+
+
+			//console.log(moveprogress);
+			for(let i = 0; i<scene.children.length; i++){
+					let child = scene.children[i];
+                    child.layers.enable(0);
+                    if(accesscoil){
+					switch(child.name){
+                        case 'nutA':
+						case 'nutB':
+						case 'nutC':
+						case 'nutD':
+						case 'nutE':
+						case 'nutF':
+							child.layers.disable(0);
+							break;
+
+						case 'topclampplate':
+                            child.layers.disable(0);
+							break;
+
+
+						case 'studA':
+						case 'studB':
+						case 'studC':
+						case 'studD':
+						case 'studE':
+						case 'studF':
+							//child.position.y=1.9+moveprogress/100.0*190;
+							//child.position.y=1.9-moveprogress/100.0*120;		
+							break;
+
+						case 'topbearingplate':
+                            child.layers.disable(0);
+							break;
+
+						case 'tierodA':
+						case 'tierodB':
+						case 'tierodC':
+						case 'tierodD':
+						case 'tierodE':
+						case 'tierodF':
+                            child.layers.disable(0);
+							break;
+
+						case 'topbearingspacer':
+                            child.layers.disable(0);
+							break;
+						case 'topbearinghousing':
+                            child.layers.disable(0);
+							break;
+
+						case 'toplocatorring':
+                            child.layers.disable(0);
+							break;
+
+							
+						case 'removablesolidcoreA':
+							
+						case 'removablesolidcoreB':	
+							
+						case 'removablesolidcoreC':
+							
+
+						case 'uppercoreclampA':
+							
+						
+						case 'uppercoreclampB':	
+							
+						case 'uppercoreclampC':
+							
+
+						case 'upperlaminationretainerA':
+						case 'upperlaminationretainerB':
+						case 'upperlaminationretainerC':	
+                            child.layers.disable(0);
+							break;
+
+
+						case 'removablelaminatedcoreA':
+							
+						case 'removablelaminatedcoreB':
+							
+						case 'removablelaminatedcoreC':
+							
+						case 'removablelaminatedcoreD':
+							
+						case 'removablelaminatedcoreE':
+							
+						case 'removablelaminatedcoreF':
+							
+						case 'lowerlaminationretainerA':
+						case 'lowerlaminationretainerB':
+						case 'lowerlaminationretainerC':
+                            child.layers.disable(0);
+							break;
+
+                    }
+                }
+                }
+            }                    
+
+
+        function hideStator(){
+            for(let i = 0; i<scene.children.length; i++){
+                let child = scene.children[i];
+                switch(child.name){
+                    case 'removablesolidcoreA':
+                    case 'removablesolidcoreB':
+                    case 'removablesolidcoreC':
+                    case 'lowersolidcoreA':
+                    case 'lowersolidcoreB':
+                    case 'lowersolidcoreC':
+                    case 'removablelaminatedcoreA':
+                    case 'removablelaminatedcoreB':
+                    case 'removablelaminatedcoreC':
+                    case 'removablelaminatedcoreD':
+                    case 'removablelaminatedcoreE':
+                    case 'removablelaminatedcoreF':    
+                    case 'laminatedcoreupperA':
+                    case 'laminatedcoreupperB':
+                    case 'laminatedcoreupperC':
+                    case 'laminatedcoreupperD':    
+                    case 'laminatedcorelowerA':
+                    case 'laminatedcorelowerB':
+                    case 'laminatedcorelowerC':
+                    case 'laminatedcorelowerD':
+                        child.layers.toggle(0);                       
+                        break;
+                }
+
+            }
+        }
+
+        function hideSupports(){
+            for(let i = 0; i<scene.children.length; i++){
+                let child = scene.children[i];
+                switch(child.name){
+                    case 'nutA':
+						case 'nutB':
+						case 'nutC':
+						case 'nutD':
+						case 'nutE':
+						case 'nutF':
+                        case 'topclampplate':
+                        case 'topbearingplate':
+                    case 'studA':
+                    case 'studB':
+                    case 'studC':
+                    case 'studD':
+                    case 'studE':
+                    case 'studF':
+                    case 'tierodA':
+						case 'tierodB':
+						case 'tierodC':
+						case 'tierodD':
+						case 'tierodE':
+						case 'tierodF':
+                        case 'topbearingspacer':
+                        case 'topbearinghousing':
+                        case 'toplocatorring':
+                        case 'upperlaminationretainerA':
+						case 'upperlaminationretainerB':
+						case 'upperlaminationretainerC':	
+                        case 'lowerlaminationretainerA':
+						case 'lowerlaminationretainerB':
+						case 'lowerlaminationretainerC':
+                        case 'spacer':	
+                        case 'coilsupportA':
+						case 'coilsupportB':
+						case 'coilsupportC':
+						case 'coilsupportD':
+                        case 'uppercoreclampA':
+                        case 'uppercoreclampB':
+                        case 'uppercoreclampC':
+                        case 'lowercoreclampA':
+                        case 'lowercoreclampB':
+                        case 'lowercoreclampC':
+                        case 'bottombearinghousing':
+                    case 'bottombearingspacer':
+                    case 'bottombearingplate':
+
+                        child.layers.toggle(0);
+                        break;
+                }
+
+            }
+        }
+
+
+		function onClick(event) {
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			var intersects = raycaster.intersectObjects(scene.children);
+			if (intersects.length > 0) {
+				var name = intersects[0].object.name;
+
+				switch(name){
+					case 'nutA':
+					case 'nutB':
+					case 'nutC':
+					case 'nutD':
+					case 'nutE':
+					case 'nutF':
+						infoFunction(loz + " M12 nut.");
+						break;
+
+					case 'topclampplate':
+						infoFunction(loz + " Top clamp plate.");
+						break;
+
+
+					case 'studA':
+					case 'studB':
+					case 'studC':
+					case 'studD':
+					case 'studE':
+					case 'studF':
+						infoFunction(loz + " M12 stud.");	
+						break;
+
+					case 'topbearingplate':
+						infoFunction(loz + " Top bearing plate.");
+						break;
+
+					case 'tierodA':
+					case 'tierodB':
+					case 'tierodC':
+					case 'tierodD':
+					case 'tierodE':
+					case 'tierodF':
+						infoFunction(loz + " Tie rod.");
+						break;
+
+					case 'topbearingspacer':
+						infoFunction(loz + " Top bearing spacer.");
+						break;
+
+					case 'topbearinghousing':
+						infoFunction(loz + " Top bearing housing.");
+						break;
+
+					case 'toplocatorring':
+						infoFunction(loz + " Top locator ring.");
+						break;
+
+						
+					case 'removablesolidcoreA':
+					case 'removablesolidcoreB':
+					case 'removablesolidcoreC':	
+						infoFunction(loz + " Removable solid core.");
+						break;
+
+
+					case 'uppercoreclampA':
+					case 'uppercoreclampB':	
+					case 'uppercoreclampC':
+						infoFunction(loz + " Upper core clamp.");
+						break;	
+
+					case 'upperlaminationretainerA':
+					case 'upperlaminationretainerB':
+					case 'upperlaminationretainerC':	
+						infoFunction(loz + " Upper lamination retainer.");
+						break;
+
+
+					case 'removablelaminatedcoreA':
+					case 'removablelaminatedcoreB':
+					case 'removablelaminatedcoreC':
+					case 'removablelaminatedcoreD':
+					case 'removablelaminatedcoreE':
+					case 'removablelaminatedcoreF':
+						infoFunction(loz + " Removable laminated core.");
+						break;
+
+					case 'lowerlaminationretainerA':
+					case 'lowerlaminationretainerB':
+					case 'lowerlaminationretainerC':
+						infoFunction(loz + " Lower lamination retainer.");
+						break;
+
+					case 'laminatedcoreupperA':
+					case 'laminatedcoreupperB':
+					case 'laminatedcoreupperC':
+					case 'laminatedcoreupperD':
+						infoFunction(loz + " Upper laminated core.");
+						break;
+
+					case 'rippleshield':
+						infoFunction(loz + " Ripple shield.");
+						break;
+
+					case 'spacer':
+						infoFunction(loz + " Middle spacer.");
+						break;
+
+					case 'armature':
+						infoFunction(loz + " Armature.");
+						break;
+
+					case 'fieldcoil':
+						infoFunction(loz + " Superconducting field coil.");
+						break;
+
+
+
+					case 'coilsupportA':
+					case 'coilsupportB':
+					case 'coilsupportC':
+					case 'coilsupportD':
+						infoFunction(loz + " Coil support.");
+						break;
+
+					case 'laminatedcorelowerA':
+					case 'laminatedcorelowerB':
+					case 'laminatedcorelowerC':
+					case 'laminatedcorelowerD':
+						infoFunction(loz + " Lower laminated core.");
+						break;
+
+
+					
+
+					case 'lowercoreclampA':	
+					case 'lowercoreclampB':	
+					case 'lowercoreclampC':
+						infoFunction(loz + " Lower core clamp.");
+						break;
+
+					case 'lowersolidcoreA':
+					case 'lowersolidcoreB':
+					case 'lowersolidcoreC':
+						infoFunction(loz + " Lower solid core.");
+						break;
+
+
+					case 'bottombearinghousing':
+						infoFunction(loz + " Bottom bearing housing.");
+						break;
+
+					case 'bottombearingspacer':
+						infoFunction(loz + " Bottom bearing spacer.");
+						break;
+					case 'bottombearingplate':
+						infoFunction(loz + " Bottom bearing plate.");
+						break;	
+				}
+				
+				/*
+				if (intersects[0].object == stator) {
+					//intersects[0].object.material.opacity -=0.1;
+					infoFunction(loz + " 36-Slot Laminated Stator\n\nMaterial: 10JNEX900 Super Core\nChamfered to Minimize Weight\nDiameter: 548 mm\nAir Gap: 3 mm");
+				}
+				*/
+				//else if(intersects[0].object==rotortube || intersects[0].object==rotorlumps1 || intersects[0].object==rotorlumps2){
+				//	infoFunction(loz+" 6-Pole High-Speed Rotor\n\nMaterial: Aermet 310 Magnetic Steel\nActive Pole Length: 100 mm\nOne-Piece Construction")
+				//}
+				if (intersects[0].object == rotortube) {
+					infoFunction(loz + " 6-Pole single-piece high-speed rotor.")
+				}
+				/*
+				else if (intersects[0].object == coil) {
+					infoFunction(loz + " High-Temperature Superconductor Field Coil\n\nMaterial: Rare-Earth Barium Copper Oxide (REBCO)\nOperating Temperature: 50 K\nCurrent at Rated Load: 364 A\n\Number of Turns: 60");
+				}
+				else if (intersects[0].object == w1 || intersects[0].object == w2 || intersects[0].object == w3) {
+					infoFunction(loz + " Double-Layer 3-Phase Armature Winding\n\nMaterial: Litz Copper Wire\n6 A/mm" + sq + " Strands\nLiquid-Cooled");
+				}
+
+				else if (intersects[0].object == flux1) {
+					infoFunction("Flux path");
+				}
+				*/
+				else {
+					document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+					i = 0;
+				}
+				
+			}
+
+
+		}
+
+
+		function onWindowResize() {
+
+			renderer.setSize(window.innerWidth, window.innerHeight);
+
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+
+			render();
+
+		}
+
+		function onDocumentMouseMove(event) {
+			event.preventDefault();
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+		}
+
+
+
+		function animate() {
+			requestAnimationFrame(animate);
+			if (rotortube)
+				rotortube.rotation.z += 0.01;
+
+			if(movedirection!=0){
+				moveprogress+=movedirection*movespeed;
+				if(moveprogress<=0){
+					moveprogress=0;
+					movedirection=0;
+				}
+				else if(moveprogress>=100){
+					moveprogress=100;
+					movedirection=0;
+				}
+				explodeParts();	
+			}
+
+
+				raycaster.setFromCamera(mouse, camera);
+			var intersects = raycaster.intersectObjects(scene.children);
+			if (intersects.length > 0) {
+				if (INTERSECTED != intersects[0].object) {
+
+					if (INTERSECTED) {
+						if (INTERSECTED != plane && INTERSECTED != grid) {
+							//INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+							INTERSECTED.material.opacity = 1.0;
+						}
+					}
+					INTERSECTED = intersects[0].object;
+					if (INTERSECTED != plane && INTERSECTED != grid) {
+						//INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+						//INTERSECTED.material.emissive.setHex( 0xff0000 );
+						INTERSECTED.material.opacity = 0.5;
+					}
+				}
+			} else {
+				if (INTERSECTED) {
+					if (INTERSECTED != plane && INTERSECTED != grid) {
+						//INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+						INTERSECTED.material.opacity = 1.0;
+					}
+				}
+				INTERSECTED = null;
+			}
+
+			render();
+		}
+
+
+       
+
+
+
+		function render() {
+
+			renderer.render(scene, camera);
+
+		}
+
+	</script>
+	<script>
+
+
+		var i = 0;
+		var txt = 'Superconducting field coil\nREBCO conductor'; /* The text */
+		var speed = 20; /* The speed/duration of the effect in milliseconds */
+
+		function infoFunction(text) {
+			txt = text;
+			var x = document.getElementById("d1");
+
+			x.innerHTML = "<p id='line1'></p>";
+			i = 0;
+			typeWriter();
+
+
+
+
+		}
+
+
+
+		function typeWriter() {
+			if (i < txt.length) {
+				if (txt.charAt(i) == '\n') {
+					document.getElementById("line1").innerHTML += '<br>';
+				} else {
+					document.getElementById("line1").innerHTML += txt.charAt(i);
+				}
+				i++;
+				setTimeout(typeWriter, speed);
+			}
+			else if (i == txt.length) {
+				document.getElementById("d1").innerHTML += "<p id='cursor-line' class='visible'> <span class='typed-cursor'>&#9608;</span></p>";
+				i++;
+			}
+		}
+	</script>
+
+
+	<script>
+		// Get the modal
+		var modal = document.getElementById("myModal");
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("aboutBtn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks the button, open the modal 
+		btn.onclick = function () {
+			modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+
+
+	</script>
+</body>
+
+</html>
