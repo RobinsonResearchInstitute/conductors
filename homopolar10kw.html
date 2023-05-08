@@ -605,6 +605,14 @@ render();
 				explode=!explode;
 				if(explode){
 					this.innerHTML='Compact';
+					document.getElementById('access').innerHTML='Coil Access';
+					accesscoil=false;
+					document.getElementById('supports').disabled = false;
+					document.getElementById('stator').disabled = false;
+					document.getElementById('armature').disabled = false;
+					document.getElementById('rippleshield').disabled = false;
+					document.getElementById('fieldcoil').disabled = false;
+					document.getElementById('rotor').disabled = false;
 				}
 				else{
 					this.innerHTML='Explode';
@@ -632,6 +640,12 @@ render();
         document.getElementById('access').addEventListener('click', function () {
             
                accesscoil=!accesscoil;
+		if(accesscoil){
+			this.innerHTML='Reset';
+		}
+		else{
+			this.innerHTML='Coil Access';
+		}
                coilAccess();
         });
 
