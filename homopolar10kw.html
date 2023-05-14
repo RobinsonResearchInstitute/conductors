@@ -28,48 +28,53 @@
 	<title>Homopolar Motor</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<link type="text/css" rel="stylesheet" href="10kWhomopolar.css">
+	<link type="text/css" rel="stylesheet" href="10kWhomopolar2.css">
 	<link type="text/css" rel="stylesheet" href="arrows.css">
 	<link rel="stylesheet" type="text/css" href="text-cursor.css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+
+		<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet"> 
+
 </head>
 
 <body>
+    
 	<div id="info">
 		<h1>Superconducting Homopolar Motor/Generator</h1>
 		<button id="infobutton">Info</button>
-		<!--<button id="supports">Supports</button>
-        <button id="stator">Stator</button>
-		<button id="armature">Armature</button>
-        <button id="rippleshield">EM Shield</button>
-		<button id="fieldcoil">Field Coil</button>
-		<button id="rotor">Rotor</button>-->
+		
 		
 		<button id="explode">Explode</button>
 		<button id="access">Coil Access</button>
-
-		<!--<label class="container">Stator
-			<input type="checkbox" id='stator'>
-			<span class="checkmark"></span>
-		  </label>
-		-->
-
-		<input type="checkbox" id="supports">
-		<label for="supports">Supports</label>
-
-		<input type="checkbox" id="stator">
-		<label for="stator">Stator</label>
-
-		<input type="checkbox" id="armature">
-		<label for="armature">Armature</label>
-
-		<input type="checkbox" id="rippleshield">
-		<label for="rippleshield">EM Shield</label>
-
-		<input type="checkbox" id="fieldcoil">
-		<label for="fieldcoil">Field Coil</label>
-
-		<input type="checkbox" id="rotor">
-		<label for="rotor">Rotor</label>
+        <label class="container">Supports
+            <input type="checkbox" checked="checked" id="supports">
+            <span class="checkmark"></span>
+          </label>
+		
+          <label class="container">Stator
+            <input type="checkbox" checked="checked" id="stator">
+            <span class="checkmark"></span>
+          </label>
+          <label class="container">Armature
+            <input type="checkbox" checked="checked" id="armature">
+            <span class="checkmark"></span>
+          </label>
+          <label class="container">EM Shield
+            <input type="checkbox" checked="checked" id="rippleshield">
+            <span class="checkmark"></span>
+          </label>
+          <label class="container">Field Coil
+            <input type="checkbox" checked="checked" id="fieldcoil">
+            <span class="checkmark"></span>
+          </label>
+          <label class="container">Rotor
+            <input type="checkbox" checked="checked" id="rotor">
+            <span class="checkmark"></span>
+          </label>
+        
 
 		<button id="aboutBtn">Help</button>
 		<br>
@@ -121,6 +126,8 @@
 	<div id="logo">
 		<a href="https://www.wgtn.ac.nz/robinson" target="_blank">Robinson Research Institute</a>
 	</div>
+
+	
 
 	<script type="module">
 
@@ -616,6 +623,7 @@ render();
 				}
 				else{
 					this.innerHTML='Explode';
+					
 				}
 				document.getElementById('access').disabled=explode;
 
@@ -640,16 +648,16 @@ render();
         document.getElementById('access').addEventListener('click', function () {
             
                accesscoil=!accesscoil;
-		if(accesscoil){
-			this.innerHTML='Reset';
-		}
-		else{
-			this.innerHTML='Coil Access';
-		}
+			   if(accesscoil){
+					this.innerHTML='Reset';
+				}
+				else{
+					this.innerHTML='Coil Access';
+				}
                coilAccess();
         });
 
-
+		
 		document.getElementById('supports').checked = true;
 		document.getElementById('stator').checked = true;
 		document.getElementById('armature').checked = true;
@@ -934,6 +942,8 @@ render();
 		document.getElementById('rippleshield').disabled = accesscoil
 		document.getElementById('fieldcoil').disabled = accesscoil
 		document.getElementById('rotor').disabled = accesscoil
+		
+		
 			
 
 
