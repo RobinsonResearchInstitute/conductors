@@ -2,9 +2,9 @@ body {
 	margin: 0;
 	background-color: #000;
 	color: rgba(127,255,255,0.75);
-	font-family: Monospace;
+	font-family: 'Chakra Petch',Monospace;
 	/*line-height: 32px;*/
-	overflow:hidden;
+    overflow:hidden;
 }
 
 h1{
@@ -18,9 +18,11 @@ button {
 				background: transparent;
 				outline: 1px solid rgba(127,255,255,0.75);
 				border: 0px;
-				padding: 5px 0px;
+				padding: 6px 0px;
+                margin-left:5px;
 				cursor: pointer;
-				min-width:14ch;
+				min-width:12ch;
+				
 			}
 			button:hover {
 				background-color: rgba(0,255,255,0.5);
@@ -65,13 +67,14 @@ button {
 	cursor: pointer;
 	text-transform: uppercase;
 	font-size:0.9rem;
+	font-family:'Chakra Petch';
 }
-
+/*
 label{
 	text-transform: uppercase;
 	font-size:1rem;
 }
-
+*/
 canvas {
 	display: block;
 }
@@ -84,16 +87,18 @@ canvas {
 	padding: 10px;
 	box-sizing: border-box;
 	text-align: center;
-	/*-moz-user-select: none;
+
+
 	-webkit-user-select: none;
-	-webkit-appearance:none;
+	-moz-user-select: none;
 	-ms-user-select: none;
-	user-select: none;*/
+	user-select: none;
+
 	pointer-events: none;
 	z-index: 1; /* TODO Solve this in HTML */
 }
 
-a, button, input, select {
+a, button, input, select, .container{
 	pointer-events: auto;
 }
 /*
@@ -147,22 +152,25 @@ a, button, input, select {
 	cursor: pointer;
   }
 
-
-  p {
-	font-family: monospace; color:rgba(127,255,255,0.75);
-  }
-  
   #d1 {
 	
 	padding-left:2rem;
 	
 	text-align:left;
-	font-family: monospace; 
+	font-family: 'Helvetica'; 
 	color:#00FF00;
 	font-size: 1.125rem;
 	width:50ch; 
 	height:auto;
   }
+
+  p {
+	font-family: 'Chakra Petch',Monospace;
+	color:rgba(127,255,255,0.75);
+	
+  }
+  
+ 
   
   
   @media screen and (max-width: 800px) {
@@ -184,23 +192,26 @@ a, button, input, select {
 
 	/* The container */
 .container {
-	display: block;
+	/*display: block;*/
 	position: relative;
-	padding-left: 35px;
+	padding-left: 30px;
+	/*padding-right:10px;*/
 	margin-bottom: 12px;
-	cursor: pointer;
-	font-size: 22px;
+	margin-left:10px;
+	/*cursor: pointer;*/
+	font-size: 0.9rem;
+	text-transform: uppercase;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	
   }
   
   /* Hide the browser's default checkbox */
   .container input {
 	position: absolute;
 	opacity: 0;
-	cursor: pointer;
 	height: 0;
 	width: 0;
   }
@@ -210,19 +221,22 @@ a, button, input, select {
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 25px;
-	width: 25px;
-	background-color: #eee;
+	height: 20px;
+	width: 20px;
+	background-color: #000000;
+	outline: 1px solid rgba(127,255,255,0.75);
+	cursor:pointer;
+	
   }
   
   /* On mouse-over, add a grey background color */
   .container:hover input ~ .checkmark {
-	background-color: #ccc;
+	background-color: rgba(0,255,255,0.5);
   }
   
   /* When the checkbox is checked, add a blue background */
   .container input:checked ~ .checkmark {
-	background-color: #2196F3;
+	background-color: #000000;
   }
   
   /* Create the checkmark/indicator (hidden when not checked) */
@@ -239,13 +253,21 @@ a, button, input, select {
   
   /* Style the checkmark/indicator */
   .container .checkmark:after {
-	left: 9px;
-	top: 5px;
+	left: 7px;
+	top: 2px;
 	width: 5px;
 	height: 10px;
-	border: solid white;
+	border: solid rgba(127,255,255,0.75);
 	border-width: 0 3px 3px 0;
 	-webkit-transform: rotate(45deg);
 	-ms-transform: rotate(45deg);
 	transform: rotate(45deg);
   }
+
+  .container input[type='checkbox']:disabled ~ .checkmark{
+background-color:darkgrey;
+outline: 1px solid darkgrey;
+cursor:default;
+  }
+
+  
