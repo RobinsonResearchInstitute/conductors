@@ -193,6 +193,7 @@ a, button, input, select, .container{
 	/* The container */
 .container {
 	/*display: block;*/
+	display:inline-block;
 	position: relative;
 	padding-left: 30px;
 	/*padding-right:10px;*/
