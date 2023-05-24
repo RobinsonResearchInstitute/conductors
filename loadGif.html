@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Gif</title>
+
+    <link type="text/css" rel="stylesheet" href="loadGif.css">
+</head>
+<body>
+    <button onclick="insertPlot()">Show Plot</button>
+    <!--
+    <div id="plot_div">
+    <img src="ComsolHomopolar3.gif" alt="Homopolar motor radial field animation">
+    </div>
+-->
+<div id="plot_div">
+
+</div>
+    <script>
+
+function showPlot() {
+  var x = document.getElementById("plot_div");
+  if (x.style.display === "none" || x.style.display=="") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+function insertPlot(){
+    var x = document.getElementById("plot_div");
+    var img = "<img id='fieldplot' src='ComsolHomopolar3.gif' alt='Homopolar motor radial field animation'>";
+    if(document.getElementById('fieldplot')==null){
+        x.innerHTML = img;
+    }
+    else{
+        x.innerHTML="";
+    }    
+}
+    </script>
+</body>
+</html>
