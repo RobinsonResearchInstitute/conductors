@@ -12,7 +12,7 @@
     <button onclick="insertPlot()">Show Plot</button>
     <!--
     <div id="plot_div">
-    <img src="ComsolHomopolar3.gif" alt="Homopolar motor radial field animation">
+    <img src="img/ComsolHomopolar3.gif" alt="Homopolar motor radial field animation">
     </div>
 -->
 <div id="plot_div">
@@ -31,7 +31,7 @@ function showPlot() {
 
 function insertPlot(){
     var x = document.getElementById("plot_div");
-    var img = "<img id='fieldplot' src='ComsolHomopolar3.gif' alt='Homopolar motor radial field animation'>";
+    var img = "<img id='fieldplot' src='img/ComsolHomopolar3.gif' alt='Homopolar motor radial field animation'>";
     if(document.getElementById('fieldplot')==null){
         x.innerHTML = img;
     }
