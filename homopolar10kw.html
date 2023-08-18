@@ -74,6 +74,10 @@
             <input type="checkbox" checked="checked" id="rotor">
             <span class="checkmark"></span>
           </label>
+	<label class="container">Cryocooler
+		<input type="checkbox" checked="checked" id="cryocooler">
+		<span class="checkmark"></span>
+	</label>
         
 
 		<button id="aboutBtn">Help</button>
@@ -492,6 +496,9 @@ loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Ma
 loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(Math.PI/12), 17.5*Math.sin(Math.PI/12), 27.3, nutmat, 'nutE' ); 
 loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-Math.PI/12), 17.5*Math.sin(-Math.PI/12), 27.3, nutmat, 'nutF' ); 
 
+//cryocooler
+loadPart('models/10kW/CryocoolerLowRes.glb',Math.PI / 2.0,0,-Math.PI/6.0,20.2,27,-26.5,clampmat,'cryocooler');
+			
 /*
 //swagelok parts
 loadPart('Swagelok1.glb', Math.PI / 2.0, 0, -1.5*Math.PI/10, -2.8, -20, -13.1, swagemat ); 
@@ -912,6 +919,9 @@ render();
 							break;
 						case 'bottombearingplate':
 							child.position.y=-25.3-(moveprogress)/100.0*120;
+							break;
+						case 'cryocooler':
+							infoFunction(loz + " Cryocooler.");
 							break;
 					}
 						
