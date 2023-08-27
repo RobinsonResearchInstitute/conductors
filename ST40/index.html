@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta property="og:title" content="ST40 Reactor" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://robinson.ac.nz/conductors/st40/index.html" />
+	<meta property="og:site_name" content="Robinson Research Institute" />
+	<meta property="og:image" content="https://robinson.ac.nz/conductors/st40/thumb.png" />
+	<meta property="og:description" content="ST40 Compact Spherical Tokamak Fusion Reactor" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="robinson.ac.nz" />
+	<meta name="twitter:title" content="Homopolar Motor" />
+	<meta name="twitter:description" content="ST40 Compact Spherical Tokamak Fusion Reactor" />
+	<meta name="twitter:image" content="https://robinson.ac.nz/conductors/st40/thumb.png" />
+
+
+
+
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="site.webmanifest">
+
+	<meta name="description" content="Compact Spherical Tokamak Fusion Reactor.">
+	<title>ST40 Fusion Reactor</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link type="text/css" rel="stylesheet" href="styles/style.css">
+	<link type="text/css" rel="stylesheet" href="styles/arrows.css">
+	<link rel="stylesheet" type="text/css" href="styles/text-cursor.css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+	<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<div id="info">
+		<h1>ST40 Compact Spherical Tokamak Fusion Reactor</h1>
+		
+		
+		<div id='sidebar'>
+		<button id="infobutton">Info</button>
+
+
+		<button id="explode">Labels</button>
+		<!--<button id="access">Coil Access</button>-->
+
+		<label class="container">Plasma
+			<input type="checkbox" checked="checked" id="plasma">
+			<span class="checkmark"></span>
+		</label>
+
+		<label class="container">Chamber 1
+			<input type="checkbox" checked="checked" id="outercan">
+			<span class="checkmark"></span>
+		</label>
+		<label class="container">PF-coils
+			<input type="checkbox" checked="checked" id="pcoils">
+			<span class="checkmark"></span>
+		</label>
+		<label class="container">TF-coils
+			<input type="checkbox" checked="checked" id="tcoils">
+			<span class="checkmark"></span>
+		</label>
+		<label class="container">MC-coils
+			<input type="checkbox" checked="checked" id="mcoils">
+			<span class="checkmark"></span>
+		</label>
+		<label class="container">Column
+			<input type="checkbox" checked="checked" id="column">
+			<span class="checkmark"></span>
+		</label>
+		<label class="container">Chamber 2
+			<input type="checkbox" checked="checked" id="innercan">
+			<span class="checkmark"></span>
+		</label>
+
+
+		<button id="aboutBtn">Help</button>
+		</div>
+		<br>
+
+		<div id="d1">
+			<p id='line1'></p>
+		</div>
+		
+		<div id="footer"><a href="https://www.tokamakenergy.co.uk" target="_blank"><h2>tokamakenergy.co.uk</h2></a></div>
+		
+	</div>
+
+
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<ul>
+			<li>Use checkboxes to show or hide components.</li>
+			<!--<li>Click on a component to show information.</li>-->
+			<li>Left-click & drag to rotate, mousewheel to zoom, right-click & drag to pan.</li>
+			<li>Webpage and 3D model created by James Storey.</li>
+			<li>NOTE: the model is an approximation based on publically available images.</li>
+			<li>For more information visit <a href='https://www.tokamakenergy.co.uk'
+					target="_blank">www.tokamakenergy.co.uk</a></p>
+			</ul>
+			<p>Robinson Research Institute, 2023.</p>
+		
+		</div>
+
+	</div>
+	<!--
+	<a href="https://robinson.ac.nz/conductors/syncmotor.html">
+        <div class="arrow">
+            <div class="arrow-top"></div>
+            <div class="arrow-bottom"></div>
+        </div>
+    </a>
+-->
+	<a href="https://robinson.ac.nz/conductors/cubesatearth.html">
+        <div class="barrow">
+            <div class="barrow-top"></div>
+            <div class="barrow-bottom"></div>
+        </div>
+    </a>
+
+
+	<!--<div id="logo">
+		<a href="https://www.wgtn.ac.nz/robinson">
+			<img src="RRILogoSmall.png" alt="Logo">
+		</a>
+	</div>-->
+
+	<div id="logo">
+		<a href="https://www.wgtn.ac.nz/robinson" target="_blank">Robinson Research Institute</a>
+	</div>
+
+
+
+	<script type="module">
+
+		import * as THREE from 'https://unpkg.com/three@0.126.0/build/three.module.js';
+
+		import { OrbitControls } from 'https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js';
+		import { GLTFLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/GLTFLoader.js';
+		import { RGBELoader } from 'https://unpkg.com/three@0.124.0/examples/jsm/loaders/RGBELoader.js';
+		import { CSS2DRenderer, CSS2DObject } from 'https://unpkg.com/three@0.124.0/examples/jsm/renderers/CSS2DRenderer.js';
+		
+
+		var renderer, scene, camera, raycaster, controls, root, labelRenderer;
+		var rotorlumps1, rotorlumps2, plane, grid, stator;
+		var rotortube, flux1, w1, w2, w3, coil;
+		var statorvisible = false;
+		var light1;
+		var th = 0;
+		var loz = String.fromCharCode(9671);
+		var sq = String.fromCharCode(178);
+		var mmx, mmy;
+		var explode = false;
+		var accesscoil = false;
+		var movedirection = 0;
+		var moveprogress = 0;
+		var movespeed = 1;
+
+		var labelsShowing = false;
+
+		var mouse = new THREE.Vector2(), INTERSECTED;
+
+		init();
+		animate();
+
+		function init() {
+
+
+			const params = {
+				exposure: 1,
+				//toneMapping: 'ACESFilmic'
+				toneMapping: 'Reinhard'
+			};
+
+			const toneMappingOptions = {
+				None: THREE.NoToneMapping,
+				Linear: THREE.LinearToneMapping,
+				Reinhard: THREE.ReinhardToneMapping,
+				Cineon: THREE.CineonToneMapping,
+				ACESFilmic: THREE.ACESFilmicToneMapping,
+				Custom: THREE.CustomToneMapping
+			};
+
+
+			// renderer
+			renderer = new THREE.WebGLRenderer({ antialias: true });
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			document.body.appendChild(renderer.domElement);
+
+
+			renderer.toneMapping = toneMappingOptions[params.toneMapping];
+			renderer.toneMappingExposure = params.exposure;
+
+
+			renderer.outputEncoding = THREE.sRGBEncoding;
+
+
+			labelRenderer = new CSS2DRenderer();
+			labelRenderer.setSize(window.innerWidth, window.innerHeight);
+			labelRenderer.domElement.style.position = 'absolute';
+			labelRenderer.domElement.style.top = '0px';
+			labelRenderer.domElement.style.pointerEvents = 'none';
+			document.body.appendChild(labelRenderer.domElement);
+
+
+
+			raycaster = new THREE.Raycaster();
+			raycaster.layers.set(0);
+
+
+			// scene
+			scene = new THREE.Scene();
+			//scene.background = new THREE.Color( 'skyblue' )
+			scene.fog = new THREE.Fog(0x000000, 250, 2400);
+
+			// camera
+			camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 2000);
+			camera.layers.enable(0);
+
+			camera.position.set(0, 0, -100);
+			scene.add(camera);
+
+
+			// controls
+			controls = new OrbitControls(camera, renderer.domElement);
+			controls.addEventListener('change', render);
+			controls.minDistance = 10;
+			controls.maxDistance = 800;
+		
+
+			// ambient
+			scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+			
+			const pointLight = new THREE.PointLight(0x0014FF, 10);
+			pointLight.name = 'pointlight';
+			pointLight.position.set(0, 0, 4);
+			scene.add(pointLight);
+
+
+
+			//hdri
+			const pmremGenerator = new THREE.PMREMGenerator(renderer);
+			pmremGenerator.compileEquirectangularShader();
+
+
+			async function loadHDRI() {
+				const rgbeLoader = new RGBELoader()
+					.setDataType(THREE.UnsignedByteType);
+				//.setPath( 'textures/equirectangular/' );
+
+				const texture = await rgbeLoader.loadAsync('hdr/HDR_029_Sky_Cloudy_Env.hdr');
+				const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+
+				scene.environment = envMap;
+				texture.dispose();
+				pmremGenerator.dispose();
+			}
+			loadHDRI();
+
+
+			plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(10000, 10000), new THREE.MeshPhongMaterial({ color: 'rgb(0,127,127)', depthWrite: false, opacity: 0.2, transparent: true }));
+			plane.position.y = -200;
+			plane.rotation.x = - Math.PI / 2;
+			scene.add(plane);
+
+
+			grid = new THREE.GridHelper(10000, 100, 'rgb(127,255,255)', 'rgb(127,255,255)');
+			grid.material.opacity = 0.5;
+			grid.material.transparent = true
+			grid.position.y = -200;
+			scene.add(grid);
+
+			root = new THREE.Group();
+
+
+
+			function getLabel(labeltext, x, y, z){
+				var text = document.createElement('div');
+				text.className = 'label';
+				text.textContent = labeltext;
+
+				var position = new THREE.Vector3(x,y,z);
+
+				var label = new CSS2DObject(text);
+				label.position.copy(position);
+				return label;
+			}
+
+			root.add(getLabel('Toroidal field coils',42,20,-2));
+			root.add(getLabel('Poloidal field coils',42,12,-2));
+			root.add(getLabel('Merging-compression coils',42,4,-2));
+			root.add(getLabel('Centre column',42,-4,-2));
+			root.add(getLabel('Inner vacuum vessel',42,-12,-2));
+			root.add(getLabel('Outer vacuum vessel',42,-20,-2));
+
+			
+
+			const linematerial = new THREE.LineBasicMaterial( { color: 'rgb(255,255,0)'} );
+
+			var points = [];
+			points.push( new THREE.Vector3( 5.5, 15.5, -1 ) );
+			points.push( new THREE.Vector3( 10, 20, -2 ) );
+			points.push( new THREE.Vector3( 30, 20, -2 ) );
+
+			var geometry = new THREE.BufferGeometry().setFromPoints( points );
+			var line = new THREE.Line( geometry, linematerial );
+			root.add(line);
+
+
+			points = [];
+			points.push( new THREE.Vector3( 13.5, 13.5, 0 ) );
+			points.push( new THREE.Vector3( 20, 13.5, -2 ) );
+			points.push( new THREE.Vector3( 23, 13.5, -2 ) );
+			points.push( new THREE.Vector3( 27, 12, -2 ) );
+
+			geometry = new THREE.BufferGeometry().setFromPoints( points );
+			line = new THREE.Line( geometry, linematerial );
+			root.add(line);
+
+
+			points = [];
+			points.push( new THREE.Vector3( 18.7, 11, 0 ) );
+			points.push( new THREE.Vector3( 23, 11, -2 ) );
+			points.push( new THREE.Vector3( 27, 12, -2 ) );
+			points.push( new THREE.Vector3( 30, 12, -2 ) );
+
+			geometry = new THREE.BufferGeometry().setFromPoints( points );
+			line = new THREE.Line( geometry, linematerial );
+			root.add(line);
+
+
+			points = [];
+			points.push( new THREE.Vector3( 2.5, 10.5, 0 ) );
+			points.push( new THREE.Vector3( 10, 8, -2 ) );
+			points.push( new THREE.Vector3( 23, 8, -2 ) );
+			points.push( new THREE.Vector3( 27, 12, -2 ) );
+
+			geometry = new THREE.BufferGeometry().setFromPoints( points );
+			line = new THREE.Line( geometry, linematerial );
+			root.add(line);
+
+
+			points = [];
+			points.push( new THREE.Vector3( 18, 4, 0 ) );
+			points.push( new THREE.Vector3( 21, 4, -2 ) );
+			points.push( new THREE.Vector3( 23, 4, -2 ) );
+			points.push( new THREE.Vector3( 27, 12, -2 ) );
+
+			geometry = new THREE.BufferGeometry().setFromPoints( points );
+			line = new THREE.Line( geometry, linematerial );
+			root.add(line);
+
+
+			points = [];
+			points.push( new THREE.Vector3( 9.7, 4.6, 0 ) );
+			points.push( new THREE.Vector3( 13, 1, -2 ) );
+			points.push( new THREE.Vector3( 25, 1, -2 ) );
+			points.push( new THREE.Vector3( 30, 4, -2 ) );
+
+			geometry = new THREE.BufferGeometry().setFromPoints( points );
+			line = new THREE.Line( geometry, linematerial );
+			root.add(line);
+
+			points = [];
+			points.push( new THREE.Vector3( 0, -4, 0 ) );
+			points.push( new THREE.Vector3( 5, -4, -2 ) );
+			points.push( new THREE.Vector3( 25, -4, -2 ) );
+			points.push( new THREE.Vector3( 30, -4, -2 ) );
+
+			geometry = new THREE.BufferGeometry().setFromPoints( points );
+			line = new THREE.Line( geometry, linematerial );
+			root.add(line);
+
+
+			points = [];
+			points.push( new THREE.Vector3( 9.5, -10, 2 ) );
+			points.push( new THREE.Vector3( 9.5, -10, -2 ) );
+			points.push( new THREE.Vector3( 15, -12, -2 ) );
+			points.push( new THREE.Vector3( 30, -12, -2 ) );
+
+			geometry = new THREE.BufferGeometry().setFromPoints( points );
+			line = new THREE.Line( geometry, linematerial );
+			root.add(line);
+
+
+			points = [];
+			points.push( new THREE.Vector3( 14, -20, 2 ) );
+			points.push( new THREE.Vector3( 16, -20, -2 ) );
+			points.push( new THREE.Vector3( 20, -20, -2 ) );
+			points.push( new THREE.Vector3( 30, -20, -2 ) );
+
+			geometry = new THREE.BufferGeometry().setFromPoints( points );
+			line = new THREE.Line( geometry, linematerial );
+			root.add(line);
+
+
+			
+
+
+			var platemat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.1, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+			var bearingmat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+			var G10mat = new THREE.MeshStandardMaterial({ color: 0x203015, emissive: 0x303030, roughness: 1.0, metalness: 0.0, emissiveIntensity: 0.0, transparent: true });
+
+			var statormat = new THREE.MeshStandardMaterial({ color: 0x555555, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+			var laminatedmat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+			var rotormat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+			var coppermat = new THREE.MeshStandardMaterial({ color: 0xff7744, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+			var studmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+			var clampmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+			var tierodmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+			var swagemat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+			var nutmat = new THREE.MeshStandardMaterial({ color: 0x666666, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+			var plasmamat3 = new THREE.MeshStandardMaterial({ color: 0x0014FF, emissive: 0x0076FF, roughness: 0.5, metalness: 0.0, emissiveIntensity: 0.4, transparent: true, opacity: 0.6 });
+			var plasmamat8 = new THREE.MeshStandardMaterial({ color: 0x0014FF, emissive: 0x0076FF, roughness: 0.5, metalness: 0.0, emissiveIntensity: 0.4, transparent: true, opacity: 0.4 });
+
+			plasmamat3.depthWrite = false;
+			plasmamat8.depthWrite = false;
+
+			plasmamat3.envMapIntensity = 0;
+			plasmamat8.envMapIntensity = 0;
+
+			var loader = new GLTFLoader();
+
+
+			
+			loadPart('models/Chamber1b.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan');  
+			loadPart('models/Chamber2C2.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan');  
+			loadPart('models/Chamber3.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan');  
+			loadPart('models/TCoil.glb', 0, 0, 0, 0, 0, 0, coppermat, 'tcoil');  
+			loadPart('models/PCoil.glb', 0, 0, 0, 0, 0, 0, coppermat, 'column');  
+			loadPart('models/Coils1.glb', 0, 0, 0, 0, 0, 0, coppermat, 'pcoil');
+			loadPart('models/Coils2.glb', 0, 0, 0, 0, 0, 0, coppermat, 'pcoil');
+			loadPart('models/Coils3.glb', 0, 0, 0, 0, 0, 0, coppermat, 'pcoil');
+			loadPart('models/Coils4.glb', 0, 0, 0, 0, 0, 0, coppermat, 'pcoil');
+			loadPart('models/ClampsB.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan');
+			loadPart('models/Coils1Outer.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan');
+			loadPart('models/InnerCan.glb', 0, 0, 0, 0, 0, 0, statormat, 'innercan'); 
+			loadPart('models/Coil2HolderB.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan');  
+			loadPart('models/InnerCoil1.glb', 0, 0, 0, 0, 0, 0, coppermat, 'mcoil');  
+			loadPart('models/InnerCoil2.glb', 0, 0, 0, 0, 0, 0, platemat, 'innercan');  
+			loadPart('models/PortB.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan'); 
+			loadPart('models/Rods.glb', 0, 0, 0, 0, 0, 0, platemat, 'column'); 
+			loadPart('models/Standoff1.glb', 0, 0, 0, 0, 0, 0, platemat, 'innercan'); 
+			loadPart('models/Standoff2B.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan'); 
+			loadPart('models/Standoff3B.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan'); 
+			loadPart('models/Terminals.glb', 0, 0, 0, 0, 0, 0, coppermat, 'column'); 
+			loadPart('models/TCoilRod.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan'); 
+			loadPart('models/TCoilBracket.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan'); 
+			loadPart('models/EndCap.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan'); 
+			loadPart('models/EndRings.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan'); 
+			loadPart('models/Coil3Clamps.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan'); 
+			loadPart('models/Plasma3.glb', 0, 0, 0, 0, 0, 0, plasmamat3, 'plasma'); 
+			loadPart('models/Plasma8.glb', 0, 0, 0, 0, 0, 0, plasmamat8, 'plasma'); 
+			
+
+
+
+			function loadPart(filename, rotx, roty, rotz, posx, posy, posz, material, groupname) {
+
+				loader.load(filename, function (gltf) {
+
+					gltf.scene.traverse(function (child) {
+
+						if (child.isMesh) {
+
+							child.geometry.computeFaceNormals();
+							child.geometry.computeVertexNormals();
+							child.material = material;
+
+							child.rotation.x = rotx;
+							child.rotation.y = roty;
+							child.rotation.z = rotz;
+
+							child.scale.multiplyScalar(10);
+							child.position.x = posx;
+							child.position.z = posy;
+							child.position.y = posz;
+							
+							child.name = groupname;
+							
+							child.layers.set(0);
+							scene.add(child);
+							
+						}
+
+					});
+
+
+
+
+					render();
+
+				});
+			}
+
+
+
+
+
+
+
+			function showLabels(show){
+				if(show){
+					hideInfo();
+					document.getElementById('plasma').checked = true;
+					document.getElementById('outercan').checked = true;
+					document.getElementById('pcoils').checked = true;
+					document.getElementById('tcoils').checked = true;
+					document.getElementById('mcoils').checked = true;
+					document.getElementById('column').checked = true;
+					document.getElementById('innercan').checked = true;
+					showAll();
+					camera.position.set(0, 0, -100);
+					controls.update();
+					scene.add(root);
+					let labels = document.getElementsByClassName('label');
+					for(let i = 0; i<labels.length; i++){
+						labels[i].style.display = 'block';
+					}
+				}	
+				else{
+					scene.remove(root);
+					let labels = document.getElementsByClassName('label');
+					for(let i = 0; i<labels.length; i++){
+						labels[i].style.display = 'none';
+					}
+				}
+			}
+
+			
+
+
+
+
+
+			window.addEventListener('resize', onWindowResize, false);
+			document.addEventListener('mousemove', onDocumentMouseMove, false);
+
+
+			document.getElementById("infobutton").addEventListener('click', function () {
+				document.getElementById('explode').innerHTML="LABELS";
+				labelsShowing = false;
+				showLabels(false);
+				document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+				i = 0;
+				infoFunction("Strong magnetic fields produced by high-temperature superconducting coils are enabling a new generation of compact spherical tokamak fusion reactors.\n\n\
+				Tokamak Energy's ST40 reactor shown here has proven the concept using copper coils. In 2023 it achieved ion temperatures exceeding 100 million degrees, relevant for commercial magnetic confinement fusion.")
+
+			});
+
+			renderer.domElement.addEventListener("click", hideInfo, false);
+
+
+
+
+			
+
+			document.getElementById('explode').addEventListener('click', function () {
+				
+				labelsShowing=!labelsShowing;
+				if (labelsShowing) {
+					
+					this.innerHTML = 'No Labels';
+					
+				}
+				else {
+					this.innerHTML = 'Labels';
+
+				}
+				showLabels(labelsShowing);
+			});
+
+
+			document.getElementById('plasma').addEventListener('click', function () {
+				hidePlasma();
+			});
+
+			document.getElementById('outercan').addEventListener('click', function () {
+				hideChamber1();
+			});
+
+			document.getElementById('pcoils').addEventListener('click', function () {
+				hidePcoils();
+			});
+
+			document.getElementById('tcoils').addEventListener('click', function () {
+				hideTcoils();
+			});
+
+			document.getElementById('mcoils').addEventListener('click', function () {
+				hideMcoils();
+			});
+
+			document.getElementById('column').addEventListener('click', function () {
+				hideColumn();
+			});
+
+			document.getElementById('innercan').addEventListener('click', function () {
+				hideChamber2();
+			});
+
+			
+
+			document.getElementById('plasma').checked = true;
+			document.getElementById('outercan').checked = true;
+			document.getElementById('pcoils').checked = true;
+			document.getElementById('tcoils').checked = true;
+			document.getElementById('mcoils').checked = true;
+			document.getElementById('column').checked = true;
+			document.getElementById('innercan').checked = true;
+
+		}
+
+
+		
+		
+
+		function showAll(){
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				switch (child.name) {
+					case 'plasma':
+					case 'pointlight':
+					case 'outercan':
+					case 'innercan':
+					case 'pcoil':
+					case 'tcoil':
+					case 'mcoil':
+					case 'column':
+						child.layers.enable(0);
+						break;
+				}
+
+			}
+		}
+
+		function hidePlasma() {
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				switch (child.name) {
+					case 'plasma':
+					case 'pointlight':
+						child.layers.toggle(0);
+						break;
+				}
+
+			}
+		}
+
+		function hideChamber1(){
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				switch (child.name) {
+					case 'outercan':
+						child.layers.toggle(0);
+						break;
+				}
+
+			}
+		}
+
+
+		function hidePcoils(){
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				switch (child.name) {
+					case 'pcoil':
+						child.layers.toggle(0);
+						break;
+				}
+
+			}
+		}
+
+		function hideTcoils(){
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				switch (child.name) {
+					case 'tcoil':
+						child.layers.toggle(0);
+						break;
+				}
+
+			}
+		}
+
+		function hideMcoils(){
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				switch (child.name) {
+					case 'mcoil':
+						child.layers.toggle(0);
+						break;
+				}
+
+			}
+		}
+
+		function hideColumn(){
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				switch (child.name) {
+					case 'column':
+						child.layers.toggle(0);
+						break;
+				}
+
+			}
+		}
+
+		function hideChamber2(){
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				switch (child.name) {
+					case 'innercan':
+						child.layers.toggle(0);
+						break;
+				}
+
+			}
+		}
+
+
+
+
+		function hideInfo(){
+			document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+					i = -1;
+		}
+
+		
+
+		function onWindowResize() {
+
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			labelRenderer.setSize( window.innerWidth, window.innerHeight );
+
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+
+			render();
+
+		}
+
+		function onDocumentMouseMove(event) {
+			event.preventDefault();
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+		}
+
+
+
+		function animate() {
+			requestAnimationFrame(animate);
+			
+
+			render();
+		}
+
+
+
+
+
+
+		function render() {
+
+			renderer.render(scene, camera);
+			labelRenderer.render(scene, camera);
+
+		}
+
+	</script>
+	<script>
+
+
+		var i = 0;
+		var txt = ''; /* The text */
+		var speed = 20; /* The speed/duration of the effect in milliseconds */
+
+		function infoFunction(text) {
+			txt = text;
+			var x = document.getElementById("d1");
+
+			x.innerHTML = "<p id='line1'></p>";
+			i = 0;
+			typeWriter();
+
+
+
+
+		}
+
+
+
+		function typeWriter() {
+			if(i<0){
+
+			}
+			else if (i < txt.length) {
+				if (txt.charAt(i) == '\n') {
+					document.getElementById("line1").innerHTML += '<br>';
+				} else {
+					document.getElementById("line1").innerHTML += txt.charAt(i);
+				}
+				i++;
+				setTimeout(typeWriter, speed);
+			}
+			else if (i == txt.length) {
+				document.getElementById("d1").innerHTML += "<p id='cursor-line' class='visible'> <span class='typed-cursor'>&#9608;</span></p>";
+				i++;
+			}
+		}
+	</script>
+
+
+	<script>
+		// Get the modal
+		var modal = document.getElementById("myModal");
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("aboutBtn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks the button, open the modal 
+		btn.onclick = function () {
+			modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+
+
+	</script>
+</body>
+
+</html>
