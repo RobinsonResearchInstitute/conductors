@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Dipole Fusion Reactor</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<!--<link type="text/css" rel="stylesheet" href="main.css">-->
+        <link rel="stylesheet" href="styles/style.css">
+		<link type="text/css" rel="stylesheet" href="styles/arrows.css">
+		<link rel="stylesheet" type="text/css" href="styles/text-cursor.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+	<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		
+		
+
+		<div id="info">
+            <h1>Levitating Dipole Fusion Reactor</h1>
+			<div id="sidebar">
+            <p id="power">Fusion Power: 100 %</p>
+            <button id="powerbtn">Power Off</button>
+            <button id="infobutton">Info</button>
+            <button id="labelBtn">Labels</button>
+            <button id="aboutBtn">Help</button>
+            
+            
+        </div>
+
+        <div id="footer"><a href="https://www.openstar.tech/" target="_blank"><h2>openstar.tech</h2></a></div>
+
+        <div id="d1">
+            <p id='line1'></p>
+        </div>
+        
+        
+        
+		</div>
+
+        <!-- The Modal -->
+	<div id="myModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<ul>
+			<!--<li>Use checkboxes to show or hide components.</li>-->
+			<!--<li>Click on a component to show information.</li>-->
+			<li>Left-click & drag to rotate, mousewheel to zoom, right-click & drag to pan.</li>
+			<li>Webpage and 3D model created by James Storey.</li>
+			<li>NOTE: the model is an approximation based on publically available images.</li>
+			<li>For more information visit <a href='https://www.openstar.tech/'
+					target="_blank">openstar.tech</a></p>
+			</ul>
+			<p>Robinson Research Institute, 2023.</p>
+		
+		</div>
+
+	</div>
+
+        <div id="container"></div>
+
+		<a href="https://robinson.ac.nz/conductors">
+			<div class="arrow">
+				<div class="arrow-top"></div>
+				<div class="arrow-bottom"></div>
+			</div>
+		</a>
+	
+		<a href="https://robinson.ac.nz/conductors/ST40/index.html">
+			<div class="barrow">
+				<div class="barrow-top"></div>
+				<div class="barrow-bottom"></div>
+			</div>
+		</a>
+
+        <div id="logo">
+            <a href="https://robinson.ac.nz/" target="_blank">Robinson Research Institute</a>
+        </div>
+
+		<!-- Import maps polyfill -->
+		<!-- Remove this when import maps will be widely supported -->
+		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+		<script type="importmap">
+			{
+                "imports": {
+                    "three": "https://unpkg.com/three@0.155.0/build/three.module.js",
+                    "three/addons/": "https://unpkg.com/three@0.155.0/examples/jsm/"
+                }
+            }
+		</script>
+
+		<script type="module">
+
+			import * as THREE from 'three';
+
+			//import Stats from 'three/addons/libs/stats.module.js';
+			//import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+
+			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+			import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+			import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+			import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+			import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+            import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+		
+
+			let camera, controls;
+            //let stats;
+			let composer, renderer, labelRenderer;
+            //let mixer, clock;
+
+			var scene,root;
+
+            var i;
+
+			var power = 100;
+			var ramp = false;
+			var increment = -0.5;
+
+            var labelsShowing = false;
+
+			const params = {
+				threshold: 1,
+				strength: 0.4,
+				radius: 0,
+				exposure: 1.4
+			};
+
+			init();
+			//printNames();
+
+			function init() {
+
+				//const plainLayer = new THREE.Layers();
+				//plainLayer.set( 1 );
+				//plainLayer.enable();
+
+				const container = document.getElementById( 'container' );
+
+				//stats = new Stats();
+				//container.appendChild( stats.dom );
+
+				//clock = new THREE.Clock();
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.toneMapping = THREE.ReinhardToneMapping;
+				renderer.toneMappingExposure = Math.pow(params.exposure,4);
+
+				//renderer.sortObjects = false; //possible solution to get nested transparent objects to render properly. doesn't work
+
+				container.appendChild( renderer.domElement );
+
+
+                labelRenderer = new CSS2DRenderer();
+			labelRenderer.setSize(window.innerWidth, window.innerHeight);
+			labelRenderer.domElement.style.position = 'absolute';
+			labelRenderer.domElement.style.top = '0px';
+			labelRenderer.domElement.style.pointerEvents = 'none';
+			document.body.appendChild(labelRenderer.domElement);
+
+				scene = new THREE.Scene();
+
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
+				//camera.position.set( - 5, 2.5, - 3.5 );
+				camera.position.set( -10, 0, 0 );
+				camera.layers.enable(1);
+				scene.add( camera );
+
+				controls = new OrbitControls( camera, renderer.domElement );
+				/*controls.maxPolarAngle = Math.PI * 0.5;*/
+				controls.minDistance = 3;
+				controls.maxDistance = 20;
+
+				scene.add( new THREE.AmbientLight( 0xcccccc ) );
+
+				//const pointLight = new THREE.PointLight( 0xffffff, 100 );
+				//camera.add( pointLight );
+
+				const pointLight = new THREE.PointLight( 0xE70DCA, 10 );
+				pointLight.name = 'pointlight';
+				
+				scene.add(pointLight);
+
+				//const sphereSize = 1;
+				//const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
+				//scene.add( pointLightHelper );
+				/*
+				const upLight = new THREE.DirectionalLight(0xE70DCA,10);
+				console.log(upLight.position);
+				upLight.position.y = 0;
+				const target = new THREE.Object3D();
+				target.position.y = 1.0;
+				upLight.target = target;
+				scene.add(upLight)
+
+				const helper = new THREE.DirectionalLightHelper(upLight)
+				scene.add(helper)
+				*/
+
+				/*const spotLight = new THREE.SpotLight( 0xE70DCA, 1000 );
+spotLight.position.set( 0, 0, 0 );
+const target = new THREE.Object3D();
+				target.position.y = 1.0;
+				spotLight.target = target;
+				spotLight.angle = Math.PI/6.0;
+				//spotLight.power = 400;
+scene.add( spotLight );
+
+//const spotLightHelper = new THREE.SpotLightHelper( spotLight );
+//scene.add( spotLightHelper );*/
+
+
+				//hdri
+				const pmremGenerator = new THREE.PMREMGenerator(renderer);
+            pmremGenerator.compileEquirectangularShader();
+
+            
+            async function loadHDRI() {
+                const rgbeLoader = new RGBELoader()
+					.setDataType(THREE.HalfFloatType);
+                    //.setDataType(THREE.UnsignedByteType); //this no longer works in newer version
+                //.setPath( 'textures/equirectangular/' );
+
+                const texture = await rgbeLoader.loadAsync('hdr/HDR_029_Sky_Cloudy_Env.hdr');
+                const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+
+                //scene.background = envMap;
+                scene.environment = envMap;
+                texture.dispose();
+                pmremGenerator.dispose();
+            }
+            loadHDRI();
+
+
+            root = new THREE.Group();
+
+
+            function getLabel(labeltext, x, y, z){
+				var text = document.createElement('div');
+				text.className = 'label';
+				text.textContent = labeltext;
+
+				var position = new THREE.Vector3(x,y,z);
+
+				var label = new CSS2DObject(text);
+				label.position.copy(position);
+				return label;
+			}
+
+			root.add(getLabel('Floating coil',0,0,-1.8));
+            root.add(getLabel('Lift coil',0,0.9,-1.8));
+            root.add(getLabel('Vacuum chamber',0,-1,0));
+           
+            //scene.add(root);
+
+
+				const renderScene = new RenderPass( scene, camera );
+
+				const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+				bloomPass.threshold = params.threshold;
+				bloomPass.strength = params.strength;
+				bloomPass.radius = params.radius;
+
+				const outputPass = new OutputPass();
+
+				composer = new EffectComposer( renderer );
+				composer.addPass( renderScene );
+				composer.addPass( bloomPass );
+				composer.addPass( outputPass );
+
+
+
+
+
+				
+
+				var steelmat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+				var plasmamat1 = new THREE.MeshStandardMaterial({ color: 0xE70DCA, emissive: 0xE70DCA, roughness: 0.5, metalness: 0.0, emissiveIntensity: 50.0, transparent: true, opacity:1.0});
+				var plasmamat2 = new THREE.MeshStandardMaterial({ color: 0xE700DC, emissive: 0xE700DC, roughness: 0.5, metalness: 0.0, emissiveIntensity: 0.0, transparent: true, opacity:0.2 });
+				var plasmamat3 = new THREE.MeshStandardMaterial({ color: 0xE74DD8, emissive: 0xE74DD8, roughness: 0.5, metalness: 0.0, emissiveIntensity: 0.0, transparent: true, opacity:0.07 });
+				var plasmamat4 = new THREE.MeshStandardMaterial({ color: 0xE786E5, emissive: 0xE786E5, roughness: 0.5, metalness: 0.0, emissiveIntensity: 0.0, transparent: true, opacity:0.05 });
+				var plainmat = new THREE.MeshPhongMaterial({color: 0x987933,shininess:0.2,reflectivity:0.8,transparent:false});
+				var glassmat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: true, opacity:0.1 });
+				var coilmat = new THREE.MeshStandardMaterial({ color: 0xc9664b, emissive: 0x303030, roughness: 0.5, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+				
+
+				//to get nested transparent objects to render properly
+				plasmamat1.depthWrite = false;
+				plasmamat2.depthWrite = false;
+				plasmamat3.depthWrite = false;
+				plasmamat4.depthWrite = false;
+
+				//steelmat.wireframe = true;
+
+
+				steelmat.envMapIntensity = 0.1;
+				plasmamat1.envMapIntensity = 0;
+				plasmamat2.envMapIntensity = 0;
+				plasmamat3.envMapIntensity = 0;
+				plasmamat4.envMapIntensity = 0;
+
+				
+
+				function loadPart(file, materialToLoad, groupname){
+					new GLTFLoader().load( file, function ( gltf ) {
+
+						gltf.scene.traverse(function (child) {
+
+						if (child.isMesh) {
+							
+							child.geometry.computeVertexNormals();	
+							child.material =  materialToLoad;
+							child.material.side = THREE.DoubleSide;
+							child.name = groupname;
+							child.layers.set(0);
+							scene.add(child);
+						}
+						});
+
+					} );
+				}
+
+				loadPart('models/OpenStar2-c-P1.glb', plasmamat1, 'p1');
+				loadPart('models/OpenStar2-c-P2.glb', plasmamat2, 'p2');
+				loadPart('models/OpenStar2-c-P3.glb', plasmamat3, 'p3');
+				loadPart('models/OpenStar2-c-P4.glb', plasmamat4, 'p4');
+				loadPart('models/OpenStar2-b-LcoilHolder.glb',steelmat, 'holder');
+				loadPart('models/OpenStar2-b-Lcoil2.glb',coilmat, 'Lcoil');
+				loadPart('models/OpenStar2-b-Fcoil.glb',steelmat, 'Fcoil');
+				loadPart('models/OpenStar2-d-Stand.glb',plainmat, 'Stand');
+				loadPart('models/OpenStar2-d-glass.glb',glassmat, 'glass');
+				
+
+				
+
+
+				new GLTFLoader().load( 'models/OpenStar2-d5-container.glb', function ( gltf ) {
+
+					gltf.scene.traverse(function (child) {
+
+					if (child.isMesh) {
+						child.geometry.computeVertexNormals();
+						child.material =  steelmat;
+						child.material.side = THREE.DoubleSide;
+						child.name = 'container';
+						child.layers.set(1);
+						child.layers.enable(1);
+						scene.add(child);
+					}
+					});
+
+					} );
+				
+					
+				
+                document.getElementById("infobutton").addEventListener('click', function () {
+				document.getElementById('labelBtn').innerHTML="LABELS";
+				labelsShowing = false;
+				showLabels(false);
+				document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+				i = 0;
+				infoFunction("New Zealand company Open Star Technologies is aiming to achieve fusion energy using a levitated dipole approach.\n\n\
+				The plasma is confined in a dipole magnetic field created by a superconducting electromagnetic ring floating inside a vacuum chamber.")
+
+			});
+
+
+			renderer.domElement.addEventListener("click", hideInfo, false);
+
+
+            document.getElementById('labelBtn').addEventListener('click', function () {
+				
+				labelsShowing=!labelsShowing;
+				if (labelsShowing) {
+					
+					this.innerHTML = 'No Labels';
+					
+				}
+				else {
+					this.innerHTML = 'Labels';
+
+				}
+				showLabels(labelsShowing);
+			});
+
+
+				animate();
+				
+				//for(let i = 0; scene.children.length; i++){
+				//	let child = scene.children[i];
+				//	console.log(child);
+					/*if(child.name == 'p1'){
+						console.log(child);
+					}*/
+				//}
+
+
+				//const geometry = new THREE.TorusGeometry( 1, 0.4, 16, 100 ); 
+				//const material = new THREE.MeshBasicMaterial( { color: 0x0000ff } ); 
+				//const torus = new THREE.Mesh( geometry, material ); scene.add( torus );
+				//torus.rotation.x = Math.PI/2.0;
+                /*
+				const gui = new GUI();
+
+				const bloomFolder = gui.addFolder( 'bloom' );
+
+				bloomFolder.add( params, 'threshold', 0.0, 1.0 ).onChange( function ( value ) {
+
+					bloomPass.threshold = Number( value );
+
+				} );
+
+				bloomFolder.add( params, 'strength', 0.0, 3.0 ).onChange( function ( value ) {
+
+					bloomPass.strength = Number( value );
+
+				} );
+
+				gui.add( params, 'radius', 0.0, 1.0 ).step( 0.01 ).onChange( function ( value ) {
+
+					bloomPass.radius = Number( value );
+
+				} );
+                
+
+				const toneMappingFolder = gui.addFolder( 'tone mapping' );
+
+				toneMappingFolder.add( params, 'exposure', 0.1, 2 ).onChange( function ( value ) {
+
+					renderer.toneMappingExposure = Math.pow( value, 4.0 );
+
+				} );
+                */
+
+				window.addEventListener( 'resize', onWindowResize );
+				
+
+				var button = document.getElementById('powerbtn');
+				if(button!=null){
+					button.addEventListener('click', function () {
+
+
+					printNames();
+				});
+				}
+			}
+
+
+
+            function showLabels(show){
+				if(show){
+					hideInfo();
+					
+					camera.position.set( 10, 0, 0 );
+					controls.update();
+					scene.add(root);
+					let labels = document.getElementsByClassName('label');
+					for(let i = 0; i<labels.length; i++){
+						labels[i].style.display = 'block';
+					}
+				}	
+				else{
+					scene.remove(root);
+					let labels = document.getElementsByClassName('label');
+					for(let i = 0; i<labels.length; i++){
+						labels[i].style.display = 'none';
+					}
+				}
+			}
+
+            
+
+
+			function printNames(){
+
+				ramp = true;
+				/*
+                return;
+				
+				for(let i = 0; i<scene.children.length; i++){
+					let child = scene.children[i];
+					
+					if(child.name){
+						console.log(child);
+					}
+				}
+                */
+			}
+
+
+
+
+            function hideInfo(){
+			document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+					i = -1;
+		}
+
+
+
+        var txt = ''; /* The text */
+		var speed = 20; /* The speed/duration of the effect in milliseconds */
+
+		function infoFunction(text) {
+			txt = text;
+			var x = document.getElementById("d1");
+
+			x.innerHTML = "<p id='line1'></p>";
+			i = 0;
+			typeWriter();
+
+
+
+
+		}
+
+
+
+
+        function typeWriter() {
+			if(i<0){
+
+			}
+			else if (i < txt.length) {
+				if (txt.charAt(i) == '\n') {
+					document.getElementById("line1").innerHTML += '<br>';
+				} else {
+					document.getElementById("line1").innerHTML += txt.charAt(i);
+				}
+				i++;
+				setTimeout(typeWriter, speed);
+			}
+			else if (i == txt.length) {
+				document.getElementById("d1").innerHTML += "<p id='cursor-line' class='visible'> <span class='typed-cursor'>&#9608;</span></p>";
+				i++;
+			}
+		}
+
+			function setFusionPower(power){
+
+                document.getElementById('power').innerHTML = 'Fusion Power: '+power+' %';
+				for(let i = 0; i<scene.children.length; i++){
+					let child = scene.children[i];
+					
+					switch(child.name){
+						case 'p1':
+							child.material.opacity = power/100.0;
+							break;
+						case 'p2':
+							child.material.opacity = 0.2*power/100.0;
+							break;	
+						case 'p3':
+							child.material.opacity = 0.07*power/100.0;
+							break;	
+						case 'p4':
+							child.material.opacity = 0.05*power/100.0;
+							break;
+						case 'pointlight':
+							child.intensity = 10*power/100.0;
+							break;
+						
+					}
+				}
+			}
+
+			function onWindowResize() {
+
+				const width = window.innerWidth;
+				const height = window.innerHeight;
+
+				camera.aspect = width / height;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( width, height );
+				composer.setSize( width, height );
+                labelRenderer.setSize(width, height);
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				//const delta = clock.getDelta();
+
+				//mixer.update( delta );
+
+				//stats.update();
+
+				composer.render();
+                labelRenderer.render(scene, camera);
+
+				if(ramp){
+					if(increment<0 && power>0){
+						power=power+increment;
+						setFusionPower(power);
+					}
+					else if(increment>0 && power<=100){
+						setFusionPower(power);
+                        power = power+increment;
+					}
+					else{
+						ramp = false;
+						increment*=-1;
+                        if(increment<0){
+                            document.getElementById('powerbtn').innerHTML='Power Off';
+                        }
+                        else{
+                            document.getElementById('powerbtn').innerHTML='Power On';
+                        }
+					}
+				}
+				
+
+			}
+
+		</script>
+
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("aboutBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+
+</script>
+
+	</body>
+
+</html>
