@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+
+
+		<meta property="og:title" content="Levitating Dipole Fusion Reactor" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://robinson.ac.nz/conductors/dipole/index.html" />
+	<meta property="og:site_name" content="Robinson Research Institute" />
+	<meta property="og:image" content="https://robinson.ac.nz/conductors/dipole/thumb.png" />
+	<meta property="og:description" content="ST40 Compact Spherical Tokamak Fusion Reactor" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="robinson.ac.nz" />
+	<meta name="twitter:title" content="Levitating Dipole Fusion Reactor" />
+	<meta name="twitter:description" content="Levitating Dipole Fusion Reactor" />
+	<meta name="twitter:image" content="https://robinson.ac.nz/conductors/dipole/thumb.png" />
+
+
+
+
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="site.webmanifest">
+
+	<meta name="description" content="Levitating Dipole Fusion Reactor.">
+
+
 		<title>Dipole Fusion Reactor</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<!--<link type="text/css" rel="stylesheet" href="main.css">-->
         <link rel="stylesheet" href="styles/style.css">
 		<link type="text/css" rel="stylesheet" href="styles/arrows.css">
 		<link rel="stylesheet" type="text/css" href="styles/text-cursor.css">
@@ -48,8 +73,6 @@
 		<div class="modal-content">
 			<span class="close">&times;</span>
 			<ul>
-			<!--<li>Use checkboxes to show or hide components.</li>-->
-			<!--<li>Click on a component to show information.</li>-->
 			<li>Left-click & drag to rotate, mousewheel to zoom, right-click & drag to pan.</li>
 			<li>Webpage and 3D model created by James Storey.</li>
 			<li>NOTE: the model is an approximation based on publically available images.</li>
@@ -99,8 +122,7 @@
 
 			import * as THREE from 'three';
 
-			//import Stats from 'three/addons/libs/stats.module.js';
-			//import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		
 
 			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -113,9 +135,8 @@
 		
 
 			let camera, controls;
-            //let stats;
+
 			let composer, renderer, labelRenderer;
-            //let mixer, clock;
 
 			var scene,root;
 
@@ -135,20 +156,13 @@
 			};
 
 			init();
-			//printNames();
+
 
 			function init() {
 
-				//const plainLayer = new THREE.Layers();
-				//plainLayer.set( 1 );
-				//plainLayer.enable();
+
 
 				const container = document.getElementById( 'container' );
-
-				//stats = new Stats();
-				//container.appendChild( stats.dom );
-
-				//clock = new THREE.Clock();
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -156,8 +170,7 @@
 				renderer.toneMapping = THREE.ReinhardToneMapping;
 				renderer.toneMappingExposure = Math.pow(params.exposure,4);
 
-				//renderer.sortObjects = false; //possible solution to get nested transparent objects to render properly. doesn't work
-
+				
 				container.appendChild( renderer.domElement );
 
 
@@ -171,53 +184,23 @@
 				scene = new THREE.Scene();
 
 				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
-				//camera.position.set( - 5, 2.5, - 3.5 );
 				camera.position.set( -10, 0, 0 );
 				camera.layers.enable(1);
 				scene.add( camera );
 
 				controls = new OrbitControls( camera, renderer.domElement );
-				/*controls.maxPolarAngle = Math.PI * 0.5;*/
 				controls.minDistance = 3;
 				controls.maxDistance = 20;
 
 				scene.add( new THREE.AmbientLight( 0xcccccc ) );
 
-				//const pointLight = new THREE.PointLight( 0xffffff, 100 );
-				//camera.add( pointLight );
 
 				const pointLight = new THREE.PointLight( 0xE70DCA, 10 );
 				pointLight.name = 'pointlight';
 				
 				scene.add(pointLight);
 
-				//const sphereSize = 1;
-				//const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
-				//scene.add( pointLightHelper );
-				/*
-				const upLight = new THREE.DirectionalLight(0xE70DCA,10);
-				console.log(upLight.position);
-				upLight.position.y = 0;
-				const target = new THREE.Object3D();
-				target.position.y = 1.0;
-				upLight.target = target;
-				scene.add(upLight)
 
-				const helper = new THREE.DirectionalLightHelper(upLight)
-				scene.add(helper)
-				*/
-
-				/*const spotLight = new THREE.SpotLight( 0xE70DCA, 1000 );
-spotLight.position.set( 0, 0, 0 );
-const target = new THREE.Object3D();
-				target.position.y = 1.0;
-				spotLight.target = target;
-				spotLight.angle = Math.PI/6.0;
-				//spotLight.power = 400;
-scene.add( spotLight );
-
-//const spotLightHelper = new THREE.SpotLightHelper( spotLight );
-//scene.add( spotLightHelper );*/
 
 
 				//hdri
@@ -228,13 +211,10 @@ scene.add( spotLight );
             async function loadHDRI() {
                 const rgbeLoader = new RGBELoader()
 					.setDataType(THREE.HalfFloatType);
-                    //.setDataType(THREE.UnsignedByteType); //this no longer works in newer version
-                //.setPath( 'textures/equirectangular/' );
-
+                
                 const texture = await rgbeLoader.loadAsync('hdr/HDR_029_Sky_Cloudy_Env.hdr');
                 const envMap = pmremGenerator.fromEquirectangular(texture).texture;
 
-                //scene.background = envMap;
                 scene.environment = envMap;
                 texture.dispose();
                 pmremGenerator.dispose();
@@ -261,8 +241,7 @@ scene.add( spotLight );
             root.add(getLabel('Lift coil',0,0.9,-1.8));
             root.add(getLabel('Vacuum chamber',0,-1,0));
            
-            //scene.add(root);
-
+        
 
 				const renderScene = new RenderPass( scene, camera );
 
@@ -396,51 +375,7 @@ scene.add( spotLight );
 
 				animate();
 				
-				//for(let i = 0; scene.children.length; i++){
-				//	let child = scene.children[i];
-				//	console.log(child);
-					/*if(child.name == 'p1'){
-						console.log(child);
-					}*/
-				//}
-
-
-				//const geometry = new THREE.TorusGeometry( 1, 0.4, 16, 100 ); 
-				//const material = new THREE.MeshBasicMaterial( { color: 0x0000ff } ); 
-				//const torus = new THREE.Mesh( geometry, material ); scene.add( torus );
-				//torus.rotation.x = Math.PI/2.0;
-                /*
-				const gui = new GUI();
-
-				const bloomFolder = gui.addFolder( 'bloom' );
-
-				bloomFolder.add( params, 'threshold', 0.0, 1.0 ).onChange( function ( value ) {
-
-					bloomPass.threshold = Number( value );
-
-				} );
-
-				bloomFolder.add( params, 'strength', 0.0, 3.0 ).onChange( function ( value ) {
-
-					bloomPass.strength = Number( value );
-
-				} );
-
-				gui.add( params, 'radius', 0.0, 1.0 ).step( 0.01 ).onChange( function ( value ) {
-
-					bloomPass.radius = Number( value );
-
-				} );
-                
-
-				const toneMappingFolder = gui.addFolder( 'tone mapping' );
-
-				toneMappingFolder.add( params, 'exposure', 0.1, 2 ).onChange( function ( value ) {
-
-					renderer.toneMappingExposure = Math.pow( value, 4.0 );
-
-				} );
-                */
+				
 
 				window.addEventListener( 'resize', onWindowResize );
 				
@@ -484,17 +419,7 @@ scene.add( spotLight );
 			function printNames(){
 
 				ramp = true;
-				/*
-                return;
 				
-				for(let i = 0; i<scene.children.length; i++){
-					let child = scene.children[i];
-					
-					if(child.name){
-						console.log(child);
-					}
-				}
-                */
 			}
 
 
@@ -590,12 +515,7 @@ scene.add( spotLight );
 
 				requestAnimationFrame( animate );
 
-				//const delta = clock.getDelta();
-
-				//mixer.update( delta );
-
-				//stats.update();
-
+				
 				composer.render();
                 labelRenderer.render(scene, camera);
 
