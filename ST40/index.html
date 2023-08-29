@@ -82,6 +82,10 @@
 			<input type="checkbox" checked="checked" id="innercan">
 			<span class="checkmark"></span>
 		</label>
+		<label class="container">Human
+			<input type="checkbox" checked="checked" id="human">
+			<span class="checkmark"></span>
+		</label>
 
 
 		<button id="aboutBtn">Help</button>
@@ -117,6 +121,7 @@
 		</div>
 
 	</div>
+
 	
 	<a href="https://robinson.ac.nz/conductors/dipole/index.html">
         <div class="arrow">
@@ -140,7 +145,7 @@
 	</div>-->
 
 	<div id="logo">
-		<a href="https://www.robinson.ac.nz" target="_blank">Robinson Research Institute</a>
+		<a href="https://www.wgtn.ac.nz/robinson" target="_blank">Robinson Research Institute</a>
 	</div>
 
 
@@ -472,7 +477,7 @@
 			loadPart('models/Coil3Clamps.glb', 0, 0, 0, 0, 0, 0, platemat, 'outercan'); 
 			loadPart('models/Plasma3.glb', 0, 0, 0, 0, 0, 0, plasmamat3, 'plasma'); 
 			loadPart('models/Plasma8.glb', 0, 0, 0, 0, 0, 0, plasmamat8, 'plasma'); 
-			
+			loadPart('models/human3.glb', 0, 135, 0, -30, 0, -24, platemat, 'human');
 
 
 
@@ -620,6 +625,10 @@
 				hideChamber2();
 			});
 
+			document.getElementById('human').addEventListener('click', function () {
+				hideHuman();
+			});
+
 			
 
 			document.getElementById('plasma').checked = true;
@@ -629,6 +638,7 @@
 			document.getElementById('mcoils').checked = true;
 			document.getElementById('column').checked = true;
 			document.getElementById('innercan').checked = true;
+			document.getElementById('human').checked = true;
 
 		}
 
@@ -741,6 +751,17 @@
 			}
 		}
 
+		function hideHuman(){
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				switch (child.name) {
+					case 'human':
+						child.layers.toggle(0);
+						break;
+				}
+
+			}
+		}
 
 
 
