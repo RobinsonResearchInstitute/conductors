@@ -184,3 +184,33 @@ a:hover {
 	width:20ch;
     color:white;
 }
+
+@media screen and (max-width: 800px) {
+	h1{
+	  line-height:1.2em;
+	}
+	#d1{
+	  position:absolute;
+	  top:60%;
+	  width:90%;
+	 
+	  padding-left:1rem;
+	}
+
+	  #sidebar {
+		width: 100%;
+		height: auto;
+		position: relative;
+		padding-right:1rem;
+	  }
+	 
+	  #sidebar button, #sidebar label{
+		display:inline-block;
+	  }
+  
+	  #footer{
+		padding-right:1rem;
+		transform:none;
+	  }
+  
+	}
