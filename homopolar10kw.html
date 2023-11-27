@@ -2,41 +2,43 @@
 <html lang="en">
 
 <head>
-  
-  <meta property="og:title" content="Homopolar Motor" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://robinson.ac.nz/conductors/homopolar10kw.html" />
-    <meta property="og:site_name" content="Robinson Research Institute"/>
-    <meta property="og:image" content="https://robinson.ac.nz/conductors/img/homopolar10kw.jpg" />
-    <meta property="og:description" content="Superconducting homopolar motor/generator." />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="robinson.ac.nz" />    
-    <meta name="twitter:title" content="Homopolar Motor" />
-    <meta name="twitter:description" content="Superconducting homopolar motor/generator." />  
-    <meta name="twitter:image" content="https://robinson.ac.nz/conductors/img/homopolar10kw.jpg" />
-    
-    
-    
-    
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="manifest" href="site.webmanifest">
-    
-    <meta name="description" content="Superconducting homopolar motor/generator.">
+	<meta property="og:title" content="Homopolar Motor" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://robinson.ac.nz/conductors/homopolar10kw.html" />
+	<meta property="og:site_name" content="Robinson Research Institute" />
+	<meta property="og:image" content="https://robinson.ac.nz/conductors/img/homopolar10kw.jpg" />
+	<meta property="og:description" content="Superconducting homopolar motor/generator." />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="robinson.ac.nz" />
+	<meta name="twitter:title" content="Homopolar Motor" />
+	<meta name="twitter:description" content="Superconducting homopolar motor/generator." />
+	<meta name="twitter:image" content="https://robinson.ac.nz/conductors/img/homopolar10kw.jpg" />
+
+
+
+
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="site.webmanifest">
+
+	<meta name="description" content="Superconducting homopolar motor/generator.">
 	<title>Homopolar Motor</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<link type="text/css" rel="stylesheet" href="10kWhomopolar.css">
+	<link type="text/css" rel="stylesheet" href="10kWhomopolar2.css">
 	<link type="text/css" rel="stylesheet" href="ST40/styles/arrows.css">
 	<link rel="stylesheet" type="text/css" href="text-cursor.css">
+	<link rel="stylesheet" type="text/css" href="jsw3.css">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-		<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet"> 
+
+	<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 
@@ -44,53 +46,102 @@
     
 	<div id="info">
 		<h1>Superconducting Homopolar Motor/Generator</h1>
-		<div id="sidebar">
+
+		<div class="w3-top">
+			<div class="w3-bar" id="myNavbar">
+				<a class="w3-bar-item w3-button w3-hover-grey w3-hide-medium w3-hide-large w3-right"
+					href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+					<i class="fa fa-bars"></i>
+				</a>
+				
+			</div>
+
+			<div id="navDemo" class="w3-bar-block w3-grey w3-hide w3-hide-large w3-hide-medium">
+				<!--<button id="infobutton2" class="w3-bar-item">Info</button>-->
+				<button id="explode2" class="w3-bar-item">Explode</button>
+				<button id="access2" class="w3-bar-item">Coil Access</button>
+				<!--<button id="aboutBtn2" class="w3-bar-item">Help</button>-->
+				<label class="container">Supports
+					<input type="checkbox" checked="checked" id="supports2">
+					<span class="checkmark"></span>
+				</label>
+				<label class="container">Stator
+					<input type="checkbox" checked="checked" id="stator2">
+					<span class="checkmark"></span>
+				</label>
+				<label class="container">Armature
+					<input type="checkbox" checked="checked" id="armature2">
+					<span class="checkmark"></span>
+				</label>
+				<label class="container">EM Shield
+					<input type="checkbox" checked="checked" id="rippleshield2">
+					<span class="checkmark"></span>
+				</label>
+				<label class="container">Field Coil
+					<input type="checkbox" checked="checked" id="fieldcoil2">
+					<span class="checkmark"></span>
+				</label>
+				<label class="container">Rotor
+					<input type="checkbox" checked="checked" id="rotor2">
+					<span class="checkmark"></span>
+				</label>
+				<label class="container">Cryocooler
+					<input type="checkbox" checked="checked" id="cryocooler2">
+					<span class="checkmark"></span>
+				</label>
+		
+		
+				
+				
+			</div>
+			</div>
+		<div id="sidebar" class="w3-hide-small">
 		<button id="infobutton">Info</button>
-		
-		
+
+
 		<button id="explode">Explode</button>
 		<button id="access">Coil Access</button>
-        <label class="container">Supports
-            <input type="checkbox" checked="checked" id="supports">
-            <span class="checkmark"></span>
-          </label>
-		
-          <label class="container">Stator
-            <input type="checkbox" checked="checked" id="stator">
-            <span class="checkmark"></span>
-          </label>
-          <label class="container">Armature
-            <input type="checkbox" checked="checked" id="armature">
-            <span class="checkmark"></span>
-          </label>
-          <label class="container">EM Shield
-            <input type="checkbox" checked="checked" id="rippleshield">
-            <span class="checkmark"></span>
-          </label>
-          <label class="container">Field Coil
-            <input type="checkbox" checked="checked" id="fieldcoil">
-            <span class="checkmark"></span>
-          </label>
-          <label class="container">Rotor
-            <input type="checkbox" checked="checked" id="rotor">
-            <span class="checkmark"></span>
-          </label>
-	<label class="container">Cryocooler
-		<input type="checkbox" checked="checked" id="cryocooler">
-		<span class="checkmark"></span>
-	</label>
-        
+		<label class="container">Supports
+			<input type="checkbox" checked="checked" id="supports">
+			<span class="checkmark"></span>
+		</label>
+
+		<label class="container">Stator
+			<input type="checkbox" checked="checked" id="stator">
+			<span class="checkmark"></span>
+		</label>
+		<label class="container">Armature
+			<input type="checkbox" checked="checked" id="armature">
+			<span class="checkmark"></span>
+		</label>
+		<label class="container">EM Shield
+			<input type="checkbox" checked="checked" id="rippleshield">
+			<span class="checkmark"></span>
+		</label>
+		<label class="container">Field Coil
+			<input type="checkbox" checked="checked" id="fieldcoil">
+			<span class="checkmark"></span>
+		</label>
+		<label class="container">Rotor
+			<input type="checkbox" checked="checked" id="rotor">
+			<span class="checkmark"></span>
+		</label>
+		<label class="container">Cryocooler
+			<input type="checkbox" checked="checked" id="cryocooler">
+			<span class="checkmark"></span>
+		</label>
+
 
 		<button id="aboutBtn">Help</button>
-		</div>
+	</div>
 		<br>
-		
+
 		<div id="d1">
 			<p id='line1'></p>
 		</div>
 	</div>
 
-	
+
 	<!-- The Modal -->
 	<div id="myModal" class="modal">
 
@@ -101,9 +152,10 @@
 			<p>Click on a component to show information.</p>
 			<p>Left-click & drag to rotate, mousewheel to zoom, right-click & drag to pan.</p>
 			<p>Motor design by Kent Hamilton, webpage by James Storey.</p>
-			<p>For more information see <a href='https://doi.org/10.26686/wgtn.22351555' target="_blank">https://doi.org/10.26686/wgtn.22351555</a></p>
+			<p>For more information see <a href='https://doi.org/10.26686/wgtn.22351555'
+					target="_blank">https://doi.org/10.26686/wgtn.22351555</a></p>
 			<p>Robinson Research Institute, 2023.</p>
-			
+
 		</div>
 
 	</div>
@@ -133,7 +185,7 @@
 		<a href="https://www.wgtn.ac.nz/robinson" target="_blank">Robinson Research Institute</a>
 	</div>
 
-	
+
 
 	<script type="module">
 
@@ -144,7 +196,7 @@
 		import { RGBELoader } from 'https://unpkg.com/three@0.124.0/examples/jsm/loaders/RGBELoader.js';
 
 
-		var renderer, scene, camera, raycaster,controls;
+		var renderer, scene, camera, raycaster, controls;
 		var rotorlumps1, rotorlumps2, plane, grid, stator;
 		var rotortube, flux1, w1, w2, w3, coil;
 		var statorvisible = false;
@@ -154,10 +206,11 @@
 		var sq = String.fromCharCode(178);
 		var mmx, mmy;
 		var explode = false;
-        var accesscoil = false;
+		var accesscoil = false;
 		var movedirection = 0;
 		var moveprogress = 0;
 		var movespeed = 1;
+		var showField = false;
 
 
 		var mouse = new THREE.Vector2(), INTERSECTED;
@@ -284,7 +337,7 @@
 			// model
 
 			var loader = new GLTFLoader();
-            
+
 			loader.load('models/10kW/RotorFine.glb', function (gltf) {
 
 				gltf.scene.traverse(function (child) {
@@ -300,11 +353,12 @@
 						//{ color: 0x0000ff, specular: 0xffffff, shininess: 10, opacity: 0.3, transparent: true, wireframe: false });
 						child.material = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
 
+						child.name = 'rotor';
 
 						child.material.side = THREE.DoubleSide;
 						child.rotation.x = Math.PI / 2.0;
 						child.scale.multiplyScalar(0.1);
-                        child.position.y = 5.3;
+						child.position.y = 5.3;
 						//light1.add(child);
 						//recenter
 
@@ -313,13 +367,13 @@
 						rotortube.layers.set(0);
 						scene.add(child);
 
-						document.getElementById("rotor").addEventListener('click', function () {
+						/*document.getElementById("rotor").addEventListener('click', function () {
 
 
 							rotortube.layers.toggle(0);
 
 
-						});
+						});*/
 
 					}
 
@@ -330,11 +384,6 @@
 				render();
 
 			});
-            
-
-
-
-            
 
 
 
@@ -342,248 +391,252 @@
 
 
 
-var platemat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.1, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
-var bearingmat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
-
-var G10mat = new THREE.MeshStandardMaterial({ color: 0x203015, emissive: 0x303030, roughness: 1.0, metalness: 0.0, emissiveIntensity: 0.0, transparent: true });
-
-var statormat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: true });
-var laminatedmat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
-
-var rotormat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
-
-var coppermat = new THREE.MeshStandardMaterial({ color: 0xff7744, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
-var studmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
-
-var clampmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
-
-var tierodmat= new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
-var swagemat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
-var nutmat = new THREE.MeshStandardMaterial({ color: 0x666666, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
-
-//Top clamp plate
-loadPart('models/10kW/TopClampPlate1.glb', Math.PI / 2.0, 0, -Math.PI/6, 0, 0, 26.2, platemat, 'topclampplate');  
 
 
 
-//Top bearing plate
-loadPart('models/10kW/TopBearingPlate1.glb', Math.PI / 2.0, 0, -Math.PI/6, 0, 0, 24.75, platemat, 'topbearingplate');  
-
-//Bottom bearing plate
-loadPart('models/10kW/BottomBearingPlate1.glb', -Math.PI / 2.0, 0, Math.PI/2, 0, 0, -25.3, platemat, 'bottombearingplate');  
-
-//Top bearing spacer
-loadPart('models/10kW/TopBearingSpacer1.glb', Math.PI / 2.0, 0, -Math.PI/6, 0, 0, 20, G10mat, 'topbearingspacer');  
-
-//Bottom bearing spacer
-loadPart('models/10kW/BottomBearingSpacer1.glb', -Math.PI / 2.0, 0, 0, 0, 0, -19.9, G10mat, 'bottombearingspacer');  
-
-//Top bearing housing
-loadPart('models/10kW/BearingHousing1.glb', Math.PI / 2.0, 0, 0, 0, 0, 21, bearingmat, 'topbearinghousing');  
-
-//Bottom bearing housing
-loadPart('models/10kW/BearingHousing1.glb', -Math.PI / 2.0, 0, 0, 0, 0, -20.6, bearingmat, 'bottombearinghousing');  
 
 
-//Top locator ring
-loadPart('models/10kW/TopLocatorRing1.glb', Math.PI / 2.0, 0, 0, 0, 0, 15.85, platemat, 'toplocatorring');  
+			var platemat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.1, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+			var bearingmat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
 
-//Upper Laminiation retainer
-loadPart('models/10kW/LaminationRetainer1.glb', Math.PI / 2.0, 0, 0, 0.7*5.4, -0.7*10.7, 15.55, platemat, 'upperlaminationretainerA');  
-loadPart('models/10kW/LaminationRetainer4.glb', Math.PI / 2.0, 0, 0, 0.7*5.4, 0.7*10.7, 15.55, platemat, 'upperlaminationretainerB');  
-loadPart('models/10kW/LaminationRetainer5.glb', Math.PI / 2.0, 0, 0, -0.7*15.4, 0, 15.55, platemat, 'upperlaminationretainerC');  
+			var G10mat = new THREE.MeshStandardMaterial({ color: 0x203015, emissive: 0x303030, roughness: 1.0, metalness: 0.0, emissiveIntensity: 0.0, transparent: true });
 
-//Lower Lamination retainer
-loadPart('models/10kW/LaminationRetainer6.glb', Math.PI / 2.0, 0, 0, 0.7*5.4, -0.7*10.7, 2.9, platemat, 'lowerlaminationretainerA'); 
-loadPart('models/10kW/LaminationRetainer7.glb', Math.PI / 2.0, 0, 0, 0.7*5.4, 0.7*10.7, 2.9, platemat, 'lowerlaminationretainerB');  
-loadPart('models/10kW/LaminationRetainer8.glb', Math.PI / 2.0, 0, 0, -0.7*15.4, 0, 2.9, platemat, 'lowerlaminationretainerC');  
+			var statormat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: true });
+			var laminatedmat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+			var rotormat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+			var coppermat = new THREE.MeshStandardMaterial({ color: 0xff7744, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+			var studmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+			var clampmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+			var tierodmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+			var swagemat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+			var nutmat = new THREE.MeshStandardMaterial({ color: 0x666666, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+			//Top clamp plate
+			loadPart('models/10kW/TopClampPlate1.glb', Math.PI / 2.0, 0, -Math.PI / 6, 0, 0, 26.2, platemat, 'topclampplate');
 
 
 
-//Removable solid core
-loadPart('models/10kW/RemovableSolidCoreA.glb', Math.PI / 2.0, 0, 0, -13.2, 0, 6.22, statormat, 'removablesolidcoreA'); 
-loadPart('models/10kW/RemovableSolidCoreB.glb', Math.PI / 2.0, 0, 0, 5, -10, 6.22, statormat, 'removablesolidcoreB' ); 
-loadPart('models/10kW/RemovableSolidCoreC.glb', Math.PI / 2.0, 0, 0, 5, 10, 6.22, statormat, 'removablesolidcoreC' ); 
+			//Top bearing plate
+			loadPart('models/10kW/TopBearingPlate1.glb', Math.PI / 2.0, 0, -Math.PI / 6, 0, 0, 24.75, platemat, 'topbearingplate');
 
-//Lower solid core
-loadPart('models/10kW/SolidLowerCoreA.glb', Math.PI / 2.0, 0, 0, 5, -10, -9.5, statormat, 'lowersolidcoreA' ); 
-loadPart('models/10kW/SolidLowerCoreB.glb', Math.PI / 2.0, 0, 0, -13, 0, -9.5, statormat, 'lowersolidcoreB' ); 
-loadPart('models/10kW/SolidLowerCoreC.glb', Math.PI / 2.0, 0, 0, 5, 10, -9.5, statormat, 'lowersolidcoreC' ); 
+			//Bottom bearing plate
+			loadPart('models/10kW/BottomBearingPlate1.glb', -Math.PI / 2.0, 0, Math.PI / 2, 0, 0, -25.3, platemat, 'bottombearingplate');
 
+			//Top bearing spacer
+			loadPart('models/10kW/TopBearingSpacer1.glb', Math.PI / 2.0, 0, -Math.PI / 6, 0, 0, 20, G10mat, 'topbearingspacer');
 
+			//Bottom bearing spacer
+			loadPart('models/10kW/BottomBearingSpacer1.glb', -Math.PI / 2.0, 0, 0, 0, 0, -19.9, G10mat, 'bottombearingspacer');
 
-//Removable laminated core
-loadPart('models/10kW/RemovableLaminatedCore1.glb', Math.PI / 2.0, 0, 0, 9.4, -5.65, 9.25, laminatedmat, 'removablelaminatedcoreA' ); 
-loadPart('models/10kW/RemovableLaminatedCore7.glb', Math.PI / 2.0, 0, 0, 9.4, 5.65, 9.25, laminatedmat, 'removablelaminatedcoreB' ); 
-loadPart('models/10kW/RemovableLaminatedCore8.glb', Math.PI / 2.0, 0, 0, 0, 11.65, 9.25, laminatedmat, 'removablelaminatedcoreC' );     
-loadPart('models/10kW/RemovableLaminatedCore9.glb', Math.PI / 2.0, 0, 0, -9.4, 5.65, 9.25, laminatedmat, 'removablelaminatedcoreD' );         
-loadPart('models/10kW/RemovableLaminatedCore10.glb', Math.PI / 2.0, 0, 0, -9.4, -5.65, 9.25, laminatedmat, 'removablelaminatedcoreE' ); 
-loadPart('models/10kW/RemovableLaminatedCore11.glb', Math.PI / 2.0, 0, 0, 0, -11.65, 9.25, laminatedmat, 'removablelaminatedcoreF' );
+			//Top bearing housing
+			loadPart('models/10kW/BearingHousing1.glb', Math.PI / 2.0, 0, 0, 0, 0, 21, bearingmat, 'topbearinghousing');
 
-//Laminated core upper
-loadPart('models/10kW/LaminatedCoreUpper1Fine.glb', Math.PI / 2.0, 0, 0, 5.3, -5.5, 9.25, laminatedmat, 'laminatedcoreupperA');
-loadPart('models/10kW/LaminatedCoreUpper5Fine.glb', Math.PI / 2.0, 0, 0, 5.5, 5.3, 9.25, laminatedmat, 'laminatedcoreupperB' );
-loadPart('models/10kW/LaminatedCoreUpper6Fine.glb', Math.PI / 2.0, 0, 0, -5.3, 5.5, 9.25, laminatedmat, 'laminatedcoreupperC' );
-loadPart('models/10kW/LaminatedCoreUpper7Fine.glb', Math.PI / 2.0, 0, 0, -5.5, -5.3, 9.25, laminatedmat, 'laminatedcoreupperD' );
-
-//Laminated core lower
-loadPart('models/10kW/LaminatedCoreLower1Fine.glb', Math.PI / 2.0, 0, 0, 6.3, -6.5, -9.25, laminatedmat, 'laminatedcorelowerA' );
-loadPart('models/10kW/LaminatedCoreLower5Fine.glb', Math.PI / 2.0, 0, 0, 6.5, 6.3, -9.25, laminatedmat, 'laminatedcorelowerB' );
-loadPart('models/10kW/LaminatedCoreLower6Fine.glb', Math.PI / 2.0, 0, 0, -6.3, 6.5, -9.25, laminatedmat, 'laminatedcorelowerC' );
-loadPart('models/10kW/LaminatedCoreLower7Fine.glb', Math.PI / 2.0, 0, 0, -6.5, -6.3, -9.25, laminatedmat, 'laminatedcorelowerD' );
-
-//ripple shield
-loadPart('models/10kW/RippleShield.glb', Math.PI / 2.0, 0, 0, 0, 0, 0, coppermat, 'rippleshield' ); 
+			//Bottom bearing housing
+			loadPart('models/10kW/BearingHousing1.glb', -Math.PI / 2.0, 0, 0, 0, 0, -20.6, bearingmat, 'bottombearinghousing');
 
 
-//Core spacer
-loadPart('models/10kW/CoreMidFine.glb', Math.PI / 2.0, 0, 0, 0, 0, 0, G10mat, 'spacer' );
+			//Top locator ring
+			loadPart('models/10kW/TopLocatorRing1.glb', Math.PI / 2.0, 0, 0, 0, 0, 15.85, platemat, 'toplocatorring');
 
-//Armature
-loadPart('models/10kW/ArmatureStandard.glb', Math.PI / 2.0, 0, 0, 0, 0, 0, coppermat, 'armature');  
+			//Upper Laminiation retainer
+			loadPart('models/10kW/LaminationRetainer1.glb', Math.PI / 2.0, 0, 0, 0.7 * 5.4, -0.7 * 10.7, 15.55, platemat, 'upperlaminationretainerA');
+			loadPart('models/10kW/LaminationRetainer4.glb', Math.PI / 2.0, 0, 0, 0.7 * 5.4, 0.7 * 10.7, 15.55, platemat, 'upperlaminationretainerB');
+			loadPart('models/10kW/LaminationRetainer5.glb', Math.PI / 2.0, 0, 0, -0.7 * 15.4, 0, 15.55, platemat, 'upperlaminationretainerC');
 
-//HTS coil
-loadPart('models/10kW/Coil.glb', Math.PI / 2.0, 0, -Math.PI/6.0, 0.78*9.2, 0.78*15.75, -4.3, coppermat, 'fieldcoil');  
+			//Lower Lamination retainer
+			loadPart('models/10kW/LaminationRetainer6.glb', Math.PI / 2.0, 0, 0, 0.7 * 5.4, -0.7 * 10.7, 2.9, platemat, 'lowerlaminationretainerA');
+			loadPart('models/10kW/LaminationRetainer7.glb', Math.PI / 2.0, 0, 0, 0.7 * 5.4, 0.7 * 10.7, 2.9, platemat, 'lowerlaminationretainerB');
+			loadPart('models/10kW/LaminationRetainer8.glb', Math.PI / 2.0, 0, 0, -0.7 * 15.4, 0, 2.9, platemat, 'lowerlaminationretainerC');
 
 
 
-//Coil supports
-loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0,  12.6*Math.cos(Math.PI/12), 12.6*Math.sin(Math.PI/12), -12.6, G10mat, 'coilsupportA');
-loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0,  12.6*Math.cos(Math.PI+Math.PI/12), 12.6*Math.sin(Math.PI+Math.PI/12), -12.6, G10mat, 'coilsupportB' );
-loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0,  12.6*Math.cos(Math.PI/2+Math.PI/12), 12.6*Math.sin(Math.PI/2+Math.PI/12), -12.6, G10mat, 'coilsupportC' );
-loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0,  12.6*Math.cos(-Math.PI/2+Math.PI/12), 12.6*Math.sin(-Math.PI/2+Math.PI/12), -12.6, G10mat, 'coilsupportD' );
+			//Removable solid core
+			loadPart('models/10kW/RemovableSolidCoreA.glb', Math.PI / 2.0, 0, 0, -13.2, 0, 6.22, statormat, 'removablesolidcoreA');
+			loadPart('models/10kW/RemovableSolidCoreB.glb', Math.PI / 2.0, 0, 0, 5, -10, 6.22, statormat, 'removablesolidcoreB');
+			loadPart('models/10kW/RemovableSolidCoreC.glb', Math.PI / 2.0, 0, 0, 5, 10, 6.22, statormat, 'removablesolidcoreC');
+
+			//Lower solid core
+			loadPart('models/10kW/SolidLowerCoreA.glb', Math.PI / 2.0, 0, 0, 5, -10, -9.5, statormat, 'lowersolidcoreA');
+			loadPart('models/10kW/SolidLowerCoreB.glb', Math.PI / 2.0, 0, 0, -13, 0, -9.5, statormat, 'lowersolidcoreB');
+			loadPart('models/10kW/SolidLowerCoreC.glb', Math.PI / 2.0, 0, 0, 5, 10, -9.5, statormat, 'lowersolidcoreC');
 
 
 
-//Rotor
-//loadPart('RotorFine.glb', Math.PI / 2.0, 0, 0, 0, 0, -5.3, rotormat, 'rotor' );
+			//Removable laminated core
+			loadPart('models/10kW/RemovableLaminatedCore1.glb', Math.PI / 2.0, 0, 0, 9.4, -5.65, 9.25, laminatedmat, 'removablelaminatedcoreA');
+			loadPart('models/10kW/RemovableLaminatedCore7.glb', Math.PI / 2.0, 0, 0, 9.4, 5.65, 9.25, laminatedmat, 'removablelaminatedcoreB');
+			loadPart('models/10kW/RemovableLaminatedCore8.glb', Math.PI / 2.0, 0, 0, 0, 11.65, 9.25, laminatedmat, 'removablelaminatedcoreC');
+			loadPart('models/10kW/RemovableLaminatedCore9.glb', Math.PI / 2.0, 0, 0, -9.4, 5.65, 9.25, laminatedmat, 'removablelaminatedcoreD');
+			loadPart('models/10kW/RemovableLaminatedCore10.glb', Math.PI / 2.0, 0, 0, -9.4, -5.65, 9.25, laminatedmat, 'removablelaminatedcoreE');
+			loadPart('models/10kW/RemovableLaminatedCore11.glb', Math.PI / 2.0, 0, 0, 0, -11.65, 9.25, laminatedmat, 'removablelaminatedcoreF');
+
+			//Laminated core upper
+			loadPart('models/10kW/LaminatedCoreUpper1Fine.glb', Math.PI / 2.0, 0, 0, 5.3, -5.5, 9.25, laminatedmat, 'laminatedcoreupperA');
+			loadPart('models/10kW/LaminatedCoreUpper5Fine.glb', Math.PI / 2.0, 0, 0, 5.5, 5.3, 9.25, laminatedmat, 'laminatedcoreupperB');
+			loadPart('models/10kW/LaminatedCoreUpper6Fine.glb', Math.PI / 2.0, 0, 0, -5.3, 5.5, 9.25, laminatedmat, 'laminatedcoreupperC');
+			loadPart('models/10kW/LaminatedCoreUpper7Fine.glb', Math.PI / 2.0, 0, 0, -5.5, -5.3, 9.25, laminatedmat, 'laminatedcoreupperD');
+
+			//Laminated core lower
+			loadPart('models/10kW/LaminatedCoreLower1Fine.glb', Math.PI / 2.0, 0, 0, 6.3, -6.5, -9.25, laminatedmat, 'laminatedcorelowerA');
+			loadPart('models/10kW/LaminatedCoreLower5Fine.glb', Math.PI / 2.0, 0, 0, 6.5, 6.3, -9.25, laminatedmat, 'laminatedcorelowerB');
+			loadPart('models/10kW/LaminatedCoreLower6Fine.glb', Math.PI / 2.0, 0, 0, -6.3, 6.5, -9.25, laminatedmat, 'laminatedcorelowerC');
+			loadPart('models/10kW/LaminatedCoreLower7Fine.glb', Math.PI / 2.0, 0, 0, -6.5, -6.3, -9.25, laminatedmat, 'laminatedcorelowerD');
+
+			//ripple shield
+			loadPart('models/10kW/RippleShield.glb', Math.PI / 2.0, 0, 0, 0, 0, 0, coppermat, 'rippleshield');
 
 
-//Upper core clamps
-loadPart('models/10kW/CoreClampUpper7.glb', Math.PI / 2.0, 0, 0, 6, -11, 8, clampmat, 'uppercoreclampA');  
-loadPart('models/10kW/CoreClampUpper10.glb', Math.PI / 2.0, 0, 0, 6.05, 10.9, 8, clampmat, 'uppercoreclampB');  
-loadPart('models/10kW/CoreClampUpper11.glb', Math.PI / 2.0, 0, 0, -15, 0, 8, clampmat, 'uppercoreclampC');  
+			//Core spacer
+			loadPart('models/10kW/CoreMidFine.glb', Math.PI / 2.0, 0, 0, 0, 0, 0, G10mat, 'spacer');
 
-//Lower core clamps
-loadPart('models/10kW/CoreClampLower4.glb', Math.PI / 2.0, 0, 0, 6, -11, -8, clampmat, 'lowercoreclampA');  
-loadPart('models/10kW/CoreClampLower7.glb', Math.PI / 2.0, 0, 0, 6.05, 10.9, -8, clampmat, 'lowercoreclampB');  
-loadPart('models/10kW/CoreClampLower8.glb', Math.PI / 2.0, 0, 0, -15, 0, -8, clampmat, 'lowercoreclampC');  
+			//Armature
+			loadPart('models/10kW/ArmatureStandard.glb', Math.PI / 2.0, 0, 0, 0, 0, 0, coppermat, 'armature');
 
-//m12 studs
-loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(Math.PI/12), 17.5*Math.sin(Math.PI/12), 1.9, studmat, 'studA');  
-loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-Math.PI/12), 17.5*Math.sin(-Math.PI/12), 1.9, studmat, 'studB'); 
-loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3+Math.PI/12), 17.5*Math.sin(2*Math.PI/3+Math.PI/12), 1.9, studmat, 'studC'); 
-loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3-Math.PI/12), 17.5*Math.sin(2*Math.PI/3-Math.PI/12), 1.9, studmat, 'studD'); 
-loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3+Math.PI/12), 17.5*Math.sin(-2*Math.PI/3+Math.PI/12), 1.9, studmat, 'studE'); 
-loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3-Math.PI/12), 17.5*Math.sin(-2*Math.PI/3-Math.PI/12), 1.9, studmat, 'studF'); 
-
-//tie rod spacers
-loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(Math.PI/12), 17.5*Math.sin(Math.PI/12), 20.5, tierodmat, 'tierodA'); 
-loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-Math.PI/12), 17.5*Math.sin(-Math.PI/12), 20.5, tierodmat, 'tierodB'); 
-
-loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3+Math.PI/12), 17.5*Math.sin(2*Math.PI/3+Math.PI/12), 20.5, tierodmat, 'tierodC'); 
-loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3-Math.PI/12), 17.5*Math.sin(2*Math.PI/3-Math.PI/12), 20.5, tierodmat, 'tierodD'); 
-
-loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3+Math.PI/12), 17.5*Math.sin(-2*Math.PI/3+Math.PI/12), 20.5, tierodmat, 'tierodE'); 
-loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3-Math.PI/12), 17.5*Math.sin(-2*Math.PI/3-Math.PI/12), 20.5, tierodmat, 'tierodF'); 
+			//HTS coil
+			loadPart('models/10kW/Coil.glb', Math.PI / 2.0, 0, -Math.PI / 6.0, 0.78 * 9.2, 0.78 * 15.75, -4.3, coppermat, 'fieldcoil');
 
 
-//nuts
-loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3+Math.PI/12), 17.5*Math.sin(-2*Math.PI/3+Math.PI/12), 27.3, nutmat, 'nutA' ); 
-loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-2*Math.PI/3-Math.PI/12), 17.5*Math.sin(-2*Math.PI/3-Math.PI/12), 27.3, nutmat, 'nutB' ); 
 
-loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3+Math.PI/12), 17.5*Math.sin(2*Math.PI/3+Math.PI/12), 27.3, nutmat, 'nutC' ); 
-loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(2*Math.PI/3-Math.PI/12), 17.5*Math.sin(2*Math.PI/3-Math.PI/12), 27.3, nutmat, 'nutD' ); 
+			//Coil supports
+			loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0, 12.6 * Math.cos(Math.PI / 12), 12.6 * Math.sin(Math.PI / 12), -12.6, G10mat, 'coilsupportA');
+			loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0, 12.6 * Math.cos(Math.PI + Math.PI / 12), 12.6 * Math.sin(Math.PI + Math.PI / 12), -12.6, G10mat, 'coilsupportB');
+			loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0, 12.6 * Math.cos(Math.PI / 2 + Math.PI / 12), 12.6 * Math.sin(Math.PI / 2 + Math.PI / 12), -12.6, G10mat, 'coilsupportC');
+			loadPart('models/10kW/G10HTSSupport1.glb', Math.PI / 2.0, 0, 0, 12.6 * Math.cos(-Math.PI / 2 + Math.PI / 12), 12.6 * Math.sin(-Math.PI / 2 + Math.PI / 12), -12.6, G10mat, 'coilsupportD');
 
-loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(Math.PI/12), 17.5*Math.sin(Math.PI/12), 27.3, nutmat, 'nutE' ); 
-loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5*Math.cos(-Math.PI/12), 17.5*Math.sin(-Math.PI/12), 27.3, nutmat, 'nutF' ); 
 
-//cryocooler
-loadPart('models/10kW/CryocoolerLowRes.glb',Math.PI / 2.0,0,-Math.PI/6.0,20.2,27,-26.5,clampmat,'cryocooler');
+
+			//Rotor
+			//loadPart('RotorFine.glb', Math.PI / 2.0, 0, 0, 0, 0, -5.3, rotormat, 'rotor' );
+
+
+			//Upper core clamps
+			loadPart('models/10kW/CoreClampUpper7.glb', Math.PI / 2.0, 0, 0, 6, -11, 8, clampmat, 'uppercoreclampA');
+			loadPart('models/10kW/CoreClampUpper10.glb', Math.PI / 2.0, 0, 0, 6.05, 10.9, 8, clampmat, 'uppercoreclampB');
+			loadPart('models/10kW/CoreClampUpper11.glb', Math.PI / 2.0, 0, 0, -15, 0, 8, clampmat, 'uppercoreclampC');
+
+			//Lower core clamps
+			loadPart('models/10kW/CoreClampLower4.glb', Math.PI / 2.0, 0, 0, 6, -11, -8, clampmat, 'lowercoreclampA');
+			loadPart('models/10kW/CoreClampLower7.glb', Math.PI / 2.0, 0, 0, 6.05, 10.9, -8, clampmat, 'lowercoreclampB');
+			loadPart('models/10kW/CoreClampLower8.glb', Math.PI / 2.0, 0, 0, -15, 0, -8, clampmat, 'lowercoreclampC');
+
+			//m12 studs
+			loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(Math.PI / 12), 17.5 * Math.sin(Math.PI / 12), 1.9, studmat, 'studA');
+			loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(-Math.PI / 12), 17.5 * Math.sin(-Math.PI / 12), 1.9, studmat, 'studB');
+			loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(2 * Math.PI / 3 + Math.PI / 12), 17.5 * Math.sin(2 * Math.PI / 3 + Math.PI / 12), 1.9, studmat, 'studC');
+			loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(2 * Math.PI / 3 - Math.PI / 12), 17.5 * Math.sin(2 * Math.PI / 3 - Math.PI / 12), 1.9, studmat, 'studD');
+			loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(-2 * Math.PI / 3 + Math.PI / 12), 17.5 * Math.sin(-2 * Math.PI / 3 + Math.PI / 12), 1.9, studmat, 'studE');
+			loadPart('models/10kW/m12LongStud1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(-2 * Math.PI / 3 - Math.PI / 12), 17.5 * Math.sin(-2 * Math.PI / 3 - Math.PI / 12), 1.9, studmat, 'studF');
+
+			//tie rod spacers
+			loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(Math.PI / 12), 17.5 * Math.sin(Math.PI / 12), 20.5, tierodmat, 'tierodA');
+			loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(-Math.PI / 12), 17.5 * Math.sin(-Math.PI / 12), 20.5, tierodmat, 'tierodB');
+
+			loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(2 * Math.PI / 3 + Math.PI / 12), 17.5 * Math.sin(2 * Math.PI / 3 + Math.PI / 12), 20.5, tierodmat, 'tierodC');
+			loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(2 * Math.PI / 3 - Math.PI / 12), 17.5 * Math.sin(2 * Math.PI / 3 - Math.PI / 12), 20.5, tierodmat, 'tierodD');
+
+			loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(-2 * Math.PI / 3 + Math.PI / 12), 17.5 * Math.sin(-2 * Math.PI / 3 + Math.PI / 12), 20.5, tierodmat, 'tierodE');
+			loadPart('models/10kW/TieRodSpacer1.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(-2 * Math.PI / 3 - Math.PI / 12), 17.5 * Math.sin(-2 * Math.PI / 3 - Math.PI / 12), 20.5, tierodmat, 'tierodF');
+
+
+			//nuts
+			loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(-2 * Math.PI / 3 + Math.PI / 12), 17.5 * Math.sin(-2 * Math.PI / 3 + Math.PI / 12), 27.3, nutmat, 'nutA');
+			loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(-2 * Math.PI / 3 - Math.PI / 12), 17.5 * Math.sin(-2 * Math.PI / 3 - Math.PI / 12), 27.3, nutmat, 'nutB');
+
+			loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(2 * Math.PI / 3 + Math.PI / 12), 17.5 * Math.sin(2 * Math.PI / 3 + Math.PI / 12), 27.3, nutmat, 'nutC');
+			loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(2 * Math.PI / 3 - Math.PI / 12), 17.5 * Math.sin(2 * Math.PI / 3 - Math.PI / 12), 27.3, nutmat, 'nutD');
+
+			loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(Math.PI / 12), 17.5 * Math.sin(Math.PI / 12), 27.3, nutmat, 'nutE');
+			loadPart('models/10kW/NutAndWasher.glb', Math.PI / 2.0, 0, 0, 17.5 * Math.cos(-Math.PI / 12), 17.5 * Math.sin(-Math.PI / 12), 27.3, nutmat, 'nutF');
+
+			//cryocooler
+			loadPart('models/10kW/CryocoolerLowRes.glb',Math.PI / 2.0,0,-Math.PI/6.0,20.2,27,-26.5,clampmat,'cryocooler');
+
+			/*
+			//swagelok parts
+			loadPart('Swagelok1.glb', Math.PI / 2.0, 0, -1.5*Math.PI/10, -2.8, -20, -13.1, swagemat ); 
+			loadPart('Swagelok2.glb', Math.PI / 2.0, 0, -1.5*Math.PI/10, 18.2*Math.cos(-2*Math.PI/3+Math.PI/7), 18.2*Math.sin(-2*Math.PI/3+Math.PI/7), 16, swagemat ); 
 			
-/*
-//swagelok parts
-loadPart('Swagelok1.glb', Math.PI / 2.0, 0, -1.5*Math.PI/10, -2.8, -20, -13.1, swagemat ); 
-loadPart('Swagelok2.glb', Math.PI / 2.0, 0, -1.5*Math.PI/10, 18.2*Math.cos(-2*Math.PI/3+Math.PI/7), 18.2*Math.sin(-2*Math.PI/3+Math.PI/7), 16, swagemat ); 
-
-loadPart('Swagelok1.glb', Math.PI / 2.0, 0, -2*Math.PI/10, -16.1, -12.2, -13.1, swagemat ); 
-loadPart('Swagelok2.glb', Math.PI / 2.0, 0, -2*Math.PI/10, 18.2*Math.cos(-2*Math.PI/3-Math.PI/7), 18.2*Math.sin(-2*Math.PI/3-Math.PI/7), 16, swagemat ); 
-
-loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI/2, 20.1*Math.cos(Math.PI/8), 20.1*Math.sin(Math.PI/8), -13.1, swagemat ); 
-loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI/2, 18.1*Math.cos(Math.PI/7), 18.1*Math.sin(Math.PI/7), 16, swagemat ); 
-
-loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI/2, 20.1*Math.cos(-Math.PI/8), 20.1*Math.sin(-Math.PI/8), -13.1, swagemat ); 
-loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI/2, 18.1*Math.cos(-Math.PI/7), 18.1*Math.sin(-Math.PI/7), 16, swagemat ); 
-
-loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI+1.5*Math.PI/10, 20.1*Math.cos(2*Math.PI/3-Math.PI/8), 20.1*Math.sin(2*Math.PI/3-Math.PI/8), -13.1, swagemat ); 
-loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI+1.5*Math.PI/10, 18.2*Math.cos(2*Math.PI/3-Math.PI/6.9), 18.2*Math.sin(2*Math.PI/3-Math.PI/6.9), 16, swagemat ); 
-
-loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI+2*Math.PI/10, 20.1*Math.cos(2*Math.PI/3+Math.PI/8), 20.1*Math.sin(2*Math.PI/3+Math.PI/8), -13.1, swagemat );
-loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI+Math.PI/5, 18.1*Math.cos(2*Math.PI/3+Math.PI/6.9), 18.1*Math.sin(2*Math.PI/3+Math.PI/6.9), 16, swagemat );
-
-*/
+			loadPart('Swagelok1.glb', Math.PI / 2.0, 0, -2*Math.PI/10, -16.1, -12.2, -13.1, swagemat ); 
+			loadPart('Swagelok2.glb', Math.PI / 2.0, 0, -2*Math.PI/10, 18.2*Math.cos(-2*Math.PI/3-Math.PI/7), 18.2*Math.sin(-2*Math.PI/3-Math.PI/7), 16, swagemat ); 
+			
+			loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI/2, 20.1*Math.cos(Math.PI/8), 20.1*Math.sin(Math.PI/8), -13.1, swagemat ); 
+			loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI/2, 18.1*Math.cos(Math.PI/7), 18.1*Math.sin(Math.PI/7), 16, swagemat ); 
+			
+			loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI/2, 20.1*Math.cos(-Math.PI/8), 20.1*Math.sin(-Math.PI/8), -13.1, swagemat ); 
+			loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI/2, 18.1*Math.cos(-Math.PI/7), 18.1*Math.sin(-Math.PI/7), 16, swagemat ); 
+			
+			loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI+1.5*Math.PI/10, 20.1*Math.cos(2*Math.PI/3-Math.PI/8), 20.1*Math.sin(2*Math.PI/3-Math.PI/8), -13.1, swagemat ); 
+			loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI+1.5*Math.PI/10, 18.2*Math.cos(2*Math.PI/3-Math.PI/6.9), 18.2*Math.sin(2*Math.PI/3-Math.PI/6.9), 16, swagemat ); 
+			
+			loadPart('Swagelok1.glb', Math.PI / 2.0, 0, Math.PI+2*Math.PI/10, 20.1*Math.cos(2*Math.PI/3+Math.PI/8), 20.1*Math.sin(2*Math.PI/3+Math.PI/8), -13.1, swagemat );
+			loadPart('Swagelok2.glb', Math.PI / 2.0, 0, Math.PI+Math.PI/5, 18.1*Math.cos(2*Math.PI/3+Math.PI/6.9), 18.1*Math.sin(2*Math.PI/3+Math.PI/6.9), 16, swagemat );
+			
+			*/
 
 
 
-function loadPart(filename, rotx, roty, rotz, posx, posy, posz, material, groupname){
+			function loadPart(filename, rotx, roty, rotz, posx, posy, posz, material, groupname) {
 
-    loader.load(filename, function (gltf) {
+				loader.load(filename, function (gltf) {
 
-gltf.scene.traverse(function (child) {
+					gltf.scene.traverse(function (child) {
 
-    if (child.isMesh) {
+						if (child.isMesh) {
 
-        child.geometry.center();
-        child.geometry.computeFaceNormals();
-        child.geometry.computeVertexNormals();
-        //child.material =  new THREE.MeshPhongMaterial({color: 0x987933,shininess:30,reflectivity:0.8,transparent:false});
-        //child.material = new THREE.MeshStandardMaterial({ color: 0x990000, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
-        child.material = material;
+							child.geometry.center();
+							//child.geometry.computeFaceNormals();
+							child.geometry.computeVertexNormals();
+							//child.material =  new THREE.MeshPhongMaterial({color: 0x987933,shininess:30,reflectivity:0.8,transparent:false});
+							//child.material = new THREE.MeshStandardMaterial({ color: 0x990000, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+							child.material = material;
 
-        child.rotation.x = rotx;
-        child.rotation.y = roty;
-        child.rotation.z = rotz;
-        
-        child.scale.multiplyScalar(0.1);
-        child.position.x = posx;
-        child.position.z = posy;
-        child.position.y = posz;
-        //w3 = child;
-        //w3.layers.set(0);
-		child.name=groupname;
-		/*
-        if(groupname=='armature'){
-            w3 = child;
-        }else if(groupname=='stator'){
-            stator = child;
-        }
-        else if(groupname=='fieldcoil'){
-            coil = child;
-        }
-		*/
-        child.layers.set(0);
-        scene.add(child);
+							child.rotation.x = rotx;
+							child.rotation.y = roty;
+							child.rotation.z = rotz;
 
-        var button = document.getElementById(groupname);
-        if(button!=null){
-            button.addEventListener('click', function () {
+							child.scale.multiplyScalar(0.1);
+							child.position.x = posx;
+							child.position.z = posy;
+							child.position.y = posz;
+							//w3 = child;
+							//w3.layers.set(0);
+							child.name = groupname;
+							/*
+							if(groupname=='armature'){
+								w3 = child;
+							}else if(groupname=='stator'){
+								stator = child;
+							}
+							else if(groupname=='fieldcoil'){
+								coil = child;
+							}
+							*/
+							child.layers.set(0);
+							
+							scene.add(child);
 
-
-            child.layers.toggle(0);
-        });
-    }
-    }
-
-});
+							/*var button = document.getElementById(groupname);
+							if (button != null) {
+								button.addEventListener('click', function () {
 
 
+									child.layers.toggle(0);
+								});
+							}*/
+						}
 
-render();
+					});
 
-});
-}
 
-        
+
+					render();
+
+				});
+			}
 
 
 
@@ -595,390 +648,601 @@ render();
 
 
 
-            
+
+
+
 
 			window.addEventListener('resize', onWindowResize, false);
+
 
 			// create a function that will be called based on the size of a specific viewport
 			function reportWindowSize() {
 				//check if the viweport size is less then 1200px
 				if (window.innerWidth < 1200) {
+
 					// notify the user to visit the desktop site with an alert()
 					alert("Note: This page is best viewed on a desktop computer.");
 				};
+				/*
+			 // Add a Window: resize event to the Window interface to force a reload of the 
+			 // page if the viewport size is greater than or equal to 1200px.
+			
+				window.addEventListener("resize" , () => {
+				 // check if viewport width is greater than or equal to 1200px.
+					if (window.innerWidth >= 1200) {
+					 // reload/refresh the page
+						location.reload();
+					};
+				});*/
 			};
 
 
 
 			// call your function when page loads 
 			window.onload = reportWindowSize;
-			
+
 			document.addEventListener('mousemove', onDocumentMouseMove, false);
 
 
 			document.getElementById("infobutton").addEventListener('click', function () {
+
 				document.getElementById("d1").innerHTML = "<p id='line1'></p>";
 				i = 0;
+				showField = true;
 				infoFunction(loz + " Superconducting Homopolar Motor/Generator\n\nMotor Rating: 10 kW\nRated Speed: 25000 RPM");
 
-
 			});
+			/*
+			document.getElementById("infobutton2").addEventListener('click', function () {
 
+				document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+				i = 0;
+				showField = true;
+				infoFunction(loz + " Superconducting Homopolar Motor/Generator\n\nMotor Rating: 10 kW\nRated Speed: 25000 RPM");
+
+				});
+			*/
+			
 			renderer.domElement.addEventListener("click", onClick, false);
 
 
 
-			
-        
-            document.getElementById('explode').addEventListener('click', function () {
+
+
+			document.getElementById('explode').addEventListener('click', function () {
 				//console.log("explode");
 				//console.log(scene.children);
-				explode=!explode;
-				if(explode){
-					this.innerHTML='Compact';
-					document.getElementById('access').innerHTML='Coil Access';
-					accesscoil=false;
+				explode = !explode;
+				if (explode) {
+					this.innerHTML = 'Compact';
+					document.getElementById('explode2').innerHTML = 'Compact';
+					document.getElementById('access').innerHTML = 'Coil Access';
+					document.getElementById('access2').innerHTML = 'Coil Access';
+					accesscoil = false;
 					document.getElementById('supports').disabled = false;
 					document.getElementById('stator').disabled = false;
 					document.getElementById('armature').disabled = false;
 					document.getElementById('rippleshield').disabled = false;
 					document.getElementById('fieldcoil').disabled = false;
 					document.getElementById('rotor').disabled = false;
-				}
-				else{
-					this.innerHTML='Explode';
-					
-				}
-				document.getElementById('access').disabled=explode;
+					document.getElementById('cryocooler').disabled = false;
 
-				if(explode){
+					document.getElementById('supports2').disabled = false;
+					document.getElementById('stator2').disabled = false;
+					document.getElementById('armature2').disabled = false;
+					document.getElementById('rippleshield2').disabled = false;
+					document.getElementById('fieldcoil2').disabled = false;
+					document.getElementById('rotor2').disabled = false;
+					document.getElementById('cryocooler2').disabled = false;
+				}
+				else {
+					this.innerHTML = 'Explode';
+					document.getElementById('explode2').innerHTML = 'Explode';
+
+				}
+				document.getElementById('access').disabled = explode;
+				document.getElementById('access2').disabled = explode;
+
+				if (explode) {
 					movedirection = 1;
 				}
-				else{
+				else {
 					movedirection = -1;
 				}
-        });
+			});
 
 
-        document.getElementById('stator').addEventListener('click', function () {
+			document.getElementById('explode2').addEventListener('click', function () {
+				//console.log("explode");
+				//console.log(scene.children);
+				explode = !explode;
+				if (explode) {
+					this.innerHTML = 'Compact';
+					document.getElementById('explode').innerHTML = 'Compact';
+					document.getElementById('access').innerHTML = 'Coil Access';
+					document.getElementById('access2').innerHTML = 'Coil Access';
+					accesscoil = false;
+					document.getElementById('supports').disabled = false;
+					document.getElementById('stator').disabled = false;
+					document.getElementById('armature').disabled = false;
+					document.getElementById('rippleshield').disabled = false;
+					document.getElementById('fieldcoil').disabled = false;
+					document.getElementById('rotor').disabled = false;
+					document.getElementById('cryocooler').disabled = false;
+
+					document.getElementById('supports2').disabled = false;
+					document.getElementById('stator2').disabled = false;
+					document.getElementById('armature2').disabled = false;
+					document.getElementById('rippleshield2').disabled = false;
+					document.getElementById('fieldcoil2').disabled = false;
+					document.getElementById('rotor2').disabled = false;
+					document.getElementById('cryocooler2').disabled = false;
+				}
+				else {
+					this.innerHTML = 'Explode';
+					document.getElementById('explode').innerHTML = 'Explode';
+
+				}
+				document.getElementById('access').disabled = explode;
+				document.getElementById('access2').disabled = explode;
+
+				if (explode) {
+					movedirection = 1;
+				}
+				else {
+					movedirection = -1;
+				}
+			});
+
+
+			document.getElementById('stator').addEventListener('click', function () {
 				hideStator();
-        });
+				document.getElementById('stator2').checked = document.getElementById('stator').checked;
+			});
 
-    
-        document.getElementById('supports').addEventListener('click', function () {
+			document.getElementById('stator2').addEventListener('click', function () {
+				hideStator();
+				document.getElementById('stator').checked = document.getElementById('stator2').checked;
+			});
+
+
+			document.getElementById('supports').addEventListener('click', function () {
 				hideSupports();
-        });
+				document.getElementById('supports2').checked = document.getElementById('supports').checked;
+			});
 
-        document.getElementById('access').addEventListener('click', function () {
-            
-               accesscoil=!accesscoil;
-			   if(accesscoil){
-					this.innerHTML='Reset';
-				}
-				else{
-					this.innerHTML='Coil Access';
-				}
-               coilAccess();
-        });
+			document.getElementById('supports2').addEventListener('click', function () {
+				hideSupports();
+				document.getElementById('supports').checked = document.getElementById('supports2').checked;
+			});
 
-		
-		document.getElementById('supports').checked = true;
-		document.getElementById('stator').checked = true;
-		document.getElementById('armature').checked = true;
-		document.getElementById('rippleshield').checked = true;
-		document.getElementById('fieldcoil').checked = true;
-		document.getElementById('rotor').checked = true;
 
-		}
-        
-		function explodeParts(){
-			let prog = 0;
-			camera.position.set(-100-moveprogress/100.0*500*Math.sin(0.69), 30, 120+moveprogress/100.0*500*Math.cos(0.69));
-			//camera.updateProjectionMatrix();
+			document.getElementById('armature').addEventListener('click', function () {
+				hidePart('armature');
+				document.getElementById('armature2').checked = document.getElementById('armature').checked;
+			});
+
+			document.getElementById('armature2').addEventListener('click', function () {
+				hidePart('armature');
+				document.getElementById('armature').checked = document.getElementById('armature2').checked;
+			});
+
+			document.getElementById('rippleshield').addEventListener('click', function () {
+				hidePart('rippleshield');
+				document.getElementById('rippleshield2').checked = document.getElementById('rippleshield').checked;
+			});
+
+			document.getElementById('rippleshield2').addEventListener('click', function () {
+				hidePart('rippleshield');
+				document.getElementById('rippleshield').checked = document.getElementById('rippleshield2').checked;
+			});
+
+			document.getElementById('fieldcoil').addEventListener('click', function () {
+				hidePart('fieldcoil');
+				document.getElementById('fieldcoil2').checked = document.getElementById('fieldcoil').checked;
+			});
+
+			document.getElementById('fieldcoil2').addEventListener('click', function () {
+				hidePart('fieldcoil');
+				document.getElementById('fieldcoil').checked = document.getElementById('fieldcoil2').checked;
+			});
+
+			document.getElementById('rotor').addEventListener('click', function () {
+				hidePart('rotor');
+				document.getElementById('rotor2').checked = document.getElementById('rotor').checked;
+			});
+
+			document.getElementById('rotor2').addEventListener('click', function () {
+				hidePart('rotor');
+				document.getElementById('rotor').checked = document.getElementById('rotor2').checked;
+			});
+
+			document.getElementById('cryocooler').addEventListener('click', function () {
+				hidePart('cryocooler');
+				document.getElementById('cryocooler2').checked = document.getElementById('cryocooler').checked;
+			});
+
+			document.getElementById('cryocooler2').addEventListener('click', function () {
+				hidePart('cryocooler');
+				document.getElementById('cryocooler').checked = document.getElementById('cryocooler2').checked;
+			});
+
 			
-			controls.update();
-			controls.target=new THREE.Vector3(0, 0+moveprogress/100.0*60, 0);
-			controls.update();
 
-			document.getElementById('supports').checked = true;
-		document.getElementById('stator').checked = true;
-		document.getElementById('armature').checked = true;
-		document.getElementById('rippleshield').checked = true;
-		document.getElementById('fieldcoil').checked = true;
-		document.getElementById('rotor').checked = true;
-		
-			//console.log(moveprogress);
-			for(let i = 0; i<scene.children.length; i++){
+			function hidePart(part) {
+				for (let i = 0; i < scene.children.length; i++) {
 					let child = scene.children[i];
-                    child.layers.enable(0);
-					switch(child.name){
-
-						case 'nutA':
-						case 'nutB':
-						case 'nutC':
-						case 'nutD':
-						case 'nutE':
-						case 'nutF':
-							child.position.y=27.3+moveprogress/100.0*205;	
+					switch (child.name) {
+						case part:
+							child.layers.toggle(0);
 							break;
-
-						case 'topclampplate':
-							child.position.y=26.2+moveprogress/100.0*200;	
-							break;
-
-
-						case 'studA':
-						case 'studB':
-						case 'studC':
-						case 'studD':
-						case 'studE':
-						case 'studF':
-							//child.position.y=1.9+moveprogress/100.0*190;
-							child.position.y=1.9-moveprogress/100.0*120;		
-							break;
-
-						case 'topbearingplate':
-							child.position.y=24.75+moveprogress/100.0*190;
-							break;
-
-						case 'tierodA':
-						case 'tierodB':
-						case 'tierodC':
-						case 'tierodD':
-						case 'tierodE':
-						case 'tierodF':
-							child.position.y=20.5+moveprogress/100.0*180;
-							break;
-
-						case 'topbearingspacer':
-							child.position.y=20+moveprogress/100.0*180;
-							break;
-						case 'topbearinghousing':
-							child.position.y=21+moveprogress/100.0*160;
-							break;
-
-						case 'toplocatorring':
-							child.position.y=15.85+moveprogress/100.0*155;
-							break;
-
-							
-						case 'removablesolidcoreA':
-							prog = Math.max(0,2*(moveprogress-50));
-							child.position.x = -13.2-prog/100.0*10;
-							child.position.y=6.22+moveprogress/100.0*150;
-							break;
-						case 'removablesolidcoreB':	
-							prog = Math.max(0,2*(moveprogress-50));
-							child.position.x = 5+prog/100.0*10*Math.sin(0.5); //0.5 is arctan 6/11
-							child.position.z = -10-prog/100.0*10*Math.cos(0.5);
-							child.position.y=6.22+moveprogress/100.0*150;
-							break;
-						case 'removablesolidcoreC':
-							prog = Math.max(0,2*(moveprogress-50));
-							child.position.x = 5+prog/100.0*10*Math.sin(0.5); //0.5 is arctan 6/11
-							child.position.z = 10+prog/100.0*10*Math.cos(0.5);
-							child.position.y=6.22+moveprogress/100.0*150;
-							break;
-
-						case 'uppercoreclampA':
-							child.position.x = 6+moveprogress/100.0*20*Math.sin(0.5); //0.5 is arctan 6/11
-							child.position.z = -11-moveprogress/100.0*20*Math.cos(0.5);
-							child.position.y=8+moveprogress/100.0*150;
-							break;
-						
-						case 'uppercoreclampB':	
-							child.position.x = 6.05+moveprogress/100.0*20*Math.sin(0.5); 
-							child.position.z = 10.9+moveprogress/100.0*20*Math.cos(0.5);
-							child.position.y=8+moveprogress/100.0*150;
-							break;
-						case 'uppercoreclampC':
-							child.position.x = -15-moveprogress/100.0*20; 
-							child.position.z = 0*moveprogress/100.0*20;
-							child.position.y=8+moveprogress/100.0*150;
-							break;	
-
-						case 'upperlaminationretainerA':
-						case 'upperlaminationretainerB':
-						case 'upperlaminationretainerC':	
-							child.position.y=15.55+moveprogress/100.0*125;
-							break;
-
-
-						case 'removablelaminatedcoreA':
-							prog = Math.max(0,5*(moveprogress-80));
-							child.position.x = 9.4+prog/100.0*5*Math.sin(1.03); 
-							child.position.z = -5.65-prog/100.0*5*Math.cos(1.03);
-							child.position.y=9.25+moveprogress/100.0*120;
-							break;
-						case 'removablelaminatedcoreB':
-							prog = Math.max(0,5*(moveprogress-80));
-							child.position.x = 9.4+prog/100.0*5*Math.sin(1.03); 
-							child.position.z = 5.65+prog/100.0*5*Math.cos(1.03);
-							child.position.y=9.25+moveprogress/100.0*120;
-							break;
-						case 'removablelaminatedcoreC':
-							prog = Math.max(0,5*(moveprogress-80));
-							child.position.z = 11.65+prog/100.0*5
-							child.position.y=9.25+moveprogress/100.0*120;
-							break;
-						case 'removablelaminatedcoreD':
-							prog = Math.max(0,5*(moveprogress-80));
-							child.position.x = -9.4-prog/100.0*5*Math.sin(1.03); 
-							child.position.z = 5.65+prog/100.0*5*Math.cos(1.03);
-							child.position.y=9.25+moveprogress/100.0*120;
-							break;
-						case 'removablelaminatedcoreE':
-							prog = Math.max(0,5*(moveprogress-80));
-							child.position.x = -9.4-prog/100.0*5*Math.sin(1.03); 
-							child.position.z = -5.65-prog/100.0*5*Math.cos(1.03);
-							child.position.y=9.25+moveprogress/100.0*120;
-							break;
-						case 'removablelaminatedcoreF':
-							prog = Math.max(0,5*(moveprogress-80));
-							child.position.z = -11.65-prog/100.0*5
-							child.position.y=9.25+moveprogress/100.0*120;
-							break;
-
-						case 'lowerlaminationretainerA':
-						case 'lowerlaminationretainerB':
-						case 'lowerlaminationretainerC':
-							child.position.y=2.9+moveprogress/100.0*115;
-							break;
-
-						case 'laminatedcoreupperA':
-						case 'laminatedcoreupperB':
-						case 'laminatedcoreupperC':
-						case 'laminatedcoreupperD':
-							child.position.y=9.25+moveprogress/100.0*95;
-							break;
-
-						case 'rippleshield':
-							child.position.y=moveprogress/100.0*90;
-							break;
-
-						case 'spacer':
-							child.position.y=moveprogress/100.0*80;
-							break;
-
-						case 'armature':
-							child.position.y=moveprogress/100.0*55;
-							break;
-
-						case 'fieldcoil':
-							child.position.y=-4.3+moveprogress/100.0*30;
-							break;
-
-
-
-						case 'coilsupportA':
-						case 'coilsupportB':
-						case 'coilsupportC':
-						case 'coilsupportD':
-							child.position.y=-12.6-moveprogress/100.0*20;
-							break;
-
-						case 'laminatedcorelowerA':
-						case 'laminatedcorelowerB':
-						case 'laminatedcorelowerC':
-						case 'laminatedcorelowerD':
-							child.position.y=-9.25-moveprogress/100.0*40;
-							break;
-
-
-						
-
-						case 'lowercoreclampA':
-							child.position.x = 6+moveprogress/100.0*20*Math.sin(0.5); //0.5 is arctan 6/11
-							child.position.z = -11-moveprogress/100.0*20*Math.cos(0.5);
-							child.position.y=-8-moveprogress/100.0*60;
-							break;
-						case 'lowercoreclampB':
-							child.position.x = 6.05+moveprogress/100.0*20*Math.sin(0.5); 
-							child.position.z = 10.9+moveprogress/100.0*20*Math.cos(0.5);
-							child.position.y=-8-moveprogress/100.0*60;
-							break;
-						case 'lowercoreclampC':
-							child.position.x = -15-moveprogress/100.0*20; 
-							child.position.z = 0*moveprogress/100.0*20;
-							child.position.y=-8-moveprogress/100.0*60;
-							break;
-
-						case 'lowersolidcoreA':
-							prog = Math.max(0,5*(moveprogress-80));
-							child.position.x = 5+prog/100.0*10*Math.sin(0.5); //0.5 is arctan 6/11
-							child.position.z = -10-prog/100.0*10*Math.cos(0.5);
-							//child.position.x = 5+moveprogress/100.0*10*Math.sin(0.5);
-							//child.position.z = -10-moveprogress/100.0*10*Math.cos(0.5);
-							child.position.y=-9.5-(moveprogress)/100.0*60;
-							break;
-						case 'lowersolidcoreB':
-							prog = Math.max(0,5*(moveprogress-80));
-							child.position.x = -13-prog/100.0*10;
-							//child.position.x = -13-moveprogress/100.0*10;
-							child.position.y=-9.5-(moveprogress)/100.0*60;
-							break;
-						case 'lowersolidcoreC':
-							prog = Math.max(0,5*(moveprogress-80));
-							child.position.x = 5+prog/100.0*10*Math.sin(0.5); 
-							child.position.z = 10+prog/100.0*10*Math.cos(0.5);
-							//child.position.x = 5+moveprogress/100.0*10*Math.sin(0.5); //0.5 is arctan 6/11
-							//child.position.z = 10+moveprogress/100.0*10*Math.cos(0.5);
-							child.position.y=-9.5-(moveprogress)/100.0*60;
-							break;
-
-
-						case 'bottombearinghousing':
-							child.position.y=-20.6-(moveprogress)/100.0*70;
-							break;
-
-						case 'bottombearingspacer':
-							child.position.y=-19.9-(moveprogress)/100.0*90;
-							break;
-						case 'bottombearingplate':
-							child.position.y=-25.3-(moveprogress)/100.0*120;
-							break;
-						
 					}
-						
-					
+
 				}
+			}
+
+
+
+
+			document.getElementById('access').addEventListener('click', function () {
+
+				accesscoil = !accesscoil;
+				if (accesscoil) {
+					this.innerHTML = 'Reset';
+					document.getElementById('access2').innerHTML = 'Reset';
+				}
+				else {
+					this.innerHTML = 'Coil Access';
+					document.getElementById('access2').innerHTML = 'Coil Access';
+				}
+				coilAccess();
+			});
+
+			document.getElementById('access2').addEventListener('click', function () {
+
+				accesscoil = !accesscoil;
+				if (accesscoil) {
+					this.innerHTML = 'Reset';
+					document.getElementById('access').innerHTML = 'Reset';
+				}
+				else {
+					this.innerHTML = 'Coil Access';
+					document.getElementById('access').innerHTML = 'Coil Access';
+				}
+				coilAccess();
+			});
+
+
+			document.getElementById('supports').checked = true;
+			document.getElementById('stator').checked = true;
+			document.getElementById('armature').checked = true;
+			document.getElementById('rippleshield').checked = true;
+			document.getElementById('fieldcoil').checked = true;
+			document.getElementById('rotor').checked = true;
+			document.getElementById('cryocooler').checked = true;
+
+			document.getElementById('supports2').checked = true;
+			document.getElementById('stator2').checked = true;
+			document.getElementById('armature2').checked = true;
+			document.getElementById('rippleshield2').checked = true;
+			document.getElementById('fieldcoil2').checked = true;
+			document.getElementById('rotor2').checked = true;
+			document.getElementById('cryocooler2').checked = true;
+
 		}
 
-        function coilAccess(){
+		function explodeParts() {
 			let prog = 0;
-			camera.position.set(-100-moveprogress/100.0*500*Math.sin(0.69), 30, 120+moveprogress/100.0*500*Math.cos(0.69));
+			camera.position.set(-100 - moveprogress / 100.0 * 500 * Math.sin(0.69), 30, 120 + moveprogress / 100.0 * 500 * Math.cos(0.69));
 			//camera.updateProjectionMatrix();
-			
+
 			controls.update();
-			controls.target=new THREE.Vector3(0, 0+moveprogress/100.0*60, 0);
+			controls.target = new THREE.Vector3(0, 0 + moveprogress / 100.0 * 60, 0);
 			controls.update();
 
 			document.getElementById('supports').checked = true;
-		document.getElementById('stator').checked = true;
-		document.getElementById('armature').checked = true;
-		document.getElementById('rippleshield').checked = true;
-		document.getElementById('fieldcoil').checked = true;
-		document.getElementById('rotor').checked = true;
+			document.getElementById('stator').checked = true;
+			document.getElementById('armature').checked = true;
+			document.getElementById('rippleshield').checked = true;
+			document.getElementById('fieldcoil').checked = true;
+			document.getElementById('rotor').checked = true;
+			document.getElementById('cryocooler').checked = true;
 
-			
-				document.getElementById('supports').disabled = accesscoil;
-		document.getElementById('stator').disabled = accesscoil
-		document.getElementById('armature').disabled = accesscoil
-		document.getElementById('rippleshield').disabled = accesscoil
-		document.getElementById('fieldcoil').disabled = accesscoil
-		document.getElementById('rotor').disabled = accesscoil
-		
-		
-			
+			document.getElementById('supports2').checked = true;
+			document.getElementById('stator2').checked = true;
+			document.getElementById('armature2').checked = true;
+			document.getElementById('rippleshield2').checked = true;
+			document.getElementById('fieldcoil2').checked = true;
+			document.getElementById('rotor2').checked = true;
+			document.getElementById('cryocooler2').checked = true;
+
+			//console.log(moveprogress);
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				child.layers.enable(0);
+				switch (child.name) {
+
+					case 'nutA':
+					case 'nutB':
+					case 'nutC':
+					case 'nutD':
+					case 'nutE':
+					case 'nutF':
+						child.position.y = 27.3 + moveprogress / 100.0 * 205;
+						break;
+
+					case 'topclampplate':
+						child.position.y = 26.2 + moveprogress / 100.0 * 200;
+						break;
+
+
+					case 'studA':
+					case 'studB':
+					case 'studC':
+					case 'studD':
+					case 'studE':
+					case 'studF':
+						//child.position.y=1.9+moveprogress/100.0*190;
+						child.position.y = 1.9 - moveprogress / 100.0 * 120;
+						break;
+
+					case 'topbearingplate':
+						child.position.y = 24.75 + moveprogress / 100.0 * 190;
+						break;
+
+					case 'tierodA':
+					case 'tierodB':
+					case 'tierodC':
+					case 'tierodD':
+					case 'tierodE':
+					case 'tierodF':
+						child.position.y = 20.5 + moveprogress / 100.0 * 180;
+						break;
+
+					case 'topbearingspacer':
+						child.position.y = 20 + moveprogress / 100.0 * 180;
+						break;
+					case 'topbearinghousing':
+						child.position.y = 21 + moveprogress / 100.0 * 160;
+						break;
+
+					case 'toplocatorring':
+						child.position.y = 15.85 + moveprogress / 100.0 * 155;
+						break;
+
+
+					case 'removablesolidcoreA':
+						prog = Math.max(0, 2 * (moveprogress - 50));
+						child.position.x = -13.2 - prog / 100.0 * 10;
+						child.position.y = 6.22 + moveprogress / 100.0 * 150;
+						break;
+					case 'removablesolidcoreB':
+						prog = Math.max(0, 2 * (moveprogress - 50));
+						child.position.x = 5 + prog / 100.0 * 10 * Math.sin(0.5); //0.5 is arctan 6/11
+						child.position.z = -10 - prog / 100.0 * 10 * Math.cos(0.5);
+						child.position.y = 6.22 + moveprogress / 100.0 * 150;
+						break;
+					case 'removablesolidcoreC':
+						prog = Math.max(0, 2 * (moveprogress - 50));
+						child.position.x = 5 + prog / 100.0 * 10 * Math.sin(0.5); //0.5 is arctan 6/11
+						child.position.z = 10 + prog / 100.0 * 10 * Math.cos(0.5);
+						child.position.y = 6.22 + moveprogress / 100.0 * 150;
+						break;
+
+					case 'uppercoreclampA':
+						child.position.x = 6 + moveprogress / 100.0 * 20 * Math.sin(0.5); //0.5 is arctan 6/11
+						child.position.z = -11 - moveprogress / 100.0 * 20 * Math.cos(0.5);
+						child.position.y = 8 + moveprogress / 100.0 * 150;
+						break;
+
+					case 'uppercoreclampB':
+						child.position.x = 6.05 + moveprogress / 100.0 * 20 * Math.sin(0.5);
+						child.position.z = 10.9 + moveprogress / 100.0 * 20 * Math.cos(0.5);
+						child.position.y = 8 + moveprogress / 100.0 * 150;
+						break;
+					case 'uppercoreclampC':
+						child.position.x = -15 - moveprogress / 100.0 * 20;
+						child.position.z = 0 * moveprogress / 100.0 * 20;
+						child.position.y = 8 + moveprogress / 100.0 * 150;
+						break;
+
+					case 'upperlaminationretainerA':
+					case 'upperlaminationretainerB':
+					case 'upperlaminationretainerC':
+						child.position.y = 15.55 + moveprogress / 100.0 * 125;
+						break;
+
+
+					case 'removablelaminatedcoreA':
+						prog = Math.max(0, 5 * (moveprogress - 80));
+						child.position.x = 9.4 + prog / 100.0 * 5 * Math.sin(1.03);
+						child.position.z = -5.65 - prog / 100.0 * 5 * Math.cos(1.03);
+						child.position.y = 9.25 + moveprogress / 100.0 * 120;
+						break;
+					case 'removablelaminatedcoreB':
+						prog = Math.max(0, 5 * (moveprogress - 80));
+						child.position.x = 9.4 + prog / 100.0 * 5 * Math.sin(1.03);
+						child.position.z = 5.65 + prog / 100.0 * 5 * Math.cos(1.03);
+						child.position.y = 9.25 + moveprogress / 100.0 * 120;
+						break;
+					case 'removablelaminatedcoreC':
+						prog = Math.max(0, 5 * (moveprogress - 80));
+						child.position.z = 11.65 + prog / 100.0 * 5
+						child.position.y = 9.25 + moveprogress / 100.0 * 120;
+						break;
+					case 'removablelaminatedcoreD':
+						prog = Math.max(0, 5 * (moveprogress - 80));
+						child.position.x = -9.4 - prog / 100.0 * 5 * Math.sin(1.03);
+						child.position.z = 5.65 + prog / 100.0 * 5 * Math.cos(1.03);
+						child.position.y = 9.25 + moveprogress / 100.0 * 120;
+						break;
+					case 'removablelaminatedcoreE':
+						prog = Math.max(0, 5 * (moveprogress - 80));
+						child.position.x = -9.4 - prog / 100.0 * 5 * Math.sin(1.03);
+						child.position.z = -5.65 - prog / 100.0 * 5 * Math.cos(1.03);
+						child.position.y = 9.25 + moveprogress / 100.0 * 120;
+						break;
+					case 'removablelaminatedcoreF':
+						prog = Math.max(0, 5 * (moveprogress - 80));
+						child.position.z = -11.65 - prog / 100.0 * 5
+						child.position.y = 9.25 + moveprogress / 100.0 * 120;
+						break;
+
+					case 'lowerlaminationretainerA':
+					case 'lowerlaminationretainerB':
+					case 'lowerlaminationretainerC':
+						child.position.y = 2.9 + moveprogress / 100.0 * 115;
+						break;
+
+					case 'laminatedcoreupperA':
+					case 'laminatedcoreupperB':
+					case 'laminatedcoreupperC':
+					case 'laminatedcoreupperD':
+						child.position.y = 9.25 + moveprogress / 100.0 * 95;
+						break;
+
+					case 'rippleshield':
+						child.position.y = moveprogress / 100.0 * 90;
+						break;
+
+					case 'spacer':
+						child.position.y = moveprogress / 100.0 * 80;
+						break;
+
+					case 'armature':
+						child.position.y = moveprogress / 100.0 * 55;
+						break;
+
+					case 'fieldcoil':
+						child.position.y = -4.3 + moveprogress / 100.0 * 30;
+						break;
+
+
+
+					case 'coilsupportA':
+					case 'coilsupportB':
+					case 'coilsupportC':
+					case 'coilsupportD':
+						child.position.y = -12.6 - moveprogress / 100.0 * 20;
+						break;
+
+					case 'laminatedcorelowerA':
+					case 'laminatedcorelowerB':
+					case 'laminatedcorelowerC':
+					case 'laminatedcorelowerD':
+						child.position.y = -9.25 - moveprogress / 100.0 * 40;
+						break;
+
+
+
+
+					case 'lowercoreclampA':
+						child.position.x = 6 + moveprogress / 100.0 * 20 * Math.sin(0.5); //0.5 is arctan 6/11
+						child.position.z = -11 - moveprogress / 100.0 * 20 * Math.cos(0.5);
+						child.position.y = -8 - moveprogress / 100.0 * 60;
+						break;
+					case 'lowercoreclampB':
+						child.position.x = 6.05 + moveprogress / 100.0 * 20 * Math.sin(0.5);
+						child.position.z = 10.9 + moveprogress / 100.0 * 20 * Math.cos(0.5);
+						child.position.y = -8 - moveprogress / 100.0 * 60;
+						break;
+					case 'lowercoreclampC':
+						child.position.x = -15 - moveprogress / 100.0 * 20;
+						child.position.z = 0 * moveprogress / 100.0 * 20;
+						child.position.y = -8 - moveprogress / 100.0 * 60;
+						break;
+
+					case 'lowersolidcoreA':
+						prog = Math.max(0, 5 * (moveprogress - 80));
+						child.position.x = 5 + prog / 100.0 * 10 * Math.sin(0.5); //0.5 is arctan 6/11
+						child.position.z = -10 - prog / 100.0 * 10 * Math.cos(0.5);
+						//child.position.x = 5+moveprogress/100.0*10*Math.sin(0.5);
+						//child.position.z = -10-moveprogress/100.0*10*Math.cos(0.5);
+						child.position.y = -9.5 - (moveprogress) / 100.0 * 60;
+						break;
+					case 'lowersolidcoreB':
+						prog = Math.max(0, 5 * (moveprogress - 80));
+						child.position.x = -13 - prog / 100.0 * 10;
+						//child.position.x = -13-moveprogress/100.0*10;
+						child.position.y = -9.5 - (moveprogress) / 100.0 * 60;
+						break;
+					case 'lowersolidcoreC':
+						prog = Math.max(0, 5 * (moveprogress - 80));
+						child.position.x = 5 + prog / 100.0 * 10 * Math.sin(0.5);
+						child.position.z = 10 + prog / 100.0 * 10 * Math.cos(0.5);
+						//child.position.x = 5+moveprogress/100.0*10*Math.sin(0.5); //0.5 is arctan 6/11
+						//child.position.z = 10+moveprogress/100.0*10*Math.cos(0.5);
+						child.position.y = -9.5 - (moveprogress) / 100.0 * 60;
+						break;
+
+
+					case 'bottombearinghousing':
+						child.position.y = -20.6 - (moveprogress) / 100.0 * 70;
+						break;
+
+					case 'bottombearingspacer':
+						child.position.y = -19.9 - (moveprogress) / 100.0 * 90;
+						break;
+					case 'bottombearingplate':
+						child.position.y = -25.3 - (moveprogress) / 100.0 * 120;
+						break;
+				}
+
+
+			}
+		}
+
+		function coilAccess() {
+			let prog = 0;
+			camera.position.set(-100 - moveprogress / 100.0 * 500 * Math.sin(0.69), 30, 120 + moveprogress / 100.0 * 500 * Math.cos(0.69));
+			//camera.updateProjectionMatrix();
+
+			controls.update();
+			controls.target = new THREE.Vector3(0, 0 + moveprogress / 100.0 * 60, 0);
+			controls.update();
+
+			document.getElementById('supports').checked = true;
+			document.getElementById('stator').checked = true;
+			document.getElementById('armature').checked = true;
+			document.getElementById('rippleshield').checked = true;
+			document.getElementById('fieldcoil').checked = true;
+			document.getElementById('rotor').checked = true;
+			document.getElementById('cryocooler').checked = true;
+
+			document.getElementById('supports2').checked = true;
+			document.getElementById('stator2').checked = true;
+			document.getElementById('armature2').checked = true;
+			document.getElementById('rippleshield2').checked = true;
+			document.getElementById('fieldcoil2').checked = true;
+			document.getElementById('rotor2').checked = true;
+			document.getElementById('cryocooler2').checked = true;
+
+
+			document.getElementById('supports').disabled = accesscoil;
+			document.getElementById('stator').disabled = accesscoil
+			document.getElementById('armature').disabled = accesscoil
+			document.getElementById('rippleshield').disabled = accesscoil
+			document.getElementById('fieldcoil').disabled = accesscoil
+			document.getElementById('rotor').disabled = accesscoil
+			document.getElementById('cryocooler').disabled = accesscoil
+
+			document.getElementById('supports2').disabled = accesscoil;
+			document.getElementById('stator2').disabled = accesscoil
+			document.getElementById('armature2').disabled = accesscoil
+			document.getElementById('rippleshield2').disabled = accesscoil
+			document.getElementById('fieldcoil2').disabled = accesscoil
+			document.getElementById('rotor2').disabled = accesscoil
+			document.getElementById('cryocooler2').disabled = accesscoil
+
 
 
 			//console.log(moveprogress);
-			for(let i = 0; i<scene.children.length; i++){
-					let child = scene.children[i];
-                    child.layers.enable(0);
-                    if(accesscoil){
-					switch(child.name){
-                        case 'nutA':
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				child.layers.enable(0);
+				if (accesscoil) {
+					switch (child.name) {
+						case 'nutA':
 						case 'nutB':
 						case 'nutC':
 						case 'nutD':
@@ -988,7 +1252,7 @@ render();
 							break;
 
 						case 'topclampplate':
-                            child.layers.disable(0);
+							child.layers.disable(0);
 							break;
 
 
@@ -1004,7 +1268,7 @@ render();
 							break;
 
 						case 'topbearingplate':
-                            child.layers.disable(0);
+							child.layers.disable(0);
 							break;
 
 						case 'tierodA':
@@ -1013,152 +1277,152 @@ render();
 						case 'tierodD':
 						case 'tierodE':
 						case 'tierodF':
-                            child.layers.disable(0);
+							child.layers.disable(0);
 							break;
 
 						case 'topbearingspacer':
-                            child.layers.disable(0);
+							child.layers.disable(0);
 							break;
 						case 'topbearinghousing':
-                            child.layers.disable(0);
+							child.layers.disable(0);
 							break;
 
 						case 'toplocatorring':
-                            child.layers.disable(0);
+							child.layers.disable(0);
 							break;
 
-							
+
 						case 'removablesolidcoreA':
-							
-						case 'removablesolidcoreB':	
-							
+
+						case 'removablesolidcoreB':
+
 						case 'removablesolidcoreC':
-							
+
 
 						case 'uppercoreclampA':
-							
-						
-						case 'uppercoreclampB':	
-							
+
+
+						case 'uppercoreclampB':
+
 						case 'uppercoreclampC':
-							
+
 
 						case 'upperlaminationretainerA':
 						case 'upperlaminationretainerB':
-						case 'upperlaminationretainerC':	
-                            child.layers.disable(0);
+						case 'upperlaminationretainerC':
+							child.layers.disable(0);
 							break;
 
 
 						case 'removablelaminatedcoreA':
-							
+
 						case 'removablelaminatedcoreB':
-							
+
 						case 'removablelaminatedcoreC':
-							
+
 						case 'removablelaminatedcoreD':
-							
+
 						case 'removablelaminatedcoreE':
-							
+
 						case 'removablelaminatedcoreF':
-							
+
 						case 'lowerlaminationretainerA':
 						case 'lowerlaminationretainerB':
 						case 'lowerlaminationretainerC':
-                            child.layers.disable(0);
+							child.layers.disable(0);
 							break;
 
-                    }
-                }
-                }
-            }                    
+					}
+				}
+			}
+		}
 
 
-        function hideStator(){
-            for(let i = 0; i<scene.children.length; i++){
-                let child = scene.children[i];
-                switch(child.name){
-                    case 'removablesolidcoreA':
-                    case 'removablesolidcoreB':
-                    case 'removablesolidcoreC':
-                    case 'lowersolidcoreA':
-                    case 'lowersolidcoreB':
-                    case 'lowersolidcoreC':
-                    case 'removablelaminatedcoreA':
-                    case 'removablelaminatedcoreB':
-                    case 'removablelaminatedcoreC':
-                    case 'removablelaminatedcoreD':
-                    case 'removablelaminatedcoreE':
-                    case 'removablelaminatedcoreF':    
-                    case 'laminatedcoreupperA':
-                    case 'laminatedcoreupperB':
-                    case 'laminatedcoreupperC':
-                    case 'laminatedcoreupperD':    
-                    case 'laminatedcorelowerA':
-                    case 'laminatedcorelowerB':
-                    case 'laminatedcorelowerC':
-                    case 'laminatedcorelowerD':
-                        child.layers.toggle(0);                       
-                        break;
-                }
+		function hideStator() {
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				switch (child.name) {
+					case 'removablesolidcoreA':
+					case 'removablesolidcoreB':
+					case 'removablesolidcoreC':
+					case 'lowersolidcoreA':
+					case 'lowersolidcoreB':
+					case 'lowersolidcoreC':
+					case 'removablelaminatedcoreA':
+					case 'removablelaminatedcoreB':
+					case 'removablelaminatedcoreC':
+					case 'removablelaminatedcoreD':
+					case 'removablelaminatedcoreE':
+					case 'removablelaminatedcoreF':
+					case 'laminatedcoreupperA':
+					case 'laminatedcoreupperB':
+					case 'laminatedcoreupperC':
+					case 'laminatedcoreupperD':
+					case 'laminatedcorelowerA':
+					case 'laminatedcorelowerB':
+					case 'laminatedcorelowerC':
+					case 'laminatedcorelowerD':
+						child.layers.toggle(0);
+						break;
+				}
 
-            }
-        }
+			}
+		}
 
-        function hideSupports(){
-            for(let i = 0; i<scene.children.length; i++){
-                let child = scene.children[i];
-                switch(child.name){
-                    case 'nutA':
-						case 'nutB':
-						case 'nutC':
-						case 'nutD':
-						case 'nutE':
-						case 'nutF':
-                        case 'topclampplate':
-                        case 'topbearingplate':
-                    case 'studA':
-                    case 'studB':
-                    case 'studC':
-                    case 'studD':
-                    case 'studE':
-                    case 'studF':
-                    case 'tierodA':
-						case 'tierodB':
-						case 'tierodC':
-						case 'tierodD':
-						case 'tierodE':
-						case 'tierodF':
-                        case 'topbearingspacer':
-                        case 'topbearinghousing':
-                        case 'toplocatorring':
-                        case 'upperlaminationretainerA':
-						case 'upperlaminationretainerB':
-						case 'upperlaminationretainerC':	
-                        case 'lowerlaminationretainerA':
-						case 'lowerlaminationretainerB':
-						case 'lowerlaminationretainerC':
-                        case 'spacer':	
-                        case 'coilsupportA':
-						case 'coilsupportB':
-						case 'coilsupportC':
-						case 'coilsupportD':
-                        case 'uppercoreclampA':
-                        case 'uppercoreclampB':
-                        case 'uppercoreclampC':
-                        case 'lowercoreclampA':
-                        case 'lowercoreclampB':
-                        case 'lowercoreclampC':
-                        case 'bottombearinghousing':
-                    case 'bottombearingspacer':
-                    case 'bottombearingplate':
+		function hideSupports() {
+			for (let i = 0; i < scene.children.length; i++) {
+				let child = scene.children[i];
+				switch (child.name) {
+					case 'nutA':
+					case 'nutB':
+					case 'nutC':
+					case 'nutD':
+					case 'nutE':
+					case 'nutF':
+					case 'topclampplate':
+					case 'topbearingplate':
+					case 'studA':
+					case 'studB':
+					case 'studC':
+					case 'studD':
+					case 'studE':
+					case 'studF':
+					case 'tierodA':
+					case 'tierodB':
+					case 'tierodC':
+					case 'tierodD':
+					case 'tierodE':
+					case 'tierodF':
+					case 'topbearingspacer':
+					case 'topbearinghousing':
+					case 'toplocatorring':
+					case 'upperlaminationretainerA':
+					case 'upperlaminationretainerB':
+					case 'upperlaminationretainerC':
+					case 'lowerlaminationretainerA':
+					case 'lowerlaminationretainerB':
+					case 'lowerlaminationretainerC':
+					case 'spacer':
+					case 'coilsupportA':
+					case 'coilsupportB':
+					case 'coilsupportC':
+					case 'coilsupportD':
+					case 'uppercoreclampA':
+					case 'uppercoreclampB':
+					case 'uppercoreclampC':
+					case 'lowercoreclampA':
+					case 'lowercoreclampB':
+					case 'lowercoreclampC':
+					case 'bottombearinghousing':
+					case 'bottombearingspacer':
+					case 'bottombearingplate':
 
-                        child.layers.toggle(0);
-                        break;
-                }
+						child.layers.toggle(0);
+						break;
+				}
 
-            }
-        }
+			}
+		}
 
 
 		function onClick(event) {
@@ -1168,7 +1432,7 @@ render();
 			if (intersects.length > 0) {
 				var name = intersects[0].object.name;
 
-				switch(name){
+				switch (name) {
 					case 'nutA':
 					case 'nutB':
 					case 'nutC':
@@ -1189,7 +1453,7 @@ render();
 					case 'studD':
 					case 'studE':
 					case 'studF':
-						infoFunction(loz + " M12 stud.");	
+						infoFunction(loz + " M12 stud.");
 						break;
 
 					case 'topbearingplate':
@@ -1217,23 +1481,23 @@ render();
 						infoFunction(loz + " Top locator ring.");
 						break;
 
-						
+
 					case 'removablesolidcoreA':
 					case 'removablesolidcoreB':
-					case 'removablesolidcoreC':	
+					case 'removablesolidcoreC':
 						infoFunction(loz + " Removable solid core.");
 						break;
 
 
 					case 'uppercoreclampA':
-					case 'uppercoreclampB':	
+					case 'uppercoreclampB':
 					case 'uppercoreclampC':
 						infoFunction(loz + " Upper core clamp.");
-						break;	
+						break;
 
 					case 'upperlaminationretainerA':
 					case 'upperlaminationretainerB':
-					case 'upperlaminationretainerC':	
+					case 'upperlaminationretainerC':
 						infoFunction(loz + " Upper lamination retainer.");
 						break;
 
@@ -1293,10 +1557,10 @@ render();
 						break;
 
 
-					
 
-					case 'lowercoreclampA':	
-					case 'lowercoreclampB':	
+
+					case 'lowercoreclampA':
+					case 'lowercoreclampB':
 					case 'lowercoreclampC':
 						infoFunction(loz + " Lower core clamp.");
 						break;
@@ -1317,12 +1581,13 @@ render();
 						break;
 					case 'bottombearingplate':
 						infoFunction(loz + " Bottom bearing plate.");
-						break;	
+						break;
+
 					case 'cryocooler':
 						infoFunction(loz + " Cryocooler.");
 						break;
 				}
-				
+
 				/*
 				if (intersects[0].object == stator) {
 					//intersects[0].object.material.opacity -=0.1;
@@ -1351,7 +1616,7 @@ render();
 					document.getElementById("d1").innerHTML = "<p id='line1'></p>";
 					i = 0;
 				}
-				
+
 			}
 
 
@@ -1382,21 +1647,21 @@ render();
 			if (rotortube)
 				rotortube.rotation.z += 0.01;
 
-			if(movedirection!=0){
-				moveprogress+=movedirection*movespeed;
-				if(moveprogress<=0){
-					moveprogress=0;
-					movedirection=0;
+			if (movedirection != 0) {
+				moveprogress += movedirection * movespeed;
+				if (moveprogress <= 0) {
+					moveprogress = 0;
+					movedirection = 0;
 				}
-				else if(moveprogress>=100){
-					moveprogress=100;
-					movedirection=0;
+				else if (moveprogress >= 100) {
+					moveprogress = 100;
+					movedirection = 0;
 				}
-				explodeParts();	
+				explodeParts();
 			}
 
 
-				raycaster.setFromCamera(mouse, camera);
+			raycaster.setFromCamera(mouse, camera);
 			var intersects = raycaster.intersectObjects(scene.children);
 			if (intersects.length > 0) {
 				if (INTERSECTED != intersects[0].object) {
@@ -1428,7 +1693,7 @@ render();
 		}
 
 
-       
+
 
 
 
@@ -1438,8 +1703,7 @@ render();
 
 		}
 
-	</script>
-	<script>
+	
 
 
 		var i = 0;
@@ -1474,6 +1738,11 @@ render();
 			else if (i == txt.length) {
 				document.getElementById("d1").innerHTML += "<p id='cursor-line' class='visible'> <span class='typed-cursor'>&#9608;</span></p>";
 				i++;
+				/*if (showField) {
+					var img = "<img id='fieldplot' src='ComsolHomopolar3.gif' alt='Homopolar motor radial field animation' width='400px'>";
+					document.getElementById("d1").innerHTML += img;
+					showField = false;
+				}*/
 			}
 		}
 	</script>
@@ -1505,6 +1774,19 @@ render();
 				modal.style.display = "none";
 			}
 		}
+
+
+		// Used to toggle the menu on small screens when clicking on the menu button
+        function toggleFunction() {
+            var x = document.getElementById("navDemo");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
+        }
+
+    
 
 
 	</script>
