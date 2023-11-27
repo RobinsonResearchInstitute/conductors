@@ -598,6 +598,21 @@ render();
             
 
 			window.addEventListener('resize', onWindowResize, false);
+
+			// create a function that will be called based on the size of a specific viewport
+			function reportWindowSize() {
+				//check if the viweport size is less then 1200px
+				if (window.innerWidth < 1200) {
+					// notify the user to visit the desktop site with an alert()
+					alert("Note: This page is best viewed on a desktop computer.");
+				};
+			};
+
+
+
+			// call your function when page loads 
+			window.onload = reportWindowSize;
+			
 			document.addEventListener('mousemove', onDocumentMouseMove, false);
 
 
