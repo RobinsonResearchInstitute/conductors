@@ -196,8 +196,13 @@ a, button, input, select, .container{
   
   
   @media screen and (max-width: 800px) {
+	#info i{
+		font-size:2rem;
+	}
+	
 	h1{
-	  line-height:1.2em;
+	  /*line-height:1.2em;*/
+	  font-size:5vw;
 	}
 	#d1{
 	  position:absolute;
