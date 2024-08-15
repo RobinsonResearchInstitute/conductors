@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta property="og:title" content="Dual Coil Homopolar Motor" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://robinson.ac.nz/conductors/homopolar10kw.html" />
+    <meta property="og:site_name" content="Robinson Research Institute" />
+    <meta property="og:image" content="https://robinson.ac.nz/conductors/img/new_homopolar_thumb.jpg" />
+    <meta property="og:description" content="Dual coil sumperconducting homopolar motor/generator." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="robinson.ac.nz" />
+    <meta name="twitter:title" content="Dual Coil Homopolar Motor" />
+    <meta name="twitter:description" content="Dual coil sumperconducting homopolar motor/generator." />
+    <meta name="twitter:image" content="https://robinson.ac.nz/conductors/img/new_homopolar_thumb.jpg" />
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+
+    <meta name="description" content="Dual coil superconducting homopolar motor/generator.">
+    <title>Dual Coil Homopolar Motor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="10kWhomopolar2.css">
+    <link type="text/css" rel="stylesheet" href="arrowsSmall.css">
+    <link rel="stylesheet" type="text/css" href="text-cursor.css">
+    <link rel="stylesheet" type="text/css" href="jsw3.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+
+    <div id="info">
+        <h1>Dual Coil Superconducting Homopolar Motor/Generator</h1>
+
+        <div class="w3-top">
+            <div class="w3-bar" id="myNavbar">
+                <a class="w3-bar-item w3-button w3-hover-grey w3-hide-medium w3-hide-large w3-right"
+                    href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+                    <i class="fa fa-bars"></i>
+                </a>
+
+            </div>
+
+            <div id="navDemo" class="w3-bar-block w3-grey w3-hide w3-hide-large w3-hide-medium">
+                <button id="infobutton2" class="w3-bar-item">Info</button>
+                 <button id="aboutBtn2" class="w3-bar-item">Help</button>
+               
+                <label class="container">Stator Outer
+                    <input type="checkbox" checked="checked" id="stator_out2">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Stator Inner
+                    <input type="checkbox" checked="checked" id="stator_in2">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Supports
+                    <input type="checkbox" checked="checked" id="G102">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Cooling Tubes
+                    <input type="checkbox" checked="checked" id="tubes2">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Armature
+                    <input type="checkbox" checked="checked" id="armature2">
+                    <span class="checkmark"></span>
+                </label>
+                
+                <label class="container">Field Coils
+                    <input type="checkbox" checked="checked" id="fieldcoil2">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Rotor
+                    <input type="checkbox" checked="checked" id="rotor2">
+                    <span class="checkmark"></span>
+                </label>
+                
+
+
+            </div>
+        </div>
+        <div id="sidebar" class="w3-hide-small">
+            <button id="infobutton">Info</button>
+            
+            <label class="container">Stator Outer
+                <input type="checkbox" checked="checked" id="stator_out">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Stator Inner
+                <input type="checkbox" checked="checked" id="stator_in">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Supports
+                <input type="checkbox" checked="checked" id="G10">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Cooling Tubes
+                <input type="checkbox" checked="checked" id="tubes">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Armature
+                <input type="checkbox" checked="checked" id="armature">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Field Coils
+                <input type="checkbox" checked="checked" id="fieldcoil">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Rotor
+                <input type="checkbox" checked="checked" id="rotor">
+                <span class="checkmark"></span>
+            </label>
+           
+
+
+            <button id="aboutBtn">Help</button>
+        </div>
+        <br>
+
+        <div id="d1">
+            <p id='line1'></p>
+        </div>
+    </div>
+
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Use checkboxes to show or hide components.</p>
+            <p>Click on a component to show information.</p>
+            <p>Left-click & drag to rotate, mousewheel to zoom, right-click & drag to pan.</p>
+            <p>Motor design by Swarn Kalsi, James Storey and Grant Lumsden, webpage by James Storey.</p>
+             <p>Robinson Research Institute, 2024.</p>
+
+        </div>
+
+    </div>
+<!--
+    <a href="https://robinson.ac.nz/conductors/syncmotor.html">
+        <div class="arrow">
+            <div class="arrow-top"></div>
+            <div class="arrow-bottom"></div>
+        </div>
+    </a>
+
+    <a href="https://robinson.ac.nz/conductors/dynamo.html">
+        <div class="barrow">
+            <div class="barrow-top"></div>
+            <div class="barrow-bottom"></div>
+        </div>
+    </a>
+-->
+
+    <!--<div id="logo">
+		<a href="https://www.wgtn.ac.nz/robinson">
+			<img src="RRILogoSmall.png" alt="Logo">
+		</a>
+	</div>-->
+
+    <div id="logo">
+        <a href="https://www.wgtn.ac.nz/robinson" target="_blank">Robinson Research Institute</a>
+    </div>
+
+
+
+    <script type="module">
+
+        import * as THREE from 'https://unpkg.com/three@0.126.0/build/three.module.js';
+
+        import { OrbitControls } from 'https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js';
+        import { GLTFLoader } from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/GLTFLoader.js';
+        import { RGBELoader } from 'https://unpkg.com/three@0.124.0/examples/jsm/loaders/RGBELoader.js';
+
+
+        var renderer, scene, camera, raycaster, controls;
+        var rotorlumps1, rotorlumps2, plane, grid, stator;
+        var rotortube, flux1, w1, w2, w3, coil;
+        var statorvisible = false;
+        var light1;
+        var th = 0;
+        var loz = String.fromCharCode(9671);
+        var sq = String.fromCharCode(178);
+        var mmx, mmy;
+        var explode = false;
+        var accesscoil = false;
+        var movedirection = 0;
+        var moveprogress = 0;
+        var movespeed = 1;
+        var showField = false;
+
+
+        var mouse = new THREE.Vector2(), INTERSECTED;
+
+        init();
+        animate();
+
+        function init() {
+
+
+            const params = {
+                exposure: 0.8,
+                toneMapping: 'ACESFilmic'
+            };
+
+            const toneMappingOptions = {
+                None: THREE.NoToneMapping,
+                Linear: THREE.LinearToneMapping,
+                Reinhard: THREE.ReinhardToneMapping,
+                Cineon: THREE.CineonToneMapping,
+                ACESFilmic: THREE.ACESFilmicToneMapping,
+                Custom: THREE.CustomToneMapping
+            };
+
+
+            // renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+
+            renderer.toneMapping = toneMappingOptions[params.toneMapping];
+            renderer.toneMappingExposure = params.exposure;
+            renderer.outputEncoding = THREE.sRGBEncoding;
+
+
+
+
+
+            raycaster = new THREE.Raycaster();
+            raycaster.layers.set(0);
+
+
+            // scene
+            scene = new THREE.Scene();
+            //scene.background = new THREE.Color( 'skyblue' )
+            scene.fog = new THREE.Fog(0x000000, 250, 2400);
+
+            // camera
+            camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 2000);
+            camera.layers.enable(0);
+
+
+            //camera.position.set(100, 30, 120);
+            camera.position.set(-100*0.015, 30*0.015, 120*0.015);
+            scene.add(camera);
+
+            //const helper = new THREE.CameraHelper( camera );
+            //scene.add( helper );
+
+            // controls
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.addEventListener('change', render);
+            controls.minDistance = 1.7;
+            controls.maxDistance = 10;
+            //controls.enablePan = false;
+
+
+            // ambient
+            scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+
+            var light = new THREE.DirectionalLight(0xffffff, 1.0);
+            //light.position.set(0,90,100);
+            camera.add(light);
+
+
+            //hdri
+            const pmremGenerator = new THREE.PMREMGenerator(renderer);
+            pmremGenerator.compileEquirectangularShader();
+
+
+            async function loadHDRI() {
+                const rgbeLoader = new RGBELoader()
+                    .setDataType(THREE.UnsignedByteType);
+                //.setPath( 'textures/equirectangular/' );
+
+                const texture = await rgbeLoader.loadAsync('HDR_029_Sky_Cloudy_Env.hdr');
+                const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+
+                //scene.background = envMap;
+                scene.environment = envMap;
+                texture.dispose();
+                pmremGenerator.dispose();
+            }
+            loadHDRI();
+
+
+            plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(10000, 10000), new THREE.MeshPhongMaterial({ color: 'rgb(0,127,127)', depthWrite: false, opacity: 0.2, transparent: true }));
+            plane.position.y = -200;
+            plane.rotation.x = - Math.PI / 2;
+            scene.add(plane);
+
+
+            grid = new THREE.GridHelper(10000, 100, 'rgb(127,255,255)', 'rgb(127,255,255)');
+            grid.material.opacity = 0.5;
+            grid.material.transparent = true
+            grid.position.y = -200;
+            scene.add(grid);
+
+
+
+            // model
+
+            var loader = new GLTFLoader();
+
+            loader.load('models/newhpm/Rotor.glb', function (gltf) {
+
+                gltf.scene.traverse(function (child) {
+
+                    if (child.isMesh) {
+
+
+                        child.geometry.center();
+                        child.geometry.computeFaceNormals();
+                        child.geometry.computeVertexNormals();
+                        child.material = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+                        child.name = 'rotor';
+
+                        child.material.side = THREE.DoubleSide;
+                       
+
+                        new THREE.Box3().setFromObject(child).getCenter(child.position).multiplyScalar(- 1);
+                        rotortube = child;
+                        rotortube.layers.set(0);
+                        scene.add(child);
+
+
+                    }
+
+                });
+
+
+
+                render();
+
+            });
+
+
+            
+
+
+
+
+
+
+
+
+
+            var platemat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.1, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+            var bearingmat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+            var G10mat = new THREE.MeshStandardMaterial({ color: 0x203015, emissive: 0x303030, roughness: 1.0, metalness: 0.0, emissiveIntensity: 0.0, transparent: true });
+
+            var statormat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: true });
+            var laminatedmat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+            var rotormat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x303030, roughness: 0.2, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+            var coppermat = new THREE.MeshStandardMaterial({ color: 0xff7744, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+            var studmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+            var clampmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+
+            var tierodmat = new THREE.MeshStandardMaterial({ color: 0x444444, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+            var swagemat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+            var nutmat = new THREE.MeshStandardMaterial({ color: 0x666666, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+            var radmat = new THREE.MeshStandardMaterial({ color: 0x999999, emissive: 0x303030, roughness: 0.4, metalness: 1.0, emissiveIntensity: 0.0, transparent: true });
+
+
+
+           
+            //Stator outer
+            loadPart('models/newhpm/Stator_Outer.glb', 0, 0, 0, 0, 0, 0, coppermat, 'Stator_Outer');
+
+            //Laminated inner stator
+            loadPart('models/newhpm/Stator_Inner.glb', 0, 0, 0, 0, 0, 0, coppermat, 'Stator_Inner');
+
+            //G10
+            loadPart('models/newhpm/G10_Center.glb', 0, 0, 0, 0, 0, 0, coppermat, 'G10');
+            loadPart('models/newhpm/G10_Outer.glb', 0, 0, 0, 0, 0, 0, coppermat, 'G10');
+            loadPart('models/newhpm/G10_Inner.glb', 0, 0, 0, 0, 0, 0, coppermat, 'G10');
+
+
+            //Armature
+            loadPart('models/newhpm/PhaseA1.glb', 0, 0, 0, 0, 0, 0, coppermat, 'armature');
+            loadPart('models/newhpm/PhaseA2.glb', 0, 0, 0, 0, 0, 0, coppermat, 'armature');
+
+            loadPart('models/newhpm/PhaseB1.glb', 0, 0, 0, 0, 0, 0, coppermat, 'armature');
+            loadPart('models/newhpm/PhaseB2.glb', 0, 0, 0, 0, 0, 0, coppermat, 'armature');
+
+            loadPart('models/newhpm/PhaseC1.glb', 0, 0, 0, 0, 0, 0, coppermat, 'armature');
+            loadPart('models/newhpm/PhaseC2.glb', 0, 0, 0, 0, 0, 0, coppermat, 'armature');
+
+            //Cooling tubes
+            loadPart('models/newhpm/Tubes.glb', 0, 0, 0, 0, 0, 0, coppermat, 'tubes');
+
+            //HTS coil
+            //loadPart('models/Coil1.glb', Math.PI / 2.0, 0, -Math.PI / 6.0, 0.78 * 9.2, 0.78 * 15.75, -4.3, coppermat, 'fieldcoil');
+            loadPart('models/newhpm/Coil1.glb', 0, 0, 0, -0.265, 0, 0, coppermat, 'fieldcoil');
+            loadPart('models/newhpm/Coil2.glb', 0, 0, 0, 0.265, 0, 0, coppermat, 'fieldcoil');
+
+
+
+            function loadPart(filename, rotx, roty, rotz, posx, posy, posz, material, groupname) {
+
+                loader.load(filename, function (gltf) {
+
+                    gltf.scene.traverse(function (child) {
+
+                        if (child.isMesh) {
+
+                            child.geometry.center();
+                            //child.geometry.computeFaceNormals();
+                            child.geometry.computeVertexNormals();
+                            //child.material =  new THREE.MeshPhongMaterial({color: 0x987933,shininess:30,reflectivity:0.8,transparent:false});
+                            //child.material = new THREE.MeshStandardMaterial({ color: 0x990000, emissive: 0x303030, roughness: 0.3, metalness: 1.0, emissiveIntensity: 0.0, transparent: false });
+                            //child.material = material;
+                           
+                                
+
+                            child.rotation.x = rotx;
+                            child.rotation.y = roty;
+                            child.rotation.z = rotz;
+
+                            
+                            child.position.x = posx;
+                            child.position.z = posy;
+                            child.position.y = posz;
+                            
+                            child.name = groupname;
+                            
+                            
+                            if(groupname=='Stator_Outer'){
+                                stator=child;
+                                child.material.transparent = true;
+                            }
+
+                            child.layers.set(0);
+
+                            scene.add(child);
+
+                            
+                        }
+
+                    });
+
+
+
+                    render();
+
+                });
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            window.addEventListener('resize', onWindowResize, false);
+
+
+            // create a function that will be called based on the size of a specific viewport
+            function reportWindowSize() {
+                //check if the viweport size is less then 1200px
+                if (window.innerWidth < 800) {
+
+                    // notify the user to visit the desktop site with an alert()
+                    alert("Note: This page is best viewed on a desktop computer.");
+                };
+                /*
+             // Add a Window: resize event to the Window interface to force a reload of the 
+             // page if the viewport size is greater than or equal to 1200px.
+        	
+                window.addEventListener("resize" , () => {
+                 // check if viewport width is greater than or equal to 1200px.
+                    if (window.innerWidth >= 1200) {
+                     // reload/refresh the page
+                        location.reload();
+                    };
+                });*/
+            };
+
+
+
+            // call your function when page loads 
+            window.onload = reportWindowSize;
+
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+
+
+            document.getElementById("infobutton").addEventListener('click', function () {
+
+                document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+                i = 0;
+                showField = true;
+                infoFunction(loz + " Dual Coil Superconducting Homopolar Motor/Generator\n\nMotor Rating: 5.5 MW\nRated Speed: 8000 RPM");
+
+            });
+
+            document.getElementById("infobutton2").addEventListener('click', function () {
+
+                document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+                i = 0;
+                showField = true;
+                infoFunction(loz + " Superconducting Homopolar Motor/Generator\n\nMotor Rating: 10 kW\nRated Speed: 25000 RPM");
+
+            });
+
+            renderer.domElement.addEventListener("click", onClick, false);
+
+
+
+
+           
+
+            document.getElementById('stator_out').addEventListener('click', function () {
+                hidePart('Stator_Outer');
+                document.getElementById('stator_out2').checked = document.getElementById('stator_out').checked;
+            });
+
+            document.getElementById('stator_out2').addEventListener('click', function () {
+                hidePart('Stator_Outer');
+                document.getElementById('stator_out').checked = document.getElementById('stator_out2').checked;
+            });
+
+            document.getElementById('stator_in').addEventListener('click', function () {
+                hidePart('Stator_Inner');
+                document.getElementById('stator_in2').checked = document.getElementById('stator_in').checked;
+            });
+
+            document.getElementById('stator_in2').addEventListener('click', function () {
+                hidePart('Stator_Inner');
+                document.getElementById('stator_in').checked = document.getElementById('stator_in2').checked;
+            });
+
+
+            document.getElementById('G10').addEventListener('click', function () {
+                hidePart('G10');
+                document.getElementById('G102').checked = document.getElementById('G10').checked;
+            });
+
+            document.getElementById('G102').addEventListener('click', function () {
+                hidePart('G10');
+                document.getElementById('G10').checked = document.getElementById('G102').checked;
+            });
+
+            document.getElementById('tubes').addEventListener('click', function () {
+                hidePart('tubes');
+                document.getElementById('tubes2').checked = document.getElementById('G10').checked;
+            });
+
+            document.getElementById('tubes2').addEventListener('click', function () {
+                hidePart('tubes');
+                document.getElementById('tubes').checked = document.getElementById('tubes2').checked;
+            });
+
+
+            document.getElementById('armature').addEventListener('click', function () {
+                hidePart('armature');
+                document.getElementById('armature2').checked = document.getElementById('armature').checked;
+            });
+
+            document.getElementById('armature2').addEventListener('click', function () {
+                hidePart('armature');
+                document.getElementById('armature').checked = document.getElementById('armature2').checked;
+            });
+
+           
+            document.getElementById('fieldcoil').addEventListener('click', function () {
+                hidePart('fieldcoil');
+                document.getElementById('fieldcoil2').checked = document.getElementById('fieldcoil').checked;
+            });
+
+            document.getElementById('fieldcoil2').addEventListener('click', function () {
+                hidePart('fieldcoil');
+                document.getElementById('fieldcoil').checked = document.getElementById('fieldcoil2').checked;
+            });
+
+            document.getElementById('rotor').addEventListener('click', function () {
+                hidePart('rotor');
+                document.getElementById('rotor2').checked = document.getElementById('rotor').checked;
+            });
+
+            document.getElementById('rotor2').addEventListener('click', function () {
+                hidePart('rotor');
+                document.getElementById('rotor').checked = document.getElementById('rotor2').checked;
+            });
+
+            
+
+
+            function hidePart(part) {
+                for (let i = 0; i < scene.children.length; i++) {
+                    let child = scene.children[i];
+                    switch (child.name) {
+                        case part:
+                            child.layers.toggle(0);
+                            break;
+                    }
+
+                }
+            }
+
+
+
+           
+
+            
+            document.getElementById('stator_out').checked = true;
+            document.getElementById('stator_in').checked = true;
+            document.getElementById('G10').checked = true;
+            document.getElementById('tubes').checked = true;
+            document.getElementById('armature').checked = true;
+            document.getElementById('fieldcoil').checked = true;
+            document.getElementById('rotor').checked = true;
+           
+            document.getElementById('stator_out2').checked = true;
+            document.getElementById('stator_in2').checked = true;
+            document.getElementById('G102').checked = true;
+            document.getElementById('tubes2').checked = true;
+            document.getElementById('armature2').checked = true;
+            document.getElementById('fieldcoil2').checked = true;
+            document.getElementById('rotor2').checked = true;
+            
+        }
+       
+        
+
+      
+
+       
+
+        function onClick(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            var intersects = raycaster.intersectObjects(scene.children);
+            if (intersects.length > 0) {
+                var name = intersects[0].object.name;
+
+                switch (name) {
+                    
+
+                    case 'tubes':
+                        infoFunction(loz + " Liquid-cooling tubes.");
+                        break;
+
+                    case 'armature':
+                        infoFunction(loz + " Copper Litz cable armature.");
+                        break;
+
+                    case 'Stator_Outer':
+                        infoFunction(loz + " Solid steel outer stator.");
+                        break;
+                    
+                    case 'Stator_Inner':
+                        infoFunction(loz + " Laminated steel inner stator.");
+                        break;
+
+                    case 'fieldcoil':
+                        infoFunction(loz + " REBCO superconducting field coils.");
+                        break;
+
+                    case 'G10':
+                        infoFunction(loz + " G10 support structure");
+                        break;
+
+
+                   
+                }
+
+                
+                if (intersects[0].object == rotortube) {
+                    infoFunction(loz + " 6 solid steel rotor pole pieces.")
+                }
+                
+                else {
+                    document.getElementById("d1").innerHTML = "<p id='line1'></p>";
+                    i = 0;
+                }
+
+            }
+
+
+        }
+
+
+        function onWindowResize() {
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            render();
+
+        }
+
+        function onDocumentMouseMove(event) {
+            event.preventDefault();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (rotortube)
+                rotortube.rotation.x += 0.01;
+
+            if (movedirection != 0) {
+                moveprogress += movedirection * movespeed;
+                if (moveprogress <= 0) {
+                    moveprogress = 0;
+                    movedirection = 0;
+                }
+                else if (moveprogress >= 100) {
+                    moveprogress = 100;
+                    movedirection = 0;
+                }
+                explodeParts();
+            }
+
+
+            raycaster.setFromCamera(mouse, camera);
+            var intersects = raycaster.intersectObjects(scene.children);
+            if (intersects.length > 0) {
+                if (INTERSECTED != intersects[0].object) {
+
+                    if (INTERSECTED) {
+                        if (INTERSECTED != plane && INTERSECTED != grid) {
+                            INTERSECTED.material.opacity = 1.0;
+                        }
+                    }
+                    INTERSECTED = intersects[0].object;
+                    if (INTERSECTED != plane && INTERSECTED != grid) {
+                         INTERSECTED.material.opacity = 0.5;
+                    }
+                }
+            } else {
+                if (INTERSECTED) {
+                    if (INTERSECTED != plane && INTERSECTED != grid) {
+                        INTERSECTED.material.opacity = 1.0;
+                    }
+                }
+                INTERSECTED = null;
+            }
+
+            render();
+        }
+
+
+
+
+
+
+        function render() {
+
+            renderer.render(scene, camera);
+
+        }
+
+
+
+
+        var i = 0;
+        var txt = 'Superconducting field coil\nREBCO conductor'; /* The text */
+        var speed = 20; /* The speed/duration of the effect in milliseconds */
+
+        function infoFunction(text) {
+            txt = text;
+            var x = document.getElementById("d1");
+
+            x.innerHTML = "<p id='line1'></p>";
+            i = 0;
+            typeWriter();
+
+
+
+
+        }
+
+
+
+        function typeWriter() {
+            if (i < txt.length) {
+                if (txt.charAt(i) == '\n') {
+                    document.getElementById("line1").innerHTML += '<br>';
+                } else {
+                    document.getElementById("line1").innerHTML += txt.charAt(i);
+                }
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+            else if (i == txt.length) {
+                document.getElementById("d1").innerHTML += "<p id='cursor-line' class='visible'> <span class='typed-cursor'>&#9608;</span></p>";
+                i++;
+                
+            }
+        }
+    </script>
+
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("aboutBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+
+        // Used to toggle the menu on small screens when clicking on the menu button
+        function toggleFunction() {
+            var x = document.getElementById("navDemo");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>
