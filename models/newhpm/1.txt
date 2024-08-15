@@ -1,0 +1,1 @@
+Models for dual coil homopolar motor.
