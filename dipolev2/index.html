@@ -505,6 +505,7 @@ scene.add( spotLight );
 					
 				}*/
 				this.disabled = true;
+				document.getElementById('raise').disabled = true;
 				rampcurrent = true;
 				
 				/*
@@ -844,6 +845,7 @@ scene.add( spotLight );
 						rampcurrent = false;
 						currentincrement*=-1;
 						document.getElementById('liftcurrent').disabled = false;
+						document.getElementById('raise').disabled = false;
 						if(currentincrement<0){
                             document.getElementById('liftcurrent').innerHTML='Lift Off';
 							
